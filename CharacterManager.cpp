@@ -5,50 +5,89 @@ void CharacterManager::Initialize(Player* player, Enemy* enemy)
 {
 	this->player = player;
 	this->enemy = enemy;
+
+	isBattle = false;
+	isEnd = false;
+	enemyNum = 0;
 }
 
 
 void CharacterManager::Update()
 {
-	if (enemy != nullptr)
+	if (!isEnd && isBattle)
 	{
-		this->enemy->Update();
+		this->enemy[enemyNum].Update();
 		this->player->Update();
 
-		//UŒ‚€”õ‚ª‚Å‚«‚½‚ç
-		if (enemy->GetIsAttack())
+		//“G‚ÌUŒ‚€”õ‚ª‚Å‚«‚½‚ç
+		if (enemy[enemyNum].GetIsAttack())
 		{
-			player->Damage(enemy->GetPower());
-			enemy->SetIsAttack(false);
+			player->Damage(enemy[enemyNum].GetPower());
+			enemy[enemyNum].SetIsAttack(false);
 
 			player->AddScale(0.6f);
-			enemy->AddAngle(0.6f);
+			enemy[enemyNum].AddAngle(0.6f);
 
 		}
+		//player‚ÌV
 		if (player->GetIsAttack())
 		{
-			enemy->Damage(player->GetPower());
+			enemy[enemyNum].Damage(player->GetPower());
 			player->SetIsAttack(false);
 
-			enemy->AddScale(0.6f);
+			enemy[enemyNum].AddScale(0.6f);
 			player->AddAngle(-0.6f);
 		}
 
-		if (enemy->GetIsDead())
+		if (enemy[enemyNum].GetIsDead())
 		{
-			enemy = nullptr;
+			enemyNum++;
+
+			isBattle = false;
+
+			if (enemyNum > 2)
+			{
+				enemyNum = 2;
+				isEnd = true;
+			}
+		}
+	}
+	if(!isBattle && !isEnd)
+	{
+		enemy[enemyNum].AddPos({ -10,0 });
+
+		if (enemy[enemyNum].GetPos().x <= 1180)
+		{
+			isBattle = true;
 		}
 	}
 }
 
 void CharacterManager::Draw()
 {
-	if (enemy != nullptr)
+	if (!isEnd)
 	{
-		SetDrawBright(255, 0, 0);
-		enemy->Draw();
+		if(enemyNum==0)SetDrawBright(255, 0, 0);
+		if(enemyNum==1)SetDrawBright(0, 255, 0);
+		if(enemyNum==2)SetDrawBright(100, 100, 0);
+		enemy[enemyNum].Draw();
 		SetDrawBright(255, 255, 255);
 	}
 
 	player->Draw();
+
+	DrawFormatString(5, 0, 0xffffff, "\nisBattle:%d", isBattle);
+	DrawFormatString(5, 0, 0xffffff, "\n\nisEnd:%d", isEnd);
+	DrawFormatString(5, 0, 0xffffff, "\n\n\nenemyNumber:%d", enemyNum);
+
+	//hp
+	DrawFormatString(player->GetPos().x -32, 1080 / 2 - 100, 0xffffff, "playerHP:%d", player->GetHP());
+	DrawFormatString(enemy[enemyNum].GetPos().x -32, 1080 / 2 - 100, 0xffffff, "enemyHP:%d", enemy[enemyNum].GetHP());
+
+	//
+	//DrawRotaGraph3(player->GetPos().x - 32, 1080 / 2 -50, 32, 32, 1.0 * player->GetAttackGauge(), 0.3f, 0, player->GetTexHandle(), false);
+	//DrawRotaGraph3(enemy[enemyNum].GetPos().x - 32, 1080 / 2 -50, 32, 32, 1.0 * enemy[enemyNum].GetAttackGauge(), 0.3f, 0, player->GetTexHandle(), false);
+
+	DrawBox(player->GetPos().x - 32, 1080 / 2 - 50, (player->GetPos().x - 32) + player->GetAttackGauge() * 64, 1080 / 2 - 40, 0xffffff, false);
+	DrawBox(enemy[enemyNum].GetPos().x - 32, 1080 / 2 - 50, (enemy[enemyNum].GetPos().x - 32) + enemy[enemyNum].GetAttackGauge() * 64, 1080 / 2 - 40, 0xffffff, false);
 }

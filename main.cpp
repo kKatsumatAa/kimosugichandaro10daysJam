@@ -21,13 +21,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
  	unsigned int texhandle = LoadGraph("resources/a.png");
 	
 	Player player;
-	player.Initialize(texhandle);
+	player.Initialize(texhandle, { 780,1080 / 2 });
 
-	Enemy enemy;
-	enemy.Initialize(texhandle);
+	Enemy enemy[3];
+	enemy[0].Initialize(texhandle, { 2100,1080 / 2 });
+	enemy[1].Initialize(texhandle, { 2100,1080 / 2 }, 7, 200);
+	enemy[2].Initialize(texhandle, { 2100,1080 / 2 }, 10, 150);
 
 	CharacterManager charaM;
-	charaM.Initialize(&player, &enemy);
+	charaM.Initialize(&player, enemy);
 
 	// ÉQÅ[ÉÄÉãÅ[Év
 	while (true) {

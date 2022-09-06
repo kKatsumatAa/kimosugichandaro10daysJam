@@ -1,15 +1,15 @@
 #include "Enemy.h"
 
-void Enemy::Initialize(unsigned int texhandle)
+void Enemy::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int attackCool)
 {
-	pos = { 1180,500 };
+	this->pos = pos;
 
-	this->texhandle = texhandle;
+	this->texhandle = textureHandle;
 
 	attribute = ENEMY;
 
 	power = 1;
-	HP = 5;
-
+	HP = hp;
+	this->attackCool = attackCool;
 
 }

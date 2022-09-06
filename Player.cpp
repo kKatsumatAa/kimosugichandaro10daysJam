@@ -1,15 +1,15 @@
 #include "Player.h"
 
-void Player::Initialize(unsigned int texhandle)
+void Player::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int attackCool)
 {
-	pos = { 780,500 };
+	this->pos = pos;
 
-	this->texhandle = texhandle;
+	this->texhandle = textureHandle;
 
 	attribute = PLAYER;
 
 	power = 1;
-	HP = 10;
+	HP = hp;
+	this->attackCool = attackCool;
 
-	attackCool = 100;
 }

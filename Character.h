@@ -38,7 +38,7 @@ protected:
 
 
 public:
-	virtual void Initialize(const unsigned int textureHandle) = 0;
+	virtual void Initialize(const unsigned int textureHandle, Vec2 pos, int hp = 5, int attackCool = 240) = 0;
 	void Update();
 	void Draw();
 
@@ -58,5 +58,15 @@ public:
 	void AddScale(const float& scale) { this->scale += scale; }
 
 	void AddAngle(const float& angle){ this->angle += angle; }
+
+	void AddPos(const Vec2& vec2) { this->pos += vec2; }
+
+	Vec2 GetPos() { return pos; }
+
+	int GetHP() { return HP; }
+
+	float GetAttackGauge() { return (float)attackTime / (float)attackCool; }
+
+	unsigned int GetTexHandle() { return texhandle; }
 
 };
