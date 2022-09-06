@@ -1,6 +1,7 @@
 #pragma once
 #include "Util.h"
 #include "Burst.h"
+#include "Fire.h"
 #include <list>
 #include <memory>
 
@@ -11,6 +12,9 @@ public:
 
 	//’e‚¯”ò‚Ô
 	void BurstGenerate(Vec2 pos, int r, int num, int time, float angle, unsigned int color);
+	//‰Î
+	void FireGenerate(Vec2 pos, int r);
+
 	void Update();
 
 	void Draw();
@@ -18,5 +22,8 @@ public:
 
 	//’e‚¯”ò‚Ô
 	std::list<std::unique_ptr<Burst>> burst_;
+	//‰Î
+	std::list<std::unique_ptr<Fire>> fire_;
+
 };
 

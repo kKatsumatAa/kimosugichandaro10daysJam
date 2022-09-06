@@ -30,7 +30,3 @@ public:
 	//‘¶İ‚·‚é‚©
 	bool isDead_ = false;
 };
-
-//‰~‚ÌŠÖ”
-void DrawCirele(Vec2 pos, int r, unsigned int color);
-
