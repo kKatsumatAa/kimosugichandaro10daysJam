@@ -4,13 +4,13 @@ class SetDef
 {
 private:
 	// ウィンドウのタイトルに表示する文字列
-	const char* TITLE = "LC1A_04_イイダ_ユウキ: タイトル";
+	const char* TITLE = "キモスギチャン";
 
 	// ウィンドウ横幅
-	const int WIN_WIDTH = 600;
+	const int WIN_WIDTH = 1980;
 
 	// ウィンドウ縦幅
-	const int WIN_HEIGHT = 400;
+	const int WIN_HEIGHT = 1080;
 
 	// 画像などのリソースデータの変数宣言と読み込み
 
