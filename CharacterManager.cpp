@@ -21,8 +21,8 @@ void CharacterManager::Update()
 			player->Damage(enemy->GetPower());
 			enemy->SetIsAttack(false);
 
-			player->AddScale(Vector3(0.6f, 0.6f, 0.6f));
-			enemy->AddAngle({ 0,0,0.6f });
+			player->AddScale(0.6f);
+			enemy->AddAngle(0.6f);
 
 		}
 		if (player->GetIsAttack())
@@ -30,8 +30,8 @@ void CharacterManager::Update()
 			enemy->Damage(player->GetPower());
 			player->SetIsAttack(false);
 
-			enemy->AddScale(Vector3(0.6f, 0.6f, 0.6f));
-			player->AddAngle({ 0,0,-0.6f });
+			enemy->AddScale(0.6f);
+			player->AddAngle(-0.6f);
 		}
 
 		if (enemy->GetIsDead())
@@ -41,10 +41,10 @@ void CharacterManager::Update()
 	}
 }
 
-void CharacterManager::Draw(const ViewProjection& view)
+void CharacterManager::Draw()
 {
 	if (enemy != nullptr)
-		enemy->Draw(view);
+		enemy->Draw();
 
-	player->Draw(view);
+	player->Draw();
 }

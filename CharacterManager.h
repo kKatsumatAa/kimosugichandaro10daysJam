@@ -12,7 +12,7 @@ public:
 	void Initialize(Player* player, Enemy* enemy);
 
 	void Update();
-	void Draw(const ViewProjection& view);
+	void Draw();
 
 };
 

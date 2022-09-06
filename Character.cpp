@@ -17,18 +17,18 @@
 
 void Character::Update()
 {
-	if (worldTransform_.scale_.x > 1.0f)
+	if (scale > 1.0f)
 	{
-		worldTransform_.scale_ -= {0.05f, 0.05f, 0.05f};
+		scale -= 0.05f;
 	}
 	
-	if (worldTransform_.rotation_.z > 0.0f)
+	if (angle > 0.0f)
 	{
-		worldTransform_.rotation_ -= {0, 0, 0.02f};
+		angle -= 0.02f;
 	}
-	else if (worldTransform_.rotation_.z < 0.0f)
+	else if (angle < 0.0f)
 	{
-		worldTransform_.rotation_ += {0, 0, 0.02f};
+		angle += 0.02f;
 	}
 
 	attackTime++;
@@ -40,14 +40,13 @@ void Character::Update()
 	}
 
 	if (HP <= 0) isDead = true;
-
-	UpdateWorldMatrix4(worldTransform_);
 }
 
-void Character::Draw(const ViewProjection& view)
+void Character::Draw()
 {
-	model_->Draw(worldTransform_, view, textureHandle_);
+	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, 1.0f, angle, texhandle, true);
 }
+
 
 void Character::Attack()
 {
