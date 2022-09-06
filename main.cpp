@@ -15,6 +15,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	KeyboardInput key;
 	Mouse mouse;
 	Iscene* scene = new TitleScene(key);
+
+	
+	LoadGraph("resources/a.png");
 	
 
 	// ÉQÅ[ÉÄÉãÅ[Év

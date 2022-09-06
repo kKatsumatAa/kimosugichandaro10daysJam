@@ -1,11 +1,6 @@
 #pragma once
-#include"WorldTransform.h"
-#include"Model.h"
-#include"Input.h"
-#include"DebugText.h"
 #include"Util.h"
 #include "Assert.h"
-#include "WinApp.h"
 
 enum 
 {
@@ -19,14 +14,7 @@ private:
 
 	
 protected:
-	//ワールド変換データ
-	WorldTransform worldTransform_;
-	//モデル
-	Model* model_ = nullptr;
-	//テクスチャハンドル
-	uint32_t textureHandle_ = 0u;
-	Input* input_ = nullptr;
-	DebugText* debugText_ = nullptr;
+	unsigned int texhandle;
 
 	int attackCool = 240;
 	int attackTime = 0;
@@ -43,11 +31,16 @@ protected:
 
 	float angle = 0;
 
+	float scale = 1.0f;
+
+
+	Vec2 pos = { 0,0 };
+
 
 public:
-	virtual void Initialize(Model* model, const uint32_t textureHandle) = 0;
+	virtual void Initialize(const unsigned int textureHandle) = 0;
 	void Update();
-	void Draw(const ViewProjection& view);
+	void Draw();
 
 	void Attack();
 
@@ -62,8 +55,8 @@ public:
 
 	bool GetIsDead() { return isDead; }
 
-	void AddScale(const Vector3& scale) { worldTransform_.scale_ += scale; }
+	void AddScale(const float& scale) { this->scale += scale; }
 
-	void AddAngle(const Vector3& angle){ worldTransform_.rotation_ += angle; }
+	void AddAngle(const float& angle){ this->angle += angle; }
 
 };

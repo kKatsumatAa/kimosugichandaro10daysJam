@@ -5,6 +5,6 @@
 class Player : public Character
 {
 public:
-	void Initialize(Model* model, const uint32_t textureHandle) override;
+	void Initialize(unsigned int texhandle) override;
 };
 
