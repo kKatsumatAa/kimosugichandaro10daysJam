@@ -44,7 +44,7 @@ void Character::Update()
 
 void Character::Draw()
 {
-	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, 1.0f, angle, texhandle, true);
+	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle, true);
 }
 
 
