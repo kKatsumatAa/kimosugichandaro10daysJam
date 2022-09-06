@@ -5,18 +5,6 @@ VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kimosugichandaro10daysJam", "kimosugichandaro10daysJam.vcxproj", "{28453AEA-164A-48EE-A378-845D62E10CA3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{338CB4F1-46CF-41A2-AC7F-9BEA4F0FB8CA}"
-	ProjectSection(SolutionItems) = preProject
-		Character.h = Character.h
-		CharacterManager.cpp = CharacterManager.cpp
-		CharacterManager.h = CharacterManager.h
-		Enemy.cpp = Enemy.cpp
-		Enemy.h = Enemy.h
-		main.cpp = main.cpp
-		Player.cpp = Player.cpp
-		Player.h = Player.h
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
