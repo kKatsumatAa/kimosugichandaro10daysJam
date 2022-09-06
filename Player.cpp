@@ -2,7 +2,7 @@
 
 void Player::Initialize(unsigned int texhandle)
 {
-	pos = { -100,0 };
+	pos = { 400,500 };
 
 	this->texhandle = texhandle;
 

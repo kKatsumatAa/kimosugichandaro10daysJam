@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Title.h"
 #include "Game.h"
+#include "CharacterManager.h"
 
 
 
@@ -16,9 +17,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Mouse mouse;
 	Iscene* scene = new TitleScene(key);
 
+	//
+ 	unsigned int texhandle = LoadGraph("resources/a.png");
 	
-	LoadGraph("resources/a.png");
-	
+	Player player;
+	player.Initialize(texhandle);
+
+	Enemy enemy;
+	enemy.Initialize(texhandle);
+
+	CharacterManager charaM;
+	charaM.Initialize(&player, &enemy);
 
 	// ゲームループ
 	while (true) {
@@ -40,7 +49,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			scene = nextScene;
 		}
 
+		charaM.Update();
+
 		// 描画処理
+		charaM.Draw();
+
 		scene->Draw();
 
 		//---------  ここまでにプログラムを記述  ---------//

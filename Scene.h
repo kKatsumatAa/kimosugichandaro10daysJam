@@ -1,7 +1,12 @@
 #pragma once
+#include"CharacterManager.h"
+
 
 class Iscene
 {
+private:
+	CharacterManager charaManager;
+
 public:
 	virtual ~Iscene() {};
 	virtual void Update() =0;
