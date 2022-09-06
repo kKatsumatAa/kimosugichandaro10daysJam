@@ -44,7 +44,11 @@ void CharacterManager::Update()
 void CharacterManager::Draw()
 {
 	if (enemy != nullptr)
+	{
+		SetDrawBright(255, 0, 0);
 		enemy->Draw();
+		SetDrawBright(255, 255, 255);
+	}
 
 	player->Draw();
 }

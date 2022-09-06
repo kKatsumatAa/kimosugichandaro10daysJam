@@ -2,7 +2,7 @@
 
 void Enemy::Initialize(unsigned int texhandle)
 {
-	pos = { 700,500 };
+	pos = { 1180,500 };
 
 	this->texhandle = texhandle;
 
