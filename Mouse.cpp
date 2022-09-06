@@ -15,7 +15,7 @@ int Mouse::GetX()
 
 int Mouse::GetY()
 {
-	return y;//
+	return y;
 }
 
 bool Mouse::GetLeftClick()
