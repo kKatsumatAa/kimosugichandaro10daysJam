@@ -134,6 +134,7 @@
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="Def.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="main.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="Def.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Fire.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="Mouse.h" />
