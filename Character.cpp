@@ -17,20 +17,6 @@
 
 void Character::Update()
 {
-	if (scale > 1.0f)
-	{
-		scale -= 0.05f;
-	}
-	
-	if (angle > 0.0f)
-	{
-		angle -= 0.02f;
-	}
-	else if (angle < 0.0f)
-	{
-		angle += 0.02f;
-	}
-
 	attackTime++;
 
 	if (attackTime >= attackCool)
@@ -44,6 +30,23 @@ void Character::Update()
 
 void Character::Draw()
 {
+	if (scale > 1.0f)
+	{
+		scale -= 0.05f;
+		if (scale < 1.0f) scale = 1.0f;
+	}
+
+	if (angle > 0.0f)
+	{
+		angle -= 0.02f;
+		if (angle < 0.0f) angle = 0.0f;
+	}
+	else if (angle < 0.0f)
+	{
+		angle += 0.02f;
+		if (angle > 0.0f) angle = 0.0f;
+	}
+
 	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle, true);
 }
 

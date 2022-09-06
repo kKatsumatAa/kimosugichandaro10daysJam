@@ -7,6 +7,11 @@ private:
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
 
+	bool isBattle = false;
+
+	int enemyNum = 0;
+
+	bool isEnd = false;
 
 public:
 	void Initialize(Player* player, Enemy* enemy);
