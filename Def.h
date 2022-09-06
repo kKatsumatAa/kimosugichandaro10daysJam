@@ -7,7 +7,7 @@ private:
 	const char* TITLE = "キモスギチャン";
 
 	// ウィンドウ横幅
-	const int WIN_WIDTH = 1920;
+	const int WIN_WIDTH = 1980;
 
 	// ウィンドウ縦幅
 	const int WIN_HEIGHT = 1080;
