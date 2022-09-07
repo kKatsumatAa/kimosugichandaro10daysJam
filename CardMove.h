@@ -3,7 +3,7 @@
 #include "Util.h"
 #include "Mouse.h"
 
-struct Card
+struct CardInfo
 {
 	Vec2 pos_;
 	Vec2 move_;
@@ -25,7 +25,7 @@ public:
 	//èD‚ÌêŠ
 	bool isSpace[5];
 	static const int CARD_CONST = 20;
-	Card card[CARD_CONST];
+	CardInfo card[CARD_CONST];
 
 	Vec2 cardSize = { 160,280 };
 	Vec2 handSpace1 = { 400,800 };
