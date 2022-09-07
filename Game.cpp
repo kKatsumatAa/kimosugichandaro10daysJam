@@ -10,10 +10,13 @@ GameScene::GameScene(KeyboardInput& key):
 {
 	particle_ = new Particle;
 	particle_->Initialize();
+	cardMove_ = new CardMove;
+	cardMove_->Initialize();
 }
 
 GameScene::~GameScene() {
 	delete particle_;
+	delete cardMove_;
 }
 
 void GameScene::Update()
@@ -36,14 +39,18 @@ void GameScene::Update()
 		particle_->WaterGenerate(Vec2(600, 600), 16);
 	}
 
+	
+
 
 	particle_->Update();
+	cardMove_->Update();
 }
 
 void GameScene::Draw()
 {
 	DrawFormatString(0, 0, 0xFFFFFF, "GAME");
 	particle_->Draw();
+	cardMove_->Draw();
 }
 
 bool GameScene::IsEnd()
