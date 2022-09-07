@@ -40,6 +40,18 @@ void CardManager::Initialize()
 
 void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy)
 {
+	if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
+	{
+		handNum++;
+		if (handNum > handAllNum - 1) handNum = 0;
+	}
+	if (key->GetKeyTrigger(KEY_INPUT_LEFT))
+	{
+		handNum--;
+		if (handNum < 0) handNum = handNumtmp - 1;
+	}
+
+	DrawFormatString(0, 0, 0xffffff, "\n\n\n\nhandNum:%d", handNum);
 
 	if (deck.size() > 0)
 	{
@@ -62,14 +74,19 @@ void CardManager::Draw(unsigned int* texhandle)
 {
 	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
-	int handNum;
+	//手札の数
+	if (deck.size() < 5) handAllNum = deck.size();
+	else                 handAllNum = handNumtmp;
 
-	if (deck.size() < 5) handNum = deck.size();
-	else                 handNum = 5;
+	//手札の最大枚数に合わせて選択してるカードを変更
+	if (handNum + 1 > handAllNum) handNum = handAllNum - 1;
 
-	for (int i = 0; i < handNum; i++)
+	for (int i = 0; i < handAllNum; i++)
 	{
-		itr->get()->Draw(texhandle[0], { (double)(400 + i * 300),(double)800 });
+		double selectPos = 0;
+		if (handNum == i) selectPos = -40;
+
+		itr->get()->Draw(texhandle[0], { (double)(400 + i * 300),(double)800 + selectPos });
 
 		itr++;
 	}

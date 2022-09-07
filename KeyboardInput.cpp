@@ -1,5 +1,6 @@
 #include "KeyboardInput.h"
 #include "DxLib.h"
+#include <dinput.h>
 
 void KeyboardInput::Update()
 {
@@ -13,17 +14,17 @@ void KeyboardInput::Update()
 	GetHitKeyStateAll(keys);
 }
 
-bool KeyboardInput::GetKey(const char& key)
+bool KeyboardInput::GetKey(const int& key)
 {
 	return keys[key];
 }
 
-bool KeyboardInput::GetKeyTrigger(const char& key)
+bool KeyboardInput::GetKeyTrigger(const int& key)
 {
 	return (keys[key] && !oldkeys[key]);
 }
 
-bool KeyboardInput::GetKeyReleaced(const char& key)
+bool KeyboardInput::GetKeyReleaced(const int& key)
 {
 	return (!keys[key] && oldkeys[key]);
 }

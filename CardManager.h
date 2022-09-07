@@ -9,6 +9,8 @@ class CardManager
 {
 private:
 	int handNum = 0;
+	int handAllNum = 0;
+	const int handNumtmp = 5;
 	std::list<std::unique_ptr<Card>> deck;
 
 public:
