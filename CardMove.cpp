@@ -104,8 +104,19 @@ void CardMove::Update()
 		}
 	}
 
-	//手札とマウスの当たり判定
+	///手札とマウスの当たり判定
+	//すでにマウスでつかんでいたら判定をとらない
+	bool isCatch = false;
 	for (int i = 0; i < CARD_CONST; i++) {
+		if (card[i].isSelect_ == true) {
+			isCatch = true;
+		}
+	}
+	for (int i = 0; i < CARD_CONST; i++) {
+		if (isCatch == true) {
+			break;
+		}
+
 		//初期化
 		card[i].isHit_ = false;
 		if (card[i].space_ != 0 && card[i].isMove_ == false) {
@@ -129,6 +140,7 @@ void CardMove::Update()
 
 	//カードの選択
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
+
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
 				card[i].isSelect_ = true;
