@@ -32,6 +32,10 @@ void GameScene::Update()
 	if (key.GetKey(KEY_INPUT_2)) {
 		particle_->FireGenerate(Vec2(600, 600),16);
 	}
+	if (key.GetKey(KEY_INPUT_3)) {
+		particle_->WaterGenerate(Vec2(600, 600), 16);
+	}
+
 
 	particle_->Update();
 }
