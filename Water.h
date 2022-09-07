@@ -14,7 +14,7 @@ public:
 	//êŠ
 	Vec2 pos_ = { 0.0f,0.0f };
 	//ˆÚ“®
-	Vec2 move_ = { 10.0f,-7.0f };
+	Vec2 move_ = { 15.0f,-10.0f };
 	//”¼Œa
 	int r_;
 

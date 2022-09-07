@@ -6,13 +6,13 @@ void Water::Initialize()
 	//ƒ‰ƒ“ƒ_ƒ€
 	std::random_device seed_gen;
 	std::mt19937_64 engine(seed_gen());
-	std::uniform_real_distribution<float> x(-1.0f, 1.0f);
+	std::uniform_real_distribution<float> x(-2.0f, 2.0f);
 	move_.x += x(engine);
 }
 
 void Water::Update()
 {
-	move_.y += 0.3f;
+	move_.y += 0.5f;
 	pos_ += move_;
 }
 
