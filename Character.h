@@ -33,6 +33,7 @@ protected:
 
 	float scale = 1.0f;
 
+	int guardPower = 0;
 
 	Vec2 pos = { 0,0 };
 
@@ -49,7 +50,7 @@ public:
 
 	int GetPower() { return power; }
 
-	void Damage(int power) { HP -= power; }
+	void Damage(int power);
 
 	int GetAttribute() { return attribute; }
 
@@ -68,5 +69,9 @@ public:
 	float GetAttackGauge() { return (float)attackTime / (float)attackCool; }
 
 	unsigned int GetTexHandle() { return texhandle; }
+
+	void AddGuardPower(int guardPower) { this->guardPower = guardPower; }
+
+	void AddPower(int power) { this->power += power; }
 
 };

@@ -131,6 +131,8 @@
   <ItemGroup>
     <ClCompile Include="Burst.cpp" />
     <ClCompile Include="CardMove.cpp" />
+    <ClCompile Include="Card.cpp" />
+    <ClCompile Include="CardManager.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="Def.cpp" />
@@ -152,6 +154,8 @@
   <ItemGroup>
     <ClInclude Include="Burst.h" />
     <ClInclude Include="CardMove.h" />
+    <ClInclude Include="Card.h" />
+    <ClInclude Include="CardManager.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="Def.h" />

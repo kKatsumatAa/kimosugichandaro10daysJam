@@ -55,3 +55,10 @@ void Character::Attack()
 {
 	isAttack = true;
 }
+
+void Character::Damage(int power)
+{
+	if (power - guardPower <= 0) return;
+
+	HP -= (power - guardPower);
+}

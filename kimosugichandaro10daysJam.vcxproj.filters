@@ -72,6 +72,10 @@
     <ClCompile Include="Particle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CardManager.cpp">
     <ClCompile Include="Water.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -134,6 +138,10 @@
     <ClInclude Include="Particle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CardManager.h">
     <ClInclude Include="Water.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

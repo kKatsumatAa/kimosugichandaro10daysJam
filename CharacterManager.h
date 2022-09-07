@@ -19,5 +19,7 @@ public:
 	void Update();
 	void Draw();
 
+	Player* GetPlayer() { return player; }
+	Enemy* GetEnemy() { return &enemy[enemyNum]; }
 };
 

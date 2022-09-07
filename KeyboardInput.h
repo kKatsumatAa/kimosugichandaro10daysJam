@@ -3,14 +3,14 @@
 class KeyboardInput
 {
 private:
-	char keys[256];
-	char oldkeys[256];
+	char keys[256] = {0};
+	char oldkeys[256] = {0};
 
 public:
 	void Update();
-	bool GetKey(const char &key);
-	bool GetKeyTrigger(const char &key);
-	bool GetKeyReleaced(const char &key);
+	bool GetKey(const int &key);
+	bool GetKeyTrigger(const int &key);
+	bool GetKeyReleaced(const int &key);
 	int GetHorizontal();
 	int GetVertical();
 };

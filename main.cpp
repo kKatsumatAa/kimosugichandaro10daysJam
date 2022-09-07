@@ -6,6 +6,7 @@
 #include "Title.h"
 #include "Game.h"
 #include "CharacterManager.h"
+#include "CardManager.h"
 
 
 
@@ -31,6 +32,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	CharacterManager charaM;
 	charaM.Initialize(&player, enemy);
 
+	CardManager cardM;
+	cardM.Initialize();
+
 	// ƒQ[ƒ€ƒ‹[ƒv
 	while (true) {
 
@@ -52,9 +56,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 
 		charaM.Update();
+		cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy());
 
 		// •`‰æˆ—
 		charaM.Draw();
+		cardM.Draw(&texhandle);
 
 		scene->Draw();
 
