@@ -1,4 +1,5 @@
 #include "Particle.h"
+#include "Particle.h"
 #include <random>
 
 void Particle::Initialize() {
@@ -37,6 +38,17 @@ void Particle::FireGenerate(Vec2 pos, int r)
 	}
 }
 
+void Particle::WaterGenerate(Vec2 pos, int r)
+{
+	for (int i = 0; i < 5; i++) {
+		std::unique_ptr<Water> newWater = std::make_unique<Water>();
+		newWater->Initialize();
+		newWater->pos_ = pos;
+		newWater->r_ = r;
+		water_.push_back(std::move(newWater));
+	}
+}
+
 void Particle::Update()
 {
 	//îÚÇ—éUÇÈ
@@ -49,6 +61,11 @@ void Particle::Update()
 	for (std::unique_ptr<Fire>& fire : fire_) {
 		fire->Update();
 	}
+	//êÖ
+	water_.remove_if([](std::unique_ptr<Water>& water) {return water->isDead_; });
+	for (std::unique_ptr<Water>& water : water_) {
+		water->Update();
+	}
 }
 
 void Particle::Draw()
@@ -58,5 +75,8 @@ void Particle::Draw()
 	}
 	for (std::unique_ptr<Fire>& fire : fire_) {
 		fire->Draw();
+	}
+	for (std::unique_ptr<Water>& water : water_) {
+		water->Draw();
 	}
 }
