@@ -3,6 +3,7 @@
 #include "Burst.h"
 #include "Fire.h"
 #include "Water.h"
+#include "Lightning.h"
 #include <list>
 #include <memory>
 
@@ -17,6 +18,8 @@ public:
 	void FireGenerate(Vec2 pos, int r);
 	//…
 	void WaterGenerate(Vec2 pos, int r);
+	//—‹
+	void LightningGenerate();
 
 	void Update();
 
@@ -29,6 +32,8 @@ public:
 	std::list<std::unique_ptr<Fire>> fire_;
 	//…
 	std::list<std::unique_ptr<Water>> water_;
+	//—‹
+	std::list<std::unique_ptr<Lightning>> lightning_;
 
 };
 

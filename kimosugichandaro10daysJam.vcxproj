@@ -140,6 +140,7 @@
     <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
+    <ClCompile Include="Lightning.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="PadInput.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Fire.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyboardInput.h" />
+    <ClInclude Include="Lightning.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="PadInput.h" />
     <ClInclude Include="Particle.h" />
