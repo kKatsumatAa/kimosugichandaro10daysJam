@@ -11,6 +11,8 @@ struct CardInfo
 	bool isMove_;
 	bool isHit_;
 	bool isSelect_;
+	Vec2 chengeSize_;
+	int alpha_;
 };
 
 class CardMove
@@ -33,6 +35,7 @@ public:
 	Vec2 handSpace3 = { 800,800 };
 	Vec2 handSpace4 = { 1000,800 };
 	Vec2 handSpace5 = { 1200,800 };
+	Vec2 handSpace6 = { 200,800 };
 
 	Mouse* mouse_ = new Mouse;
 

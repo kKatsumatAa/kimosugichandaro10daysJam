@@ -8,6 +8,8 @@ void CardMove::Initialize()
 		card[i].space_ = 0;
 		card[i].isMove_ = 0;
 		card[i].isHit_ = 0;
+		card[i].chengeSize_ = { 0,0 };
+		card[i].alpha_ = 255;
 	}
 	cardGraph_ = LoadGraph("resources/card_attack_prototype.png");
 }
@@ -65,7 +67,6 @@ void CardMove::Update()
 
 	//手札を指定の場所まで動かす
 	for (int i = 0; i < CARD_CONST; i++) {
-
 		if (card[i].space_ == 1) {
 			if (card[i].pos_.x != handSpace1.x && card[i].isSelect_ == false) {
 				card[i].pos_.x -= 20;
@@ -97,9 +98,40 @@ void CardMove::Update()
 			}
 		}
 		if (card[i].space_ == 6) {
-			if (card[i].pos_.x != handSpace5.x && card[i].isSelect_ == false) {
-				card[i].pos_.y -= 20;
+			if (card[i].isSelect_ == false) {
+				Vec2 space6Len = handSpace6 - card[i].pos_;
+				if (card[i].pos_.x != handSpace6.x) {
+					if (space6Len.GetLength() >= 20) {
+						card[i].pos_.x += space6Len.x / space6Len.GetLength() * 20;
+					}
+					else {
+						card[i].pos_.x += space6Len.x;
+					}
+				}
+				if (card[i].pos_.y != handSpace6.y) {
+					if (space6Len.GetLength() >= 20) {
+						card[i].pos_.y += space6Len.y / space6Len.GetLength() * 20;
+					}
+					else {
+						card[i].pos_.y += space6Len.y;
+					}
+				}
+				//カードの大きさを小さくする
+				if (card[i].chengeSize_.x > -60) {
+					card[i].chengeSize_.x -= 2;
+					card[i].chengeSize_.y -= 3;
+				}
+
 				card[i].isMove_ = true;
+			}
+		}
+		if (card[i].space_ == 7) {
+			if (card[i].alpha_ > 0) {
+				card[i].chengeSize_ += {2, 3};
+				card[i].alpha_ -= 10;
+			}
+			else {
+				card[i].chengeSize_ = { 0,0 };
 			}
 		}
 	}
@@ -119,9 +151,9 @@ void CardMove::Update()
 
 		//初期化
 		card[i].isHit_ = false;
-		if (card[i].space_ != 0 && card[i].isMove_ == false) {
+		if (card[i].space_ != 0 && card[i].space_ != 6 && card[i].isMove_ == false) {
 			if (card[i].pos_.x - cardSize.x / 2 < mouseX && card[i].pos_.x + cardSize.x / 2 > mouseX) {
-				if (card[i].pos_.y - cardSize.y / 2 < mouseY && card[i].pos_.y + cardSize.y / 2 > mouseY) {
+				if (card[i].pos_.y - cardSize.y / 2 + card[i].move_.y < mouseY && card[i].pos_.y + cardSize.y / 2 > mouseY) {
 					card[i].isHit_ = true;
 				}
 			}
@@ -139,6 +171,13 @@ void CardMove::Update()
 	}
 
 	//カードの選択
+	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0) {
+		for (int i = 0; i < CARD_CONST; i++) {
+			if (card[i].isHit_ == true) {
+				card[i].space_ = 7;
+			}
+		}
+	}
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
@@ -148,13 +187,10 @@ void CardMove::Update()
 	}
 	else {
 		for (int i = 0; i < CARD_CONST; i++) {
-			if (card[i].pos_.y <= 750) {
+			if (card[i].pos_.y <= 630) {
 				card[i].space_ = 6;
 			}
-			if (card[i].isSelect_ == true && mouseY < mouseClickPosY_ && card[i].pos_.y <= 800) {
-				card[i].space_ = 6;
-			}
-			else if(card[i].isMove_ == false) {
+			else if (card[i].isMove_ == false) {
 				if (card[i].space_ == 1) {
 					card[i].pos_ = handSpace1;
 				}
@@ -194,6 +230,30 @@ void CardMove::Draw()
 				GetColor(100, 100, 100),
 				true
 			);
+		}
+		else if (card[i].space_ == 6 || card[i].space_ == 7) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, card[i].alpha_);
+			DrawExtendGraph(
+				card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
+				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
+				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
+				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
+				cardGraph_,
+				true
+			);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			if (card[i].space_ == 6) {
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+				DrawBox(
+					card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
+					card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
+					card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
+					card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
+					GetColor(100, 100, 100),
+					true
+				);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			}
 		}
 		else {
 			DrawExtendGraph(
