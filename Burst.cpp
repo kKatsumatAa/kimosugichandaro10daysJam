@@ -1,14 +1,15 @@
 #include "Burst.h"
 #include <random>
+#define PI 3.14159265f
 
-void Burst::Initialize() {
+void Burst::Initialize(int angle) {
 	//ƒ‰ƒ“ƒ_ƒ€
 	std::random_device seed_gen;
 	std::mt19937_64 engine(seed_gen());
-	std::uniform_real_distribution<float> x(5.0f, 10.0f);
-	std::uniform_real_distribution<float> y(-10.0f, -5.0f);
+	std::uniform_real_distribution<float> x(-3.0f, 3.0f);
+	std::uniform_real_distribution<float> y(-3.0f, 3.0f);
 
-	move_ = { x(engine),y(engine) };
+	move_ = { cos(angle * (PI / 180)) * 10 + x(engine),sin(angle * (PI / 180)) * 10 + y(engine)};
 
 }
 
