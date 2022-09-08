@@ -25,9 +25,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	player.Initialize(texhandle, { 780,1080 / 2 });
 
 	Enemy enemy[3];
-	enemy[0].Initialize(texhandle, { 2100,1080 / 2 });
-	enemy[1].Initialize(texhandle, { 2100,1080 / 2 }, 7, 200);
-	enemy[2].Initialize(texhandle, { 2100,1080 / 2 }, 10, 150);
+	enemy[0].Initialize(texhandle, { 2100,1080 / 2 },10);
+	enemy[1].Initialize(texhandle, { 2100,1080 / 2 }, 15, 3, 170);
+	enemy[2].Initialize(texhandle, { 2100,1080 / 2 }, 20, 5, 100);
 
 	CharacterManager charaM;
 	charaM.Initialize(&player, enemy);
@@ -60,7 +60,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		cost.Update();
 		charaM.Update();
-		cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost);
+		cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle());
 
 		// ï`âÊèàóù
 		charaM.Draw();

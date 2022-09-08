@@ -21,7 +21,7 @@ void CardManager::Initialize()
 	}*/
 }
 
-void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost)
+void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle)
 {
 
 	if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
@@ -49,8 +49,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				itr++;
 			}
 
-			//カードのコストと現在のコストを比較
-			if (cost->GetCost() >= itr->get()->GetCost())
+			//カードのコストと現在のコストを比較,バトル中のみ
+			if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
 			{
 				itr->get()->Effect(player, enemy);
 				cost->UseCost(itr->get()->GetCost());

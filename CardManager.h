@@ -24,7 +24,7 @@ private:
 
 public:
 	void Initialize();
-	void Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost);
+	void Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle);
 	void Draw(unsigned int* texhandle);
 
 	void DeckSet();

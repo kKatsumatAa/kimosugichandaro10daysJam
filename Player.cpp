@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int attackCool)
+void Player::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int attackPower, int attackCool)
 {
 	this->pos = pos;
 
@@ -8,7 +8,7 @@ void Player::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int 
 
 	attribute = PLAYER;
 
-	power = 1;
+	power = attackPower;
 	HP = hp;
 	this->attackCool = attackCool;
 

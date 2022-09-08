@@ -39,7 +39,7 @@ protected:
 
 
 public:
-	virtual void Initialize(const unsigned int textureHandle, Vec2 pos, int hp = 5, int attackCool = 240) = 0;
+	virtual void Initialize(const unsigned int textureHandle, Vec2 pos, int hp = 5, int attackPower = 1, int attackCool = 240) = 0;
 	void Update();
 	void Draw();
 
@@ -70,7 +70,7 @@ public:
 
 	unsigned int GetTexHandle() { return texhandle; }
 
-	void AddGuardPower(int guardPower) { this->guardPower = guardPower; }
+	void AddGuardPower(int guardPower) { this->guardPower += guardPower; }
 
 	void AddPower(int power) { this->power += power; }
 
