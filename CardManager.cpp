@@ -21,8 +21,9 @@ void CardManager::Initialize()
 	}*/
 }
 
-void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy)
+void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost)
 {
+
 	if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
 	{
 		handNum++;
@@ -36,6 +37,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy)
 
 	DrawFormatString(0, 0, 0xffffff, "\n\n\n\nhandNum:%d", handNum);
 
+	//デッキにカードがあるなら
 	if (deck.size() > 0)
 	{
 		std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
@@ -47,11 +49,15 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy)
 				itr++;
 			}
 
-			itr->get()->Effect(player, enemy);
-			deck.erase(itr);
+			//カードのコストと現在のコストを比較
+			if (cost->GetCost() >= itr->get()->GetCost())
+			{
+				itr->get()->Effect(player, enemy);
+				cost->UseCost(itr->get()->GetCost());
+				deck.erase(itr);
+			}
 		}
 	}
-
 	//デッキをセット
 	if (deck.size() <= 0)
 	{
@@ -64,8 +70,8 @@ void CardManager::Draw(unsigned int* texhandle)
 	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
 	//手札の数
-	if (deck.size() < 5) handAllNum = deck.size();
-	else                 handAllNum = handNumtmp;
+	if (deck.size() < handNumtmp) handAllNum = deck.size();
+	else                          handAllNum = handNumtmp;
 
 	//手札の最大枚数に合わせて選択してるカードを変更
 	if (handNum + 1 > handAllNum) handNum = handAllNum - 1;
@@ -112,16 +118,10 @@ void CardManager::DeckSet()
 {
 	deck.clear();
 
+	//使うカードを生成
 	std::unique_ptr<AttackCard> attackC[attackMax];
 	std::unique_ptr<GuardCard> guardC[guardMax];
 	std::unique_ptr<BuffCard> buffC[buffMax];
-
-	std::vector<int> cardOrder;
-
-	cardOrder = make_rand_array_shuffle(deckMax, 0, deckMax - 1);
-
-	std::vector<int>::iterator ITR = cardOrder.begin();
-
 	for (int i = 0; i < attackMax; i++)
 	{
 		attackC[i] = std::make_unique<AttackCard>();
@@ -138,6 +138,14 @@ void CardManager::DeckSet()
 		buffC[i]->Initialize();
 	}
 
+	//重複なしランダムな数字の配列
+	std::vector<int> cardOrder;
+
+	cardOrder = make_rand_array_shuffle(deckMax, 0, deckMax - 1);
+	std::vector<int>::iterator ITR = cardOrder.begin();
+
+	
+	//デッキ上でのカードの順番をここで入れてあげる
 	for (int i = 0; i < cardOrder.size(); i++)
 	{
 		if (i < attackMax)
@@ -157,7 +165,7 @@ void CardManager::DeckSet()
 	}
 
 
-	int orderCount = 0;
+	//仮のリスト（デッキ）に順番関係なくとりあえず入れる
 	std::list<std::unique_ptr<Card>> deck2;
 
 	for (int i = 0; i < deckMax; i++)
@@ -176,9 +184,11 @@ void CardManager::DeckSet()
 		}
 	}
 
+	//仮のリストの中のカードを調べて、デッキ上での順にデッキのリストに入れてあげる
+	int orderCount = 0;
 	while (orderCount < deckMax)
 	{
-		std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
+		//std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
 
 		for (int i = 0; i < deck2.size(); i++)
 		{

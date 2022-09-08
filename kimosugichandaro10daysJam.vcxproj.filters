@@ -23,6 +23,7 @@
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Water.cpp" />
     <ClCompile Include="Lightning.cpp" />
+    <ClCompile Include="Cost.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Burst.h" />
@@ -46,5 +47,6 @@
     <ClInclude Include="Util.h" />
     <ClInclude Include="Water.h" />
     <ClInclude Include="Lightning.h" />
+    <ClInclude Include="Cost.h" />
   </ItemGroup>
 </Project>
