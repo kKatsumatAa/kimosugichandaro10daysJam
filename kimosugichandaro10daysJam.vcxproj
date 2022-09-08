@@ -137,6 +137,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="Cost.cpp" />
+    <ClCompile Include="Debuff.cpp" />
     <ClCompile Include="Def.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fire.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="Cost.h" />
+    <ClInclude Include="Debuff.h" />
     <ClInclude Include="Def.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fire.h" />

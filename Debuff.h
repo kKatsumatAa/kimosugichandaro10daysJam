@@ -2,7 +2,7 @@
 #include "Dxlib.h"
 #include "Util.h"
 
-class Buff
+class Debuff
 {
 public:
 	void Initialize();
