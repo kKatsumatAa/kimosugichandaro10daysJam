@@ -8,6 +8,7 @@ void CardMove::Initialize()
 		card[i].space_ = 0;
 		card[i].isMove_ = 0;
 		card[i].isHit_ = 0;
+		card[i].chengeSize_ = { 0,0 };
 	}
 	cardGraph_ = LoadGraph("resources/card_attack_prototype.png");
 }
@@ -97,10 +98,35 @@ void CardMove::Update()
 			}
 		}
 		if (card[i].space_ == 6) {
-			if (card[i].pos_.x != handSpace5.x && card[i].isSelect_ == false) {
-				card[i].pos_.y -= 20;
+			if (card[i].isSelect_ == false) {
+				Vec2 space6Len = handSpace6 - card[i].pos_;
+				if (card[i].pos_.x != handSpace6.x) {
+					if (space6Len.GetLength() >= 20) {
+						card[i].pos_.x += space6Len.x / space6Len.GetLength() * 20;
+					}
+					else {
+						card[i].pos_.x += space6Len.x;
+					}
+				}
+				if (card[i].pos_.y != handSpace6.y) {
+					if (space6Len.GetLength() >= 20) {
+						card[i].pos_.y += space6Len.y / space6Len.GetLength() * 20;
+					}
+					else {
+						card[i].pos_.y += space6Len.y;
+					}
+				}
+				//ÉJÅ[ÉhÇÃëÂÇ´Ç≥Çè¨Ç≥Ç≠Ç∑ÇÈ
+				if (card[i].chengeSize_.x > -60) {
+					card[i].chengeSize_.x -= 2;
+					card[i].chengeSize_.y -= 3;
+				}
+
 				card[i].isMove_ = true;
 			}
+		}
+		if (card[i].space_ == 7) {
+			card[i].chengeSize_ += {2, 3};
 		}
 	}
 
@@ -119,9 +145,9 @@ void CardMove::Update()
 
 		//èâä˙âª
 		card[i].isHit_ = false;
-		if (card[i].space_ != 0 && card[i].isMove_ == false) {
+		if (card[i].space_ != 0 && card[i].space_ != 6 && card[i].isMove_ == false) {
 			if (card[i].pos_.x - cardSize.x / 2 < mouseX && card[i].pos_.x + cardSize.x / 2 > mouseX) {
-				if (card[i].pos_.y - cardSize.y / 2 < mouseY && card[i].pos_.y + cardSize.y / 2 > mouseY) {
+				if (card[i].pos_.y - cardSize.y / 2 + card[i].move_.y < mouseY && card[i].pos_.y + cardSize.y / 2 > mouseY) {
 					card[i].isHit_ = true;
 				}
 			}
@@ -146,15 +172,19 @@ void CardMove::Update()
 			}
 		}
 	}
+	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0) {
+		for (int i = 0; i < CARD_CONST; i++) {
+			if (card[i].isHit_ == true) {
+				card[i].space_ = 7;
+			}
+		}
+	}
 	else {
 		for (int i = 0; i < CARD_CONST; i++) {
-			if (card[i].pos_.y <= 750) {
+			if (card[i].pos_.y <= 630) {
 				card[i].space_ = 6;
 			}
-			if (card[i].isSelect_ == true && mouseY < mouseClickPosY_ && card[i].pos_.y <= 800) {
-				card[i].space_ = 6;
-			}
-			else if(card[i].isMove_ == false) {
+			else if (card[i].isMove_ == false) {
 				if (card[i].space_ == 1) {
 					card[i].pos_ = handSpace1;
 				}
@@ -194,6 +224,26 @@ void CardMove::Draw()
 				GetColor(100, 100, 100),
 				true
 			);
+		}
+		else if (card[i].space_ == 6) {
+			DrawExtendGraph(
+				card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
+				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
+				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
+				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
+				cardGraph_,
+				true
+			);
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+			DrawBox(
+				card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
+				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
+				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
+				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
+				GetColor(100, 100, 100),
+				true
+			);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 		else {
 			DrawExtendGraph(
