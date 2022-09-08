@@ -6,11 +6,11 @@ void Particle::Initialize() {
 	
 }
 
-void Particle::BurstGenerate(Vec2 pos,int r, int num, int timer, float angle, unsigned int color)
+void Particle::BurstGenerate(Vec2 pos,int r, int num, int timer, float angle,float pow, unsigned int color)
 {
 	for (int i = 0; i < num; i++) {
 		std::unique_ptr<Burst> newBurst = std::make_unique<Burst>();
-		newBurst->Initialize(angle);
+		newBurst->Initialize(angle,pow);
 		newBurst->pos_ = pos;
 		newBurst->r_ = r;
 		newBurst->timer_ = timer;

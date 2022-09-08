@@ -5,7 +5,7 @@
 class Burst
 {
 public:
-	void Initialize(int angle);
+	void Initialize(int angle,float pow);
 
 	void Update();
 
