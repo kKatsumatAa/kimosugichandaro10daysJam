@@ -13,7 +13,7 @@ public:
 	void Initialize();
 
 	//’e‚¯”ò‚Ô
-	void BurstGenerate(Vec2 pos, int r, int num, int time, float angle, unsigned int color);
+	void BurstGenerate(Vec2 pos, int r, int num, int time, float angle,float pow, unsigned int color);
 	//‰Î
 	void FireGenerate(Vec2 pos, int r);
 	//…
