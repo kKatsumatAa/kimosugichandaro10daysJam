@@ -14,7 +14,6 @@ void CardMove::Initialize()
 
 void CardMove::Update()
 {
-	int mouseX, mouseY;
 	GetMousePoint(&mouseX, &mouseY);
 
 	for (int i = 0; i < 5; i++) {
@@ -141,7 +140,6 @@ void CardMove::Update()
 
 	//カードの選択
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
-
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
 				card[i].isSelect_ = true;
@@ -150,7 +148,10 @@ void CardMove::Update()
 	}
 	else {
 		for (int i = 0; i < CARD_CONST; i++) {
-			if (card[i].pos_.y <= 500) {
+			if (card[i].pos_.y <= 750) {
+				card[i].space_ = 6;
+			}
+			if (card[i].isSelect_ == true && mouseY < mouseClickPosY_ && card[i].pos_.y <= 800) {
 				card[i].space_ = 6;
 			}
 			else if(card[i].isMove_ == false) {

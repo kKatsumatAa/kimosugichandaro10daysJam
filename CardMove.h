@@ -36,6 +36,8 @@ public:
 
 	Mouse* mouse_ = new Mouse;
 
+	int mouseX, mouseY;
+	int mouseClickPosY_;
 	int cardGraph_;
 };
 
