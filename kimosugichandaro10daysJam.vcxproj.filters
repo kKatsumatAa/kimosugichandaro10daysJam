@@ -25,6 +25,7 @@
     <ClCompile Include="Lightning.cpp" />
     <ClCompile Include="Cost.cpp" />
     <ClCompile Include="Buff.cpp" />
+    <ClCompile Include="Debuff.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Burst.h" />
@@ -50,5 +51,6 @@
     <ClInclude Include="Lightning.h" />
     <ClInclude Include="Cost.h" />
     <ClInclude Include="Buff.h" />
+    <ClInclude Include="Debuff.h" />
   </ItemGroup>
 </Project>

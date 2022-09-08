@@ -42,7 +42,10 @@ void GameScene::Update()
 		particle_->LightningGenerate(Vec2(775, 550),500,3,60,1);
 	}
 	if (key.GetKey(KEY_INPUT_5)) {
-		particle_->BuffGenerate(Vec2(775, 550), Vec2(100, 50));
+		particle_->BuffGenerate(Vec2(775, 550), Vec2(100, 50),15);
+	}
+	if (key.GetKey(KEY_INPUT_6)) {
+		particle_->DebuffGenerate(Vec2(775, 550), Vec2(100, 50),15);
 	}
 
 	particle_->Update();

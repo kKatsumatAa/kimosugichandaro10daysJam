@@ -60,12 +60,12 @@ void Particle::LightningGenerate(Vec2 pos, int length, int num,int time,bool hor
 	}
 }
 
-void Particle::BuffGenerate(Vec2 pos,Vec2 random)
+void Particle::BuffGenerate(Vec2 pos,Vec2 random,int r)
 {
 	//ランダム
 	std::random_device seed_gen;
 	std::mt19937_64 engine(seed_gen());
-	std::uniform_real_distribution<float> rand(0.0f, 7.0f);
+	std::uniform_real_distribution<float> rand(0.0f, 5.0f);
 
 	if (static_cast<int>(rand(engine)) == 0) {
 		std::unique_ptr<Buff> newBuff = std::make_unique<Buff>();
@@ -74,8 +74,29 @@ void Particle::BuffGenerate(Vec2 pos,Vec2 random)
 		std::uniform_real_distribution<float> y(-random.y, random.y);
 
 		newBuff->pos_.x = pos.x + x(engine);
-		newBuff->pos_.y = pos.y + y(engine);
+		newBuff->pos_.y = pos.y + random.y + y(engine);
+		newBuff->r_ = r;
 		buff_.push_back(std::move(newBuff));
+	}
+}
+
+void Particle::DebuffGenerate(Vec2 pos, Vec2 random,int r)
+{
+	//ランダム
+	std::random_device seed_gen;
+	std::mt19937_64 engine(seed_gen());
+	std::uniform_real_distribution<float> rand(0.0f, 5.0f);
+
+	if (static_cast<int>(rand(engine)) == 0) {
+		std::unique_ptr<Debuff> newDebuff = std::make_unique<Debuff>();
+
+		std::uniform_real_distribution<float> x(-random.x, random.x);
+		std::uniform_real_distribution<float> y(-random.y, random.y);
+
+		newDebuff->pos_.x = pos.x + x(engine);
+		newDebuff->pos_.y = pos.y - random.y + y(engine);
+		newDebuff->r_ = r;
+		debuff_.push_back(std::move(newDebuff));
 	}
 }
 
@@ -106,6 +127,11 @@ void Particle::Update()
 	for (std::unique_ptr<Buff>& buff : buff_) {
 		buff->Update();
 	}
+	//デバフ
+	debuff_.remove_if([](std::unique_ptr<Debuff>& debuff) {return debuff->isDead_; });
+	for (std::unique_ptr<Debuff>& debuff : debuff_) {
+		debuff->Update();
+	}
 }
 
 void Particle::Draw()
@@ -124,5 +150,8 @@ void Particle::Draw()
 	}
 	for (std::unique_ptr<Buff>& buff : buff_) {
 		buff->Draw();
+	}
+	for (std::unique_ptr<Debuff>& debuff : debuff_) {
+		debuff->Draw();
 	}
 }

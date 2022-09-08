@@ -5,6 +5,7 @@
 #include "Water.h"
 #include "Lightning.h"
 #include "Buff.h"
+#include "Debuff.h"
 
 #include <list>
 #include <memory>
@@ -14,16 +15,18 @@ class Particle
 public:
 	void Initialize();
 
-	//弾け飛ぶ
+	//弾け飛ぶ(位置,半径,個数,残る時間,射出角度,飛ぶ強さ,色)
 	void BurstGenerate(Vec2 pos, int r, int num, int time, float angle,float pow, unsigned int color);
-	//火
+	//火(位置,半径)
 	void FireGenerate(Vec2 pos, int r);
-	//水
+	//水(位置,半径)
 	void WaterGenerate(Vec2 pos, int r);
-	//雷
+	//雷(位置,長さ,個数,持続時間,横にするか(trueで横))
 	void LightningGenerate(Vec2 pos,int length,int num,int time,bool horizontal);
-	//バフ
-	void BuffGenerate(Vec2 pos, Vec2 random);
+	//バフ(中心位置,ランダムで出る場所の範囲,半径)
+	void BuffGenerate(Vec2 pos, Vec2 random,int r);
+	//デバフ(中心位置,ランダムで出る場所の範囲,半径)
+	void DebuffGenerate(Vec2 pos, Vec2 random,int r);
 
 	void Update();
 
@@ -40,6 +43,8 @@ public:
 	std::list<std::unique_ptr<Lightning>> lightning_;
 	//バフ
 	std::list<std::unique_ptr<Buff>> buff_;
+	//デバフ
+	std::list<std::unique_ptr<Debuff>> debuff_;
 
 };
 
