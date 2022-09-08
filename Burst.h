@@ -5,7 +5,7 @@
 class Burst
 {
 public:
-	void Initialize();
+	void Initialize(int angle);
 
 	void Update();
 
@@ -19,8 +19,6 @@ public:
 	Vec2 move_ = { 0,0 };
 	//F
 	unsigned int color_;
-	//Šp“x
-	float angle_;
 	//o‚Ä‚¢‚éŠÔ
 	int timer_;
 

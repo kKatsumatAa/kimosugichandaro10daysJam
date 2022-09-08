@@ -30,7 +30,7 @@ void GameScene::Update()
 	}
 
 	if (key.GetKeyTrigger(KEY_INPUT_1)) {
-		particle_->BurstGenerate(Vec2(600,600),5,50,60,0,GetColor(200,0,0));
+		particle_->BurstGenerate(Vec2(600,600),5,50,60,-45,GetColor(200,0,0));
 	}
 	if (key.GetKey(KEY_INPUT_2)) {
 		particle_->FireGenerate(Vec2(600, 600),16);
