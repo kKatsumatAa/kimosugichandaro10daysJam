@@ -12,6 +12,7 @@ struct CardInfo
 	bool isHit_;
 	bool isSelect_;
 	Vec2 chengeSize_;
+	int alpha_;
 };
 
 class CardMove

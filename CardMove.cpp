@@ -9,6 +9,7 @@ void CardMove::Initialize()
 		card[i].isMove_ = 0;
 		card[i].isHit_ = 0;
 		card[i].chengeSize_ = { 0,0 };
+		card[i].alpha_ = 255;
 	}
 	cardGraph_ = LoadGraph("resources/card_attack_prototype.png");
 }
@@ -66,7 +67,6 @@ void CardMove::Update()
 
 	//手札を指定の場所まで動かす
 	for (int i = 0; i < CARD_CONST; i++) {
-
 		if (card[i].space_ == 1) {
 			if (card[i].pos_.x != handSpace1.x && card[i].isSelect_ == false) {
 				card[i].pos_.x -= 20;
@@ -126,7 +126,13 @@ void CardMove::Update()
 			}
 		}
 		if (card[i].space_ == 7) {
-			card[i].chengeSize_ += {2, 3};
+			if (card[i].alpha_ > 0) {
+				card[i].chengeSize_ += {2, 3};
+				card[i].alpha_ -= 10;
+			}
+			else {
+				card[i].chengeSize_ = { 0,0 };
+			}
 		}
 	}
 
@@ -165,17 +171,17 @@ void CardMove::Update()
 	}
 
 	//カードの選択
-	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
-		for (int i = 0; i < CARD_CONST; i++) {
-			if (card[i].isHit_ == true) {
-				card[i].isSelect_ = true;
-			}
-		}
-	}
 	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0) {
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
 				card[i].space_ = 7;
+			}
+		}
+	}
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
+		for (int i = 0; i < CARD_CONST; i++) {
+			if (card[i].isHit_ == true) {
+				card[i].isSelect_ = true;
 			}
 		}
 	}
@@ -225,7 +231,8 @@ void CardMove::Draw()
 				true
 			);
 		}
-		else if (card[i].space_ == 6) {
+		else if (card[i].space_ == 6 || card[i].space_ == 7) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, card[i].alpha_);
 			DrawExtendGraph(
 				card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
@@ -234,16 +241,19 @@ void CardMove::Draw()
 				cardGraph_,
 				true
 			);
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-			DrawBox(
-				card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
-				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
-				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
-				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
-				GetColor(100, 100, 100),
-				true
-			);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			if (card[i].space_ == 6) {
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+				DrawBox(
+					card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
+					card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
+					card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
+					card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
+					GetColor(100, 100, 100),
+					true
+				);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			}
 		}
 		else {
 			DrawExtendGraph(
