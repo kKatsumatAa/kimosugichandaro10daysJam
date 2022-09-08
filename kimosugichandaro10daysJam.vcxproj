@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Buff.cpp" />
     <ClCompile Include="Burst.cpp" />
     <ClCompile Include="CardMove.cpp" />
     <ClCompile Include="Card.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="Water.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buff.h" />
     <ClInclude Include="Burst.h" />
     <ClInclude Include="CardMove.h" />
     <ClInclude Include="Card.h" />
