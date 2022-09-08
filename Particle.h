@@ -4,6 +4,8 @@
 #include "Fire.h"
 #include "Water.h"
 #include "Lightning.h"
+#include "Buff.h"
+
 #include <list>
 #include <memory>
 
@@ -20,6 +22,8 @@ public:
 	void WaterGenerate(Vec2 pos, int r);
 	//雷
 	void LightningGenerate(Vec2 pos,int length,int num,int time,bool horizontal);
+	//バフ
+	void BuffGenerate(Vec2 pos, Vec2 random);
 
 	void Update();
 
@@ -34,6 +38,8 @@ public:
 	std::list<std::unique_ptr<Water>> water_;
 	//雷
 	std::list<std::unique_ptr<Lightning>> lightning_;
+	//バフ
+	std::list<std::unique_ptr<Buff>> buff_;
 
 };
 

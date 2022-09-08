@@ -30,16 +30,19 @@ void GameScene::Update()
 	}
 
 	if (key.GetKeyTrigger(KEY_INPUT_1)) {
-		particle_->BurstGenerate(Vec2(600,600),5,50,60,-45,15.0f,GetColor(200,0,0));
+		particle_->BurstGenerate(Vec2(775, 550),5,50,60,225,15.0f,GetColor(200,0,0));
 	}
 	if (key.GetKey(KEY_INPUT_2)) {
-		particle_->FireGenerate(Vec2(600, 600),16);
+		particle_->FireGenerate(Vec2(775, 550),16);
 	}
 	if (key.GetKey(KEY_INPUT_3)) {
-		particle_->WaterGenerate(Vec2(600, 600), 16);
+		particle_->WaterGenerate(Vec2(775, 550), 16);
 	}
 	if (key.GetKeyTrigger(KEY_INPUT_4)) {
-		particle_->LightningGenerate(Vec2(600,600),500,3,60,1);
+		particle_->LightningGenerate(Vec2(775, 550),500,3,60,1);
+	}
+	if (key.GetKey(KEY_INPUT_5)) {
+		particle_->BuffGenerate(Vec2(775, 550), Vec2(100, 50));
 	}
 
 	particle_->Update();

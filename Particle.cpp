@@ -60,6 +60,25 @@ void Particle::LightningGenerate(Vec2 pos, int length, int num,int time,bool hor
 	}
 }
 
+void Particle::BuffGenerate(Vec2 pos,Vec2 random)
+{
+	//ƒ‰ƒ“ƒ_ƒ€
+	std::random_device seed_gen;
+	std::mt19937_64 engine(seed_gen());
+	std::uniform_real_distribution<float> rand(0.0f, 7.0f);
+
+	if (static_cast<int>(rand(engine)) == 0) {
+		std::unique_ptr<Buff> newBuff = std::make_unique<Buff>();
+
+		std::uniform_real_distribution<float> x(-random.x, random.x);
+		std::uniform_real_distribution<float> y(-random.y, random.y);
+
+		newBuff->pos_.x = pos.x + x(engine);
+		newBuff->pos_.y = pos.y + y(engine);
+		buff_.push_back(std::move(newBuff));
+	}
+}
+
 void Particle::Update()
 {
 	//”ò‚ÑŽU‚é
@@ -82,6 +101,11 @@ void Particle::Update()
 	for (std::unique_ptr<Lightning>& lightning : lightning_) {
 		lightning->Update();
 	}
+	//ƒoƒt
+	buff_.remove_if([](std::unique_ptr<Buff>& buff) {return buff->isDead_; });
+	for (std::unique_ptr<Buff>& buff : buff_) {
+		buff->Update();
+	}
 }
 
 void Particle::Draw()
@@ -97,5 +121,8 @@ void Particle::Draw()
 	}
 	for (std::unique_ptr<Lightning>& lightning : lightning_) {
 		lightning->Draw();
+	}
+	for (std::unique_ptr<Buff>& buff : buff_) {
+		buff->Draw();
 	}
 }
