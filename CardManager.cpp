@@ -112,27 +112,27 @@ void CardManager::DeckSet()
 {
 	deck.clear();
 
-	std::unique_ptr<AttackCard> attackC[11];
-	std::unique_ptr<GuardCard> guardC[5];
-	std::unique_ptr<BuffCard> buffC[5];
+	std::unique_ptr<AttackCard> attackC[attackMax];
+	std::unique_ptr<GuardCard> guardC[guardMax];
+	std::unique_ptr<BuffCard> buffC[buffMax];
 
 	std::vector<int> cardOrder;
 
-	cardOrder = make_rand_array_shuffle(20, 0, 19);
+	cardOrder = make_rand_array_shuffle(deckMax, 0, deckMax - 1);
 
 	std::vector<int>::iterator ITR = cardOrder.begin();
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < attackMax; i++)
 	{
 		attackC[i] = std::make_unique<AttackCard>();
 		attackC[i]->Initialize();
 	}
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < guardMax; i++)
 	{
 		guardC[i] = std::make_unique<GuardCard>();
 		guardC[i]->Initialize();
 	}
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < buffMax; i++)
 	{
 		buffC[i] = std::make_unique<BuffCard>();
 		buffC[i]->Initialize();
@@ -140,43 +140,43 @@ void CardManager::DeckSet()
 
 	for (int i = 0; i < cardOrder.size(); i++)
 	{
-		if (i < 10)
+		if (i < attackMax)
 		{
 			attackC[i]->SetCardOrder(*ITR);
 		}
-		else if (i < 15)
+		else if (i < attackMax + guardMax)
 		{
-			guardC[i-10]->SetCardOrder(*ITR);
+			guardC[i - attackMax]->SetCardOrder(*ITR);
 		}
-		else if (i < 20)
+		else if (i < attackMax + guardMax + buffMax)
 		{
-			buffC[i-15]->SetCardOrder(*ITR);
+			buffC[i - (attackMax + guardMax)]->SetCardOrder(*ITR);
 		}
 
 		ITR++;
 	}
 
-	int count = 0;
+
 	int orderCount = 0;
 	std::list<std::unique_ptr<Card>> deck2;
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < deckMax; i++)
 	{
-		if (i < 10)
+		if (i < attackMax)
 		{
 			deck2.push_back(std::move(attackC[i]));
 		}
-		else if (i < 15)
+		else if (i < attackMax + guardMax)
 		{
-			deck2.push_back(std::move(guardC[i-10]));
+			deck2.push_back(std::move(guardC[i- attackMax]));
 		}
-		else if (i < 20)
+		else if (i < attackMax + guardMax + buffMax)
 		{
-			deck2.push_back(std::move(buffC[i-15]));
+			deck2.push_back(std::move(buffC[i - (attackMax + buffMax)]));
 		}
 	}
 
-	while (orderCount < 20)
+	while (orderCount < deckMax)
 	{
 		std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
 
@@ -194,38 +194,11 @@ void CardManager::DeckSet()
 				orderCount++;
 			}
 		}
-		if (orderCount >= 20)
+		if (orderCount >= deckMax)
 		{
 			break;
 		}
 	}
-
-	////çUåÇÉJÅ[Éh3ñáí«â¡
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	std::unique_ptr<AttackCard> card = std::make_unique<AttackCard>();
-	//	card->Initialize();
-	//	//ìoò^
-	//	deck.push_back(std::move(card));
-	//}
-
-	////ñhå‰ÉJÅ[Éh3ñáí«â¡
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	std::unique_ptr<GuardCard> card = std::make_unique<GuardCard>();
-	//	card->Initialize();
-	//	//ìoò^
-	//	deck.push_back(std::move(card));
-	//}
-
-	////ÉoÉtÉJÅ[Éh3ñáí«â¡
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	std::unique_ptr<BuffCard> card = std::make_unique<BuffCard>();
-	//	card->Initialize();
-	//	//ìoò^
-	//	deck.push_back(std::move(card));
-	//}
 }
 
 

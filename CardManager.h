@@ -5,6 +5,12 @@
 #include <list>
 #include <iostream>
 
+static const int deckMax = 20;
+
+static const int attackMax = 10;
+static const int guardMax = 5;
+static const int buffMax = 5;
+
 class CardManager
 {
 private:
@@ -14,8 +20,6 @@ private:
 	std::list<std::unique_ptr<Card>> deck;
 
 	
-
-
 
 public:
 	void Initialize();
