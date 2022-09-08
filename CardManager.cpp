@@ -1,33 +1,16 @@
 #include "CardManager.h"
+#include<iostream>
+#include<vector>
+#include<cstdlib>
+#include<algorithm>
+#include<random>
+#include<list>
+
+
 
 void CardManager::Initialize()
 {
-	//攻撃カード3枚追加
-	for (int i = 0; i < 3; i++)
-	{
-		std::unique_ptr<AttackCard> card = std::make_unique<AttackCard>();
-		card->Initialize();
-		//登録
-		deck.push_back(std::move(card));
-	}
-
-	//防御カード3枚追加
-	for (int i = 0; i < 3; i++)
-	{
-		std::unique_ptr<GuardCard> card = std::make_unique<GuardCard>();
-		card->Initialize();
-		//登録
-		deck.push_back(std::move(card));
-	}
-	
-	//バフカード3枚追加
-	for (int i = 0; i < 3; i++)
-	{
-		std::unique_ptr<BuffCard> card = std::make_unique<BuffCard>();
-		card->Initialize();
-		//登録
-		deck.push_back(std::move(card));
-	}
+	DeckSet();
 
 
 	/*for (int i = 0; i < deck.size(); i++) {
@@ -68,6 +51,12 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy)
 			deck.erase(itr);
 		}
 	}
+
+	//デッキをセット
+	if (deck.size() <= 0)
+	{
+		DeckSet();
+	}
 }
 
 void CardManager::Draw(unsigned int* texhandle)
@@ -91,3 +80,125 @@ void CardManager::Draw(unsigned int* texhandle)
 		itr++;
 	}
 }
+
+std::mt19937 create_rand_engine() {
+	std::random_device rnd;
+	std::vector<std::uint_least32_t> v(10);// 初期化用ベクタ
+	std::generate(v.begin(), v.end(), std::ref(rnd));// ベクタの初期化
+	std::seed_seq seed(v.begin(), v.end());
+	return std::mt19937(seed);// 乱数エンジン
+}
+
+std::vector<int> make_rand_array_shuffle(const size_t size, int rand_min, int rand_max) {
+	if (rand_min > rand_max) std::swap(rand_min, rand_max);
+	const size_t max_min_diff = static_cast<size_t>(rand_max - rand_min + 1);
+	if (max_min_diff < size) throw std::runtime_error("引数が異常です");
+
+	std::vector<int> tmp;
+	tmp.reserve(max_min_diff);
+
+	for (int i = rand_min; i <= rand_max; ++i)tmp.push_back(i);
+
+	auto engine = create_rand_engine();
+	std::shuffle(tmp.begin(), tmp.end(), engine);
+
+	tmp.erase(std::next(tmp.begin(), size), tmp.end());
+
+	return std::move(tmp);
+}
+
+
+void CardManager::DeckSet()
+{
+	deck.clear();
+
+	std::unique_ptr<AttackCard> attackC[attackMax];
+	std::unique_ptr<GuardCard> guardC[guardMax];
+	std::unique_ptr<BuffCard> buffC[buffMax];
+
+	std::vector<int> cardOrder;
+
+	cardOrder = make_rand_array_shuffle(deckMax, 0, deckMax - 1);
+
+	std::vector<int>::iterator ITR = cardOrder.begin();
+
+	for (int i = 0; i < attackMax; i++)
+	{
+		attackC[i] = std::make_unique<AttackCard>();
+		attackC[i]->Initialize();
+	}
+	for (int i = 0; i < guardMax; i++)
+	{
+		guardC[i] = std::make_unique<GuardCard>();
+		guardC[i]->Initialize();
+	}
+	for (int i = 0; i < buffMax; i++)
+	{
+		buffC[i] = std::make_unique<BuffCard>();
+		buffC[i]->Initialize();
+	}
+
+	for (int i = 0; i < cardOrder.size(); i++)
+	{
+		if (i < attackMax)
+		{
+			attackC[i]->SetCardOrder(*ITR);
+		}
+		else if (i < attackMax + guardMax)
+		{
+			guardC[i - attackMax]->SetCardOrder(*ITR);
+		}
+		else if (i < attackMax + guardMax + buffMax)
+		{
+			buffC[i - (attackMax + guardMax)]->SetCardOrder(*ITR);
+		}
+
+		ITR++;
+	}
+
+
+	int orderCount = 0;
+	std::list<std::unique_ptr<Card>> deck2;
+
+	for (int i = 0; i < deckMax; i++)
+	{
+		if (i < attackMax)
+		{
+			deck2.push_back(std::move(attackC[i]));
+		}
+		else if (i < attackMax + guardMax)
+		{
+			deck2.push_back(std::move(guardC[i- attackMax]));
+		}
+		else if (i < attackMax + guardMax + buffMax)
+		{
+			deck2.push_back(std::move(buffC[i - (attackMax + buffMax)]));
+		}
+	}
+
+	while (orderCount < deckMax)
+	{
+		std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
+
+		for (int i = 0; i < deck2.size(); i++)
+		{
+			std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
+
+			std::advance(itr2, i);
+			if (itr2->get()->GetCardOrder() == orderCount)
+			{
+				
+				deck.push_back(std::move(*itr2));
+				deck2.erase(itr2);
+
+				orderCount++;
+			}
+		}
+		if (orderCount >= deckMax)
+		{
+			break;
+		}
+	}
+}
+
+
