@@ -35,6 +35,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	CardManager cardM;
 	cardM.Initialize();
 
+	Cost cost;
+	cost.Initialize();
+
 	// ƒQ[ƒ€ƒ‹[ƒv
 	while (true) {
 
@@ -55,12 +58,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			scene = nextScene;
 		}
 
+		cost.Update();
 		charaM.Update();
-		cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy());
+		cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost);
 
 		// •`‰æˆ—
 		charaM.Draw();
 		cardM.Draw(&texhandle);
+
+		cost.Draw(&texhandle);
 
 		scene->Draw();
 

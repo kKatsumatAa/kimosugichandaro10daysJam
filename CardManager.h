@@ -4,6 +4,7 @@
 #include"DxLib.h"
 #include <list>
 #include <iostream>
+#include "Cost.h"
 
 static const int deckMax = 20;
 
@@ -23,7 +24,7 @@ private:
 
 public:
 	void Initialize();
-	void Update(KeyboardInput* key, Player* player, Enemy* enemy);
+	void Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost);
 	void Draw(unsigned int* texhandle);
 
 	void DeckSet();
