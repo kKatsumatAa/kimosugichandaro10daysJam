@@ -49,10 +49,16 @@ void Particle::WaterGenerate(Vec2 pos, int r)
 	}
 }
 
-void Particle::LightningGenerate()
+void Particle::LightningGenerate(Vec2 pos, int length, int num,int time,bool horizontal)
 {
-	std::unique_ptr<Lightning> newLightning = std::make_unique<Lightning>();
-	lightning_.push_back(std::move(newLightning));
+	for (int i = 0; i < num; i++) {
+		std::unique_ptr<Lightning> newLightning = std::make_unique<Lightning>();
+		newLightning->pos_ = pos;
+		newLightning->length_ = length;
+		newLightning->time_ = time;
+		newLightning->horizontal_ = horizontal;
+		lightning_.push_back(std::move(newLightning));
+	}
 }
 
 void Particle::Update()

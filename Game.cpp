@@ -39,11 +39,8 @@ void GameScene::Update()
 		particle_->WaterGenerate(Vec2(600, 600), 16);
 	}
 	if (key.GetKeyTrigger(KEY_INPUT_4)) {
-		particle_->LightningGenerate();
+		particle_->LightningGenerate(Vec2(600,600),500,3,60,1);
 	}
-
-	
-
 
 	particle_->Update();
 	cardMove_->Update();

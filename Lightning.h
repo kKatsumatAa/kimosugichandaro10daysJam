@@ -11,6 +11,12 @@ public:
 
 	void Draw();
 
+	Vec2 pos_;
+	int length_;
+	int time_;
+	bool horizontal_;
+
+	float posX;
 	bool isDead_;
 };
 

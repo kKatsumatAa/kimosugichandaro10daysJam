@@ -19,7 +19,7 @@ public:
 	//…
 	void WaterGenerate(Vec2 pos, int r);
 	//—‹
-	void LightningGenerate();
+	void LightningGenerate(Vec2 pos,int length,int num,int time,bool horizontal);
 
 	void Update();
 
