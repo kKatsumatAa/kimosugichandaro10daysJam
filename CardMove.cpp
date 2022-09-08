@@ -9,6 +9,7 @@ void CardMove::Initialize()
 		card[i].isMove_ = 0;
 		card[i].isHit_ = 0;
 	}
+	cardGraph_ = LoadGraph("resources/card_attack_prototype.png");
 }
 
 void CardMove::Update()
@@ -194,12 +195,12 @@ void CardMove::Draw()
 			);
 		}
 		else {
-			DrawBox(
+			DrawExtendGraph(
 				card[i].pos_.x - (cardSize.x / 2),
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y,
 				card[i].pos_.x + (cardSize.x / 2),
 				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y,
-				GetColor(255, 255, 255),
+				cardGraph_,
 				true
 			);
 		}

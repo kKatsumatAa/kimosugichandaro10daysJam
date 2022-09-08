@@ -27,7 +27,7 @@ public:
 	static const int CARD_CONST = 20;
 	CardInfo card[CARD_CONST];
 
-	Vec2 cardSize = { 160,280 };
+	Vec2 cardSize = { 160,240 };
 	Vec2 handSpace1 = { 400,800 };
 	Vec2 handSpace2 = { 600,800 };
 	Vec2 handSpace3 = { 800,800 };
@@ -35,5 +35,7 @@ public:
 	Vec2 handSpace5 = { 1200,800 };
 
 	Mouse* mouse_ = new Mouse;
+
+	int cardGraph_;
 };
 
