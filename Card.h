@@ -28,7 +28,7 @@ protected:
 
     Vec2 cardLength = { 150,200 };
 
-
+    int cardOrder = 0;
 
 public:
     virtual void Update();
@@ -50,6 +50,10 @@ public:
     int GetAttribute() {
         return attribute;
     }
+
+    void SetCardOrder(int cardO) { cardOrder = cardO; }
+
+    int GetCardOrder() { return cardOrder; }
 
 };
 
