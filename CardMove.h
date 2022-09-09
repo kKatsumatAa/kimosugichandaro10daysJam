@@ -44,3 +44,13 @@ public:
 	int cardGraph_;
 };
 
+enum CardSpace{
+	Deck,
+	Hand1,
+	Hand2,
+	Hand3,
+	Hand4,
+	Hand5,
+	Trash,
+	Delete
+};
