@@ -2,7 +2,6 @@
 #include "Scene.h"
 #include "KeyboardInput.h"
 #include "Particle.h"
-#include "CardMove.h"
 
 class GameScene :public Iscene
 {
@@ -20,5 +19,4 @@ public:
 	Iscene* GetNextScene() override;
 
 	Particle* particle_ = nullptr;
-	CardMove* cardMove_ = nullptr;
 };

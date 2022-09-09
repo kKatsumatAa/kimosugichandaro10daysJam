@@ -35,6 +35,7 @@ public:
     virtual void Draw(unsigned int texhandle, Vec2 pos) = 0;
 
     virtual void Effect(Player* player, Enemy* enemy) = 0;
+    virtual int GetColorNum() = 0;
 
     void SetWaste(bool waste) {
         this->isWaste = waste;
@@ -54,7 +55,6 @@ public:
     void SetCardOrder(int cardO) { cardOrder = cardO; }
 
     int GetCardOrder() { return cardOrder; }
-
 };
 
 
@@ -72,6 +72,9 @@ public:
 
     int GetPower() {
         return power;
+    }
+    int GetColorNum() override {
+        return 0;
     }
 };
 
@@ -91,6 +94,9 @@ public:
     int GetPower() {
         return guardPower;
     }
+    int GetColorNum() override {
+        return 1;
+    }
 };
 
 
@@ -109,6 +115,9 @@ public:
     int GetPower() {
         return buffPower;
     }
+    int GetColorNum() override {
+        return 2;
+    }
 };
 
 
@@ -126,5 +135,8 @@ public:
 
     int GetDeBuffPower() {
         return deBuffPower;
+    }
+    int GetColorNum() override {
+        return 3;
     }
 };
