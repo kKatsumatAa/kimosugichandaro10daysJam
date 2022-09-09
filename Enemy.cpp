@@ -8,8 +8,14 @@ void Enemy::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int p
 
 	attribute = ENEMY;
 
-	this->power = power;
+	this->powertmp = power;
 	HP = hp;
+	hpMAX = hp;
 	this->attackCool = attackCool;
 
+	attackState = new NormalAttack;
+
+	attackState->SetChara(this);
+
+	isSpecial = false;
 }

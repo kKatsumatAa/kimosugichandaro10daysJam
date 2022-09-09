@@ -8,8 +8,12 @@ void Player::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int 
 
 	attribute = PLAYER;
 
-	this->power = power;
+	this->powertmp = power;
 	HP = hp;
+	hpMAX = hp;
 	this->attackCool = attackCool;
 
+	attackState = new NormalAttack;
+
+	attackState->SetChara(this);
 }
