@@ -7,7 +7,7 @@ enum Attibute
     ATTACK,
     GUARD,
     BUFF,
-    DEBUF
+    DEBUFF
 };
 
 
@@ -108,5 +108,23 @@ public:
 
     int GetPower() {
         return buffPower;
+    }
+};
+
+
+class DeBuffCard : public Card
+{
+private:
+    int deBuffPower;
+
+public:
+    void Initialize(int cost = 1, int deBuffPower = 1);
+
+    void Draw(unsigned int texhandle, Vec2 pos) override;
+
+    void Effect(Player* player, Enemy* enemy) override;
+
+    int GetDeBuffPower() {
+        return deBuffPower;
     }
 };
