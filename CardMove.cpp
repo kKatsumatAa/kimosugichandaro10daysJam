@@ -204,8 +204,8 @@ void CardMove::Update()
 
 	///カードの選択
 
-	//右クリックで廃棄
-	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0) {
+	//掴んでいない時右クリックで廃棄
+	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0 && isCatch == false) {
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
 				card[i].space_ = CardSpace::Delete;
