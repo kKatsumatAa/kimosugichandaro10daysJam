@@ -6,11 +6,14 @@
 #include <iostream>
 #include "Cost.h"
 
-static const int deckMax = 20;
-
-static const int attackMax = 10;
+static const int attackMax = 8;
 static const int guardMax = 5;
 static const int buffMax = 5;
+static const int deBuffMax = 2;
+
+static const int deckMax = attackMax + guardMax + buffMax + deBuffMax;
+
+
 
 class CardManager
 {
@@ -24,7 +27,7 @@ private:
 
 public:
 	void Initialize();
-	void Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost);
+	void Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle);
 	void Draw(unsigned int* texhandle);
 
 	void DeckSet();

@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-void Enemy::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int attackCool)
+void Enemy::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int power, int attackCool)
 {
 	this->pos = pos;
 
@@ -8,7 +8,7 @@ void Enemy::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int a
 
 	attribute = ENEMY;
 
-	power = 1;
+	this->power = power;
 	HP = hp;
 	this->attackCool = attackCool;
 

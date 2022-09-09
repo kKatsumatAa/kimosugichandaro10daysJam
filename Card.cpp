@@ -66,3 +66,23 @@ void BuffCard::Effect(Player* player, Enemy* enemy)
 	player->AddPower(buffPower);
 }
 
+
+
+//--------------------------------------------------------------
+void DeBuffCard::Initialize(int cost, int deBuffPower)
+{
+	this->cost = cost;
+	this->deBuffPower = deBuffPower;
+	attribute = Attibute::DEBUFF;
+}
+
+void DeBuffCard::Draw(unsigned int texhandle, Vec2 pos)
+{
+	DrawBox(pos.x - cardLength.x / 2, pos.y - cardLength.y,
+		pos.x + cardLength.x / 2, pos.y + cardLength.y, 0x01ffff, true);
+}
+
+void DeBuffCard::Effect(Player* player, Enemy* enemy)
+{
+	enemy->AddDeBuff(deBuffPower);
+}

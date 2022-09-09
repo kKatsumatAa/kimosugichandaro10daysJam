@@ -21,5 +21,7 @@ public:
 
 	Player* GetPlayer() { return player; }
 	Enemy* GetEnemy() { return &enemy[enemyNum]; }
+
+	bool GetIsBattle() { return isBattle; }
 };
 

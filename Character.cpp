@@ -19,7 +19,7 @@ void Character::Update()
 {
 	attackTime++;
 
-	if (attackTime >= attackCool)
+	if (attackTime >= attackCool + (attackCool * (deBuffPower/3.0f)))
 	{
 		Attack();
 		attackTime = 0;

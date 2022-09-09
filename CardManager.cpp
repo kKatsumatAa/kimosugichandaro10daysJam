@@ -21,7 +21,7 @@ void CardManager::Initialize()
 	}*/
 }
 
-void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost)
+void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost ,bool isBattle)
 {
 
 	if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
@@ -50,7 +50,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			}
 
 			//カードのコストと現在のコストを比較
-			if (cost->GetCost() >= itr->get()->GetCost())
+			if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
 			{
 				itr->get()->Effect(player, enemy);
 				cost->UseCost(itr->get()->GetCost());
@@ -122,6 +122,8 @@ void CardManager::DeckSet()
 	std::unique_ptr<AttackCard> attackC[attackMax];
 	std::unique_ptr<GuardCard> guardC[guardMax];
 	std::unique_ptr<BuffCard> buffC[buffMax];
+	std::unique_ptr<DeBuffCard> deBuffC[deBuffMax];
+
 	for (int i = 0; i < attackMax; i++)
 	{
 		attackC[i] = std::make_unique<AttackCard>();
@@ -136,6 +138,11 @@ void CardManager::DeckSet()
 	{
 		buffC[i] = std::make_unique<BuffCard>();
 		buffC[i]->Initialize();
+	}
+	for (int i = 0; i < deBuffMax; i++)
+	{
+		deBuffC[i] = std::make_unique<DeBuffCard>();
+		deBuffC[i]->Initialize();
 	}
 
 	//重複なしランダムな数字の配列
@@ -160,6 +167,10 @@ void CardManager::DeckSet()
 		{
 			buffC[i - (attackMax + guardMax)]->SetCardOrder(*ITR);
 		}
+		else if (i < attackMax + guardMax + buffMax + deBuffMax)
+		{
+			deBuffC[i - (attackMax + guardMax + buffMax)]->SetCardOrder(*ITR);
+		}
 
 		ITR++;
 	}
@@ -180,7 +191,11 @@ void CardManager::DeckSet()
 		}
 		else if (i < attackMax + guardMax + buffMax)
 		{
-			deck2.push_back(std::move(buffC[i - (attackMax + buffMax)]));
+			deck2.push_back(std::move(buffC[i - (attackMax + guardMax)]));
+		}
+		else if (i < attackMax + guardMax + buffMax + deBuffMax)
+		{
+			deck2.push_back(std::move(deBuffC[i - (attackMax + guardMax + buffMax)]));
 		}
 	}
 

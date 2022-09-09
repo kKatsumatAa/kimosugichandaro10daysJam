@@ -37,9 +37,11 @@ protected:
 
 	Vec2 pos = { 0,0 };
 
+	int deBuffPower = 0;
+
 
 public:
-	virtual void Initialize(const unsigned int textureHandle, Vec2 pos, int hp = 5, int attackCool = 240) = 0;
+	virtual void Initialize(const unsigned int textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240) = 0;
 	void Update();
 	void Draw();
 
@@ -48,7 +50,11 @@ public:
 	bool GetIsAttack() { return isAttack; }
 	void SetIsAttack(bool isAttack) { this->isAttack = isAttack; }
 
-	int GetPower() { return power; }
+	int GetPower() 
+	{ 
+		if (power - deBuffPower <= 0) return 0;
+		                              return power - deBuffPower;
+	}
 
 	void Damage(int power);
 
@@ -66,12 +72,14 @@ public:
 
 	int GetHP() { return HP; }
 
-	float GetAttackGauge() { return (float)attackTime / (float)attackCool; }
+	float GetAttackGauge() { return (float)attackTime / (float)(attackCool + (attackCool * (deBuffPower / 3.0f))); }
 
 	unsigned int GetTexHandle() { return texhandle; }
 
 	void AddGuardPower(int guardPower) { this->guardPower = guardPower; }
 
 	void AddPower(int power) { this->power += power; }
+
+	void AddDeBuff(int deBuffPower) { this->deBuffPower += deBuffPower; }
 
 };
