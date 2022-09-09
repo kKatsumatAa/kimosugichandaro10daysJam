@@ -35,36 +35,36 @@ void CardMove::Update()
 	for (int i = 0; i < CARD_CONST; i++) {
 		//右から1番目
 		if (isSpace[0] == false) {
-			if (card[i].space_ == 0) {
-				card[i].space_ = 1;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand1;
 				isSpace[0] = true;
 			}
 		}
 		//右から2番目
 		else if (isSpace[1] == false) {
-			if (card[i].space_ == 0) {
-				card[i].space_ = 2;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand2;
 				isSpace[1] = true;
 			}
 		}
 		//右から3番目
 		else if (isSpace[2] == false) {
-			if (card[i].space_ == 0) {
-				card[i].space_ = 3;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand3;
 				isSpace[2] = true;
 			}
 		}
 		//右から4番目
 		else if (isSpace[3] == false) {
-			if (card[i].space_ == 0) {
-				card[i].space_ = 4;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand4;
 				isSpace[3] = true;
 			}
 		}
 		//右から5番目
 		else if (isSpace[4] == false) {
-			if (card[i].space_ == 0) {
-				card[i].space_ = 5;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand5;
 				isSpace[4] = true;
 			}
 		}
@@ -80,35 +80,35 @@ void CardMove::Update()
 		//右から1番目
 		if (card[i].space_ == CardSpace::Hand1) {
 			if (card[i].pos_.x != handSpace1.x && card[i].isSelect_ == false) {
-				card[i].pos_.x -= 20;
+				card[i].pos_.x -= cardSpeeed_;
 				card[i].isMove_ = true;
 			}
 		}
 		//右から2番目
 		else if (card[i].space_ == CardSpace::Hand2) {
 			if (card[i].pos_.x != handSpace2.x && card[i].isSelect_ == false) {
-				card[i].pos_.x -= 20;
+				card[i].pos_.x -= cardSpeeed_;
 				card[i].isMove_ = true;
 			}
 		}
 		//右から3番目
 		else if (card[i].space_ == CardSpace::Hand3) {
 			if (card[i].pos_.x != handSpace3.x && card[i].isSelect_ == false) {
-				card[i].pos_.x -= 20;
+				card[i].pos_.x -= cardSpeeed_;
 				card[i].isMove_ = true;
 			}
 		}
 		//右から4番目
 		else if (card[i].space_ == CardSpace::Hand4) {
 			if (card[i].pos_.x != handSpace4.x && card[i].isSelect_ == false) {
-				card[i].pos_.x -= 20;
+				card[i].pos_.x -= cardSpeeed_;
 				card[i].isMove_ = true;
 			}
 		}
 		//右から5番目
 		else if (card[i].space_ == CardSpace::Hand5) {
 			if (card[i].pos_.x != handSpace5.x && card[i].isSelect_ == false) {
-				card[i].pos_.x -= 20;
+				card[i].pos_.x -= cardSpeeed_;
 				card[i].isMove_ = true;
 			}
 		}
@@ -120,8 +120,8 @@ void CardMove::Update()
 				//使ったカードが捨て場に無ければ移動させる
 				if (card[i].pos_.x != handSpace6.x) {
 					//距離が20pixel以上離れていたら20pixel動かす
-					if (space6Len.GetLength() >= 20) {
-						card[i].pos_.x += space6Len.x / space6Len.GetLength() * 20;
+					if (space6Len.GetLength() >= cardSpeeed_) {
+						card[i].pos_.x += space6Len.x / space6Len.GetLength() * cardSpeeed_;
 					}
 					//距離が20pixel以下なら捨て場まで動かす
 					else {
@@ -130,8 +130,8 @@ void CardMove::Update()
 				}
 				if (card[i].pos_.y != handSpace6.y) {
 					//距離が20pixel以上離れていたら20pixel動かす
-					if (space6Len.GetLength() >= 20) {
-						card[i].pos_.y += space6Len.y / space6Len.GetLength() * 20;
+					if (space6Len.GetLength() >= cardSpeeed_) {
+						card[i].pos_.y += space6Len.y / space6Len.GetLength() * cardSpeeed_;
 					}
 					//距離が20pixel以下なら捨て場まで動かす
 					else {

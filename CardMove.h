@@ -42,6 +42,7 @@ public:
 	int mouseX, mouseY;
 	int mouseClickPosY_;
 	int cardGraph_;
+	const int cardSpeeed_ = 20;
 };
 
 enum CardSpace{
