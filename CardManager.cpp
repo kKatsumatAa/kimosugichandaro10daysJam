@@ -22,10 +22,10 @@ void CardManager::Initialize()
 		card[i].chengeSize_ = { 0,0 };
 		card[i].alpha_ = 255;
 	}
-	LoadDivGraph("resources/card_attack_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[0]);
+	LoadDivGraph("resources/card_attack-Sheet.png", 2, 2, 1, 100, 130, cardGraph_[0]);
 	LoadDivGraph("resources/card_defense_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[1]);
 	LoadDivGraph("resources/card_buff_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[2]);
-	LoadDivGraph("resources/card_debuff_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[3]);
+	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 130, cardGraph_[3]);
 
 
 	/*for (int i = 0; i < deck.size(); i++) {
@@ -86,50 +86,6 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	for (int i = 0; i < 5; i++) {
 		//手札にカードがあるか
 		isSpace[i] = false;
-	}
-	for (int i = 0; i < CARD_CONST; i++) {
-		//手札にカードがあればtrueに
-		if (card[i].space_ - 1 >= 0) {
-			isSpace[card[i].space_ - 1] = true;
-		}
-	}
-	//手札にカードが無ければその場所にカードを配布
-	for (int i = 0; i < CARD_CONST; i++) {
-		//右から1番目
-		if (isSpace[0] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand1;
-				isSpace[0] = true;
-			}
-		}
-		//右から2番目
-		else if (isSpace[1] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand2;
-				isSpace[1] = true;
-			}
-		}
-		//右から3番目
-		else if (isSpace[2] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand3;
-				isSpace[2] = true;
-			}
-		}
-		//右から4番目
-		else if (isSpace[3] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand4;
-				isSpace[3] = true;
-			}
-		}
-		//右から5番目
-		else if (isSpace[4] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand5;
-				isSpace[4] = true;
-			}
-		}
 	}
 
 	//カードが動いているか管理する変数の初期化
@@ -332,6 +288,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		}
 	}
 
+
+
 	///手札とマウスの当たり判定
 	//すでにマウスでつかんでいたら判定をとらない
 
@@ -463,6 +421,53 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			card[i].pos_.y = mouseY;
 		}
 	}
+
+
+	for (int i = 0; i < CARD_CONST; i++) {
+		//手札にカードがあればtrueに
+		if (card[i].space_ - 1 >= 0) {
+			isSpace[card[i].space_ - 1] = true;
+		}
+	}
+	//手札にカードが無ければその場所にカードを配布
+	for (int i = 0; i < CARD_CONST; i++) {
+		//右から1番目
+		if (isSpace[0] == false) {
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand1;
+				isSpace[0] = true;
+			}
+		}
+		//右から2番目
+		else if (isSpace[1] == false) {
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand2;
+				isSpace[1] = true;
+			}
+		}
+		//右から3番目
+		else if (isSpace[2] == false) {
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand3;
+				isSpace[2] = true;
+			}
+		}
+		//右から4番目
+		else if (isSpace[3] == false) {
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand4;
+				isSpace[3] = true;
+			}
+		}
+		//右から5番目
+		else if (isSpace[4] == false) {
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand5;
+				isSpace[4] = true;
+			}
+		}
+	}
+
 }
 
 void CardManager::Draw(unsigned int* texhandle)
