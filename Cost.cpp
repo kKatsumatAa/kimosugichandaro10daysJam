@@ -16,8 +16,8 @@ void Cost::Update()
 
 void Cost::Draw(unsigned int* texhandle)
 {
-	DrawBox(1920 / 2 - 300, 300, 1920 / 2 - 300 + (200 * costGauge), 330, 0xaaaa00, true);
+	DrawBox(1920 / 2 - 300, 100, 1920 / 2 - 300 + (200 * costGauge), 130, 0xaaaa00, true);
 
-	DrawLine(1920 / 2 - 300 + 600 / 3, 300, 1920 / 2 - 300 + 600 / 3, 330, 0xffffff);
-	DrawLine(1920 / 2 - 300 + 600 / 3 * 2, 300, 1920 / 2 - 300 + 600 / 3 * 2, 330, 0xffffff);
+	DrawLine(1920 / 2 - 300 + 600 / 3, 100, 1920 / 2 - 300 + 600 / 3, 130, 0xffffff);
+	DrawLine(1920 / 2 - 300 + 600 / 3 * 2, 100, 1920 / 2 - 300 + 600 / 3 * 2, 130, 0xffffff);
 }

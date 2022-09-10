@@ -23,5 +23,7 @@ public:
 	Enemy* GetEnemy() { return &enemy[enemyNum]; }
 
 	bool GetIsBattle() { return isBattle; }
+
+	bool GetIsEnd() { return isEnd; }
 };
 
