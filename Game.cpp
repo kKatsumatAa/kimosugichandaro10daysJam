@@ -13,10 +13,10 @@ GameScene::GameScene(KeyboardInput& key):
 	cardMove_ = new CardMove;
 	cardMove_->Initialize();
 
-	player.Initialize(texhandle, { 780,1080 / 2 });
-	enemy[0].Initialize(texhandle, { 2100,1080 / 2 }, 10);
-	enemy[1].Initialize(texhandle, { 2100,1080 / 2 }, 15, 3, 170);
-	enemy[2].Initialize(texhandle, { 2100,1080 / 2 }, 20, 5, 100);
+	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
+	enemy[0].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 10);
+	enemy[1].Initialize(texhandle, { 2100,1080 / 2 - 150}, 15, 3, 170);
+	enemy[2].Initialize(texhandle, { 2100,1080 / 2 - 150}, 20, 5, 100);
 	charaM.Initialize(&player, enemy);
 	cardM.Initialize();
 	cost.Initialize();
@@ -29,6 +29,7 @@ GameScene::~GameScene() {
 
 void GameScene::Update()
 {
+#ifdef _DEBUG
 	if (key.GetKeyTrigger(KEY_INPUT_SPACE)) isEnd = true;
 	else if (key.GetKeyTrigger(KEY_INPUT_Q))
 	{
@@ -36,6 +37,7 @@ void GameScene::Update()
 		delete nextScene;
 		nextScene = new TitleScene(key);
 	}
+#endif 
 
 	if (key.GetKeyTrigger(KEY_INPUT_1)) {
 		particle_->BurstGenerate(Vec2(775, 550),5,50,60,225,15.0f,GetColor(200,0,0));
@@ -62,6 +64,20 @@ void GameScene::Update()
 	cost.Update();
 	charaM.Update();
 	cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle());
+
+	//クリアしたらリザルト画面
+	if (charaM.GetIsEnd())
+	{
+		isEnd = true;
+	}
+
+	//playerが死んだらタイトルに戻る
+	if (charaM.GetPlayer()->GetIsDead())
+	{
+		isEnd = true;
+		delete nextScene;
+		nextScene = new TitleScene(key);
+	}
 }
 
 void GameScene::Draw()
