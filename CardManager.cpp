@@ -142,127 +142,147 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		Vec2 spaceLen;
 		//右から1番目
 		if (card[i].space_ == CardSpace::Hand1) {
-			if (card[i].isSelect_ == false && card[i].pos_.x != handSpace1.x && card[i].pos_.y != handSpace1.y) {
+			if (card[i].isSelect_ == false) {
 				//カードと捨て場の距離
 				spaceLen = handSpace1 - card[i].pos_;
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+				if (card[i].pos_.x != handSpace1.x) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら捨て場まで動かす
+					else {
+						card[i].pos_.x += spaceLen.x;
+					}
+					card[i].isMove_ = true;
 				}
-				//距離が20pixel以下なら捨て場まで動かす
-				else {
-					card[i].pos_.x += spaceLen.x;
+				if (card[i].pos_.y != handSpace1.y) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら捨て場まで動かす
+					else {
+						card[i].pos_.y += spaceLen.y;
+					}
+					card[i].isMove_ = true;
 				}
-
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
-				}
-				//距離が20pixel以下なら捨て場まで動かす
-				else {
-					card[i].pos_.y += spaceLen.y;
-				}
-				card[i].isMove_ = true;
 			}
 		}
 		//右から2番目
 		else if (card[i].space_ == CardSpace::Hand2) {
-			if (card[i].isSelect_ == false && card[i].pos_.x != handSpace1.x && card[i].pos_.y != handSpace1.y) {
+			if (card[i].isSelect_ == false) {
 				//カードと捨て場の距離
 				spaceLen = handSpace2 - card[i].pos_;
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+				if (card[i].pos_.x != handSpace2.x) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら捨て場まで動かす
+					else {
+						card[i].pos_.x += spaceLen.x;
+					}
+					card[i].isMove_ = true;
 				}
-				//距離が20pixel以下なら捨て場まで動かす
-				else {
-					card[i].pos_.x += spaceLen.x;
+				if (card[i].pos_.y != handSpace2.y) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら捨て場まで動かす
+					else {
+						card[i].pos_.y += spaceLen.y;
+					}
+					card[i].isMove_ = true;
 				}
-
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
-				}
-				//距離が20pixel以下なら捨て場まで動かす
-				else {
-					card[i].pos_.y += spaceLen.y;
-				}
-				card[i].isMove_ = true;
 			}
 		}
 		//右から3番目
 		else if (card[i].space_ == CardSpace::Hand3) {
-			if (card[i].isSelect_ == false && card[i].pos_.x != handSpace1.x && card[i].pos_.y != handSpace1.y) {
+			if (card[i].isSelect_ == false) {
 				//カードと捨て場の距離
 				spaceLen = handSpace3 - card[i].pos_;
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+				if (card[i].pos_.x != handSpace3.x) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら捨て場まで動かす
+					else {
+						card[i].pos_.x += spaceLen.x;
+					}
+					card[i].isMove_ = true;
 				}
-				//距離が20pixel以下なら捨て場まで動かす
-				else {
-					card[i].pos_.x += spaceLen.x;
+				if (card[i].pos_.y != handSpace3.y) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら捨て場まで動かす
+					else {
+						card[i].pos_.y += spaceLen.y;
+					}
+					card[i].isMove_ = true;
 				}
-
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
-				}
-				//距離が20pixel以下なら捨て場まで動かす
-				else {
-					card[i].pos_.y += spaceLen.y;
-				}
-				card[i].isMove_ = true;
 			}
 		}
 		//右から4番目
 		else if (card[i].space_ == CardSpace::Hand4) {
-			if (card[i].isSelect_ == false && card[i].pos_.x != handSpace1.x && card[i].pos_.y != handSpace1.y) {
+			if (card[i].isSelect_ == false) {
 				//カードと捨て場の距離
 				spaceLen = handSpace4 - card[i].pos_;
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+				if (card[i].pos_.x != handSpace4.x) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら捨て場まで動かす
+					else {
+						card[i].pos_.x += spaceLen.x;
+					}
+					card[i].isMove_ = true;
 				}
-				//距離が20pixel以下なら捨て場まで動かす
-				else {
-					card[i].pos_.x += spaceLen.x;
+				if (card[i].pos_.y != handSpace4.y) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら捨て場まで動かす
+					else {
+						card[i].pos_.y += spaceLen.y;
+					}
+					card[i].isMove_ = true;
 				}
-
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
-				}
-				//距離が20pixel以下なら捨て場まで動かす
-				else {
-					card[i].pos_.y += spaceLen.y;
-				}
-				card[i].isMove_ = true;
 			}
 		}
 		//右から5番目
 		else if (card[i].space_ == CardSpace::Hand5) {
-			if (card[i].isSelect_ == false && card[i].pos_.x != handSpace1.x && card[i].pos_.y != handSpace1.y) {
+			if (card[i].isSelect_ == false) {
 				//カードと手札5の距離
 				spaceLen = handSpace5 - card[i].pos_;
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+				if (card[i].pos_.x != handSpace5.x) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら手札5まで動かす
+					else {
+						card[i].pos_.x += spaceLen.x;
+					}
+					card[i].isMove_ = true;
 				}
-				//距離が20pixel以下なら手札5まで動かす
-				else {
-					card[i].pos_.x += spaceLen.x;
+				if (card[i].pos_.y != handSpace5.y) {
+					//距離が20pixel以上離れていたら20pixel動かす
+					if (spaceLen.GetLength() >= cardSpeed_) {
+						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
+					}
+					//距離が20pixel以下なら手札5まで動かす
+					else {
+						card[i].pos_.y += spaceLen.y;
+					}
+					card[i].isMove_ = true;
 				}
-
-				//距離が20pixel以上離れていたら20pixel動かす
-				if (spaceLen.GetLength() >= cardSpeed_) {
-					card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
-				}
-				//距離が20pixel以下なら手札5まで動かす
-				else {
-					card[i].pos_.y += spaceLen.y;
-				}
-				card[i].isMove_ = true;
 			}
 		}
 		//捨て札
@@ -377,60 +397,59 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	else {
 		for (int i = 0; i < CARD_CONST; i++) {
 			//カードを上に持っていったら捨て札に
-			if (card[i].pos_.y <= 630 && card[i].isSelect_ == true) {
+			if (card[i].pos_.y <= 630) {
 
-				if (deck.size() > 0)
-				{
-					std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
+				if (card[i].isSelect_ == true) {
+					if (deck.size() > 0) {
+						std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
-					for (int j = 0; j < (card[i].space_ - 1); j++)
-					{
-						itr++;
-					}
+						for (int j = 0; j < (card[i].space_ - 1); j++)
+						{
+							itr++;
+						}
 
-					//カードのコストと現在のコストを比較
-					if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
-					{
-						itr->get()->Effect(player, enemy);
-						cost->UseCost(itr->get()->GetCost());
-						deck.erase(itr);
+						//カードのコストと現在のコストを比較
+						if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
+						{
+							itr->get()->Effect(player, enemy);
+							cost->UseCost(itr->get()->GetCost());
+							deck.erase(itr);
 
-						card[i].space_ = CardSpace::Trash;
-						for (int j = 0; j < CARD_CONST; j++) {
-							if (card[j].space_ >= card[i].space_ + 1 && card[j].space_ <= 5) {
-								card[j].space_--;
+							card[i].space_ = CardSpace::Trash;
+							for (int j = 0; j < CARD_CONST; j++) {
+								if (card[j].space_ >= card[i].space_ + 1 && card[j].space_ <= 5) {
+									card[j].space_--;
+								}
 							}
 						}
 					}
 				}
-
+				else if (card[i].isMove_ == false) {
+					//右から1番目のカードを元の場所に戻す
+					if (card[i].space_ == CardSpace::Hand1) {
+						card[i].pos_ = handSpace1;
+					}
+					//右から2番目のカードを元の場所に戻す
+					else if (card[i].space_ == CardSpace::Hand2) {
+						card[i].pos_ = handSpace2;
+					}
+					//右から3番目のカードを元の場所に戻す
+					else if (card[i].space_ == CardSpace::Hand3) {
+						card[i].pos_ = handSpace3;
+					}
+					//右から4番目のカードを元の場所に戻す
+					else if (card[i].space_ == CardSpace::Hand4) {
+						card[i].pos_ = handSpace4;
+					}
+					//右から5番目のカードを元の場所に戻す
+					else if (card[i].space_ == CardSpace::Hand5) {
+						card[i].pos_ = handSpace5;
+					}
+				}
 				//デッキをセット
 				if (deck.size() <= 0)
 				{
 					DeckSet();
-				}
-
-			}
-			else if (card[i].isMove_ == false) {
-				//右から1番目のカードを元の場所に戻す
-				if (card[i].space_ == CardSpace::Hand1) {
-					card[i].pos_ = handSpace1;
-				}
-				//右から2番目のカードを元の場所に戻す
-				else if (card[i].space_ == CardSpace::Hand2) {
-					card[i].pos_ = handSpace2;
-				}
-				//右から3番目のカードを元の場所に戻す
-				else if (card[i].space_ == CardSpace::Hand3) {
-					card[i].pos_ = handSpace3;
-				}
-				//右から4番目のカードを元の場所に戻す
-				else if (card[i].space_ == CardSpace::Hand4) {
-					card[i].pos_ = handSpace4;
-				}
-				//右から5番目のカードを元の場所に戻す
-				else if (card[i].space_ == CardSpace::Hand5) {
-					card[i].pos_ = handSpace5;
 				}
 			}
 			//掴んでいるかを管理する変数をfalseに
