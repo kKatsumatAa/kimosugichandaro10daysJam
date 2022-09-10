@@ -37,9 +37,10 @@ protected:
 
 	bool isAttack = false;
 
+	//UŒ‚—Íƒoƒt
 	int power = 0;
-
-	int powertmp = 0;
+	//UŒ‚—Í(0‚Íí“¬‚²‚ÆA1‚ÍŒ³‚Ìí“¬—Í)
+	int powertmp[2] = {0};
 
 	int HP = 10;
 
@@ -75,8 +76,8 @@ public:
 
 	int GetPower() 
 	{ 
-		if (power - deBuffPower <= 0) return 0;
-		                              return power - deBuffPower;
+		if (powertmp[0] + power - deBuffPower <= 0) return 0;
+		                                            return powertmp[0] + power - deBuffPower;
 	}
 
 	void Damage(int power);
@@ -99,7 +100,7 @@ public:
 
 	unsigned int GetTexHandle() { return texhandle; }
 
-	void AddGuardPower(int guardPower) { this->guardPower = guardPower; }
+	void AddGuardPower(int guardPower) { this->guardPower += guardPower; }
 
 	void AddPower(int power) { this->power += power; }
 
@@ -124,6 +125,8 @@ public:
 	int GetIsSpecial() { return isSpecial; }
 
 	void AddHP(int hp) { HP += hp; }
+
+	void InitializeBattle();
 };
 
 
@@ -146,6 +149,8 @@ private:
 	int specialGauge = 0;
 
 	const Vec2 gaugeLength = { 100.0f,10.0f };
+
+	int count = 0;
 
 public:
 	void Update() override;
