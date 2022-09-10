@@ -22,10 +22,10 @@ void CardManager::Initialize()
 		card[i].chengeSize_ = { 0,0 };
 		card[i].alpha_ = 255;
 	}
-	cardGraph_[0] = LoadGraph("resources/card_attack_prototype.png");
-	cardGraph_[1] = LoadGraph("resources/card_buff_prototype.png");
-	cardGraph_[2] = LoadGraph("resources/card_debuff_prototype.png");
-	cardGraph_[3] = LoadGraph("resources/card_defense_prototype.png");
+	LoadDivGraph("resources/card_attack_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[0]);
+	LoadDivGraph("resources/card_defense_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[1]);
+	LoadDivGraph("resources/card_buff_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[2]);
+	LoadDivGraph("resources/card_debuff_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[3]);
 
 
 	/*for (int i = 0; i < deck.size(); i++) {
@@ -492,7 +492,7 @@ void CardManager::Draw(unsigned int* texhandle)
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
 				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
 				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
-				cardGraph_[0],
+				cardGraph_[1][card[i].isHit_],
 				true
 			);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -517,7 +517,7 @@ void CardManager::Draw(unsigned int* texhandle)
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y,
 				card[i].pos_.x + (cardSize.x / 2),
 				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y,
-				cardGraph_[color[card[i].space_ - 1]],
+				cardGraph_[color[card[i].space_ - 1]][card[i].isHit_],
 				true
 			);
 		}
