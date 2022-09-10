@@ -69,7 +69,7 @@ public:
 	void Update();
 	void Draw();
 
-	void Attack(int power = 114514);
+	void Attack(int power = 114514);//
 
 	bool GetIsAttack() { return isAttack; }
 	void SetIsAttack(bool isAttack) { this->isAttack = isAttack; }
