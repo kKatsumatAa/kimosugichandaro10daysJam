@@ -66,7 +66,7 @@ void CharacterManager::Update()
 		//ƒoƒgƒ‹‚ªI‚í‚Á‚½uŠÔ
 		if (!isBattle && oldIsBattle)
 		{
-			player->InitializeBattle();
+			player->InitializeBattle();//
 		}
 	}
 }
