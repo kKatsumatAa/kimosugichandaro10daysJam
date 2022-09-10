@@ -378,7 +378,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		for (int i = 0; i < CARD_CONST; i++) {
 			//カードを上に持っていったら捨て札に
 			if (card[i].pos_.y <= 630 && card[i].isSelect_ == true) {
-				
+
 				if (deck.size() > 0)
 				{
 					std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
@@ -403,7 +403,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 						}
 					}
 				}
-				
+
 				//デッキをセット
 				if (deck.size() <= 0)
 				{
@@ -462,7 +462,7 @@ void CardManager::Draw(unsigned int* texhandle)
 		if (handNum == i) selectPos = -40;
 
 		itr->get()->Draw(texhandle[0], { (double)(400 + i * 300),(double)800 + selectPos });
-		
+
 		itr++;
 	}
 	itr = deck.begin();
@@ -517,7 +517,7 @@ void CardManager::Draw(unsigned int* texhandle)
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y,
 				card[i].pos_.x + (cardSize.x / 2),
 				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y,
-				cardGraph_[color[i]],
+				cardGraph_[color[card[i].space_ - 1]],
 				true
 			);
 		}
