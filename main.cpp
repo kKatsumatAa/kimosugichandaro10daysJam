@@ -5,8 +5,7 @@
 #include "Scene.h"
 #include "Title.h"
 #include "Game.h"
-#include "CharacterManager.h"
-#include "CardManager.h"
+
 
 
 
@@ -18,25 +17,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Mouse mouse;
 	Iscene* scene = new TitleScene(key);
 
-	//
- 	unsigned int texhandle = LoadGraph("resources/a.png");
+
 	
-	Player player;
-	player.Initialize(texhandle, { 780,1080 / 2 });
-
-	Enemy enemy[3];
-	enemy[0].Initialize(texhandle, { 2100,1080 / 2 }, 10);
-	enemy[1].Initialize(texhandle, { 2100,1080 / 2 }, 15, 3, 170);
-	enemy[2].Initialize(texhandle, { 2100,1080 / 2 }, 20 ,5, 100);
-
-	CharacterManager charaM;
-	charaM.Initialize(&player, enemy);
-
-	CardManager cardM;
-	cardM.Initialize();
-
-	Cost cost;
-	cost.Initialize();
+	
 
 	// ƒQ[ƒ€ƒ‹[ƒv
 	while (true) {
@@ -58,15 +41,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			scene = nextScene;
 		}
 
-		cost.Update();
-		charaM.Update();
-		cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle());
+		
 
 		// •`‰æˆ—
-		charaM.Draw();
-		cardM.Draw(&texhandle);
-
-		cost.Draw(&texhandle);
+		
 
 		scene->Draw();
 

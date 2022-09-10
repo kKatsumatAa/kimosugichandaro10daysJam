@@ -14,6 +14,8 @@ void CharacterManager::Initialize(Player* player, Enemy* enemy)
 
 void CharacterManager::Update()
 {
+	bool oldIsBattle = isBattle;
+
 	if (!isEnd && isBattle)
 	{
 		this->enemy[enemyNum].Update();
@@ -59,6 +61,12 @@ void CharacterManager::Update()
 		if (enemy[enemyNum].GetPos().x <= 1180)
 		{
 			isBattle = true;
+		}
+
+		//ƒoƒgƒ‹‚ªI‚í‚Á‚½uŠÔ
+		if (!isBattle && oldIsBattle)
+		{
+			player->InitializeBattle();//
 		}
 	}
 }

@@ -12,6 +12,14 @@ GameScene::GameScene(KeyboardInput& key):
 	particle_->Initialize();
 	cardMove_ = new CardMove;
 	cardMove_->Initialize();
+
+	player.Initialize(texhandle, { 780,1080 / 2 });
+	enemy[0].Initialize(texhandle, { 2100,1080 / 2 }, 10);
+	enemy[1].Initialize(texhandle, { 2100,1080 / 2 }, 15, 3, 170);
+	enemy[2].Initialize(texhandle, { 2100,1080 / 2 }, 20, 5, 100);
+	charaM.Initialize(&player, enemy);
+	cardM.Initialize();
+	cost.Initialize();
 }
 
 GameScene::~GameScene() {
@@ -50,10 +58,19 @@ void GameScene::Update()
 
 	particle_->Update();
 	cardMove_->Update();
+
+	cost.Update();
+	charaM.Update();
+	cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle());
 }
 
 void GameScene::Draw()
 {
+	charaM.Draw();
+	cardM.Draw(&texhandle);
+
+	cost.Draw(&texhandle);
+
 	DrawFormatString(0, 0, 0xFFFFFF, "GAME");
 	particle_->Draw();
 	cardMove_->Draw();
