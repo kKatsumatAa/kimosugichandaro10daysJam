@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Burst.cpp" />
-    <ClCompile Include="CardMove.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="CardManager.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -29,7 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Burst.h" />
-    <ClInclude Include="CardMove.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardManager.h" />
     <ClInclude Include="Character.h" />

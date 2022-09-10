@@ -6,13 +6,10 @@
 
 GameScene::GameScene(KeyboardInput& key):
 	key(key), isEnd(false),
-	nextScene(new ResultScene(key))//Œ³‚ÍƒŠƒUƒ‹ƒg‚ª“ü‚Á‚Ä‚é
+	nextScene(new ResultScene(key))//å…ƒã¯ãƒªã‚¶ãƒ«ãƒˆãŒå…¥ã£ã¦ã‚‹
 {
 	particle_ = new Particle;
 	particle_->Initialize();
-	cardMove_ = new CardMove;
-	cardMove_->Initialize();
-
 	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
 	enemy[0].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 10);
 	enemy[1].Initialize(texhandle, { 2100,1080 / 2 - 150}, 15, 3, 170);
@@ -24,7 +21,6 @@ GameScene::GameScene(KeyboardInput& key):
 
 GameScene::~GameScene() {
 	delete particle_;
-	delete cardMove_;
 }
 
 void GameScene::Update()
@@ -59,19 +55,18 @@ void GameScene::Update()
 	}
 
 	particle_->Update();
-	cardMove_->Update();
 
 	cost.Update();
 	charaM.Update();
 	cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle());
 
-	//ƒNƒŠƒA‚µ‚½‚çƒŠƒUƒ‹ƒg‰æ–Ê
+	//ã‚¯ãƒªã‚¢ã—ãŸã‚‰ãƒªã‚¶ãƒ«ãƒˆç”»é¢
 	if (charaM.GetIsEnd())
 	{
 		isEnd = true;
 	}
 
-	//player‚ªŽ€‚ñ‚¾‚çƒ^ƒCƒgƒ‹‚É–ß‚é
+	//playerãŒæ­»ã‚“ã ã‚‰ã‚¿ã‚¤ãƒˆãƒ«ã«æˆ»ã‚‹
 	if (charaM.GetPlayer()->GetIsDead())
 	{
 		isEnd = true;
@@ -89,7 +84,6 @@ void GameScene::Draw()
 
 	DrawFormatString(0, 0, 0xFFFFFF, "GAME");
 	particle_->Draw();
-	cardMove_->Draw();
 }
 
 bool GameScene::IsEnd()
