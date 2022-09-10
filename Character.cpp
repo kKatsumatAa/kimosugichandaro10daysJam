@@ -1,4 +1,5 @@
 #include "Character.h"
+#include <math.h>
 
 
 //void Character::Initialize(Model* model, const uint32_t textureHandle)
@@ -17,13 +18,7 @@
 
 void Character::Update()
 {
-	attackTime++;
-
-	if (attackTime >= attackCool + (attackCool * (deBuffPower/3.0f)))
-	{
-		Attack();
-		attackTime = 0;
-	}
+	attackState->Update();
 
 	if (HP <= 0) isDead = true;
 }
@@ -34,6 +29,11 @@ void Character::Draw()
 	{
 		scale -= 0.05f;
 		if (scale < 1.0f) scale = 1.0f;
+	}
+	if (scale < 1.0f)
+	{
+		scale += 0.05f;
+		if (scale > 1.0f) scale = 1.0f;
 	}
 
 	if (angle > 0.0f)
@@ -48,12 +48,21 @@ void Character::Draw()
 	}
 
 	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle, true);
+
+	attackState->Draw(&texhandle);
+
+	//数値描画
+	DrawFormatString(pos.x + 50, pos.y - 20, 0xffffff, "power:%d", GetPower());
+	DrawFormatString(pos.x + 50, pos.y - 20, 0xffff00, "\nguard:%d", guardPower);
 }
 
 
-void Character::Attack()
+void Character::Attack(int power)
 {
 	isAttack = true;
+
+	if (power != 114514) this->powertmp[0] = power;
+	else                 this->powertmp[0] = powertmp[1];
 }
 
 void Character::Damage(int power)
@@ -61,4 +70,106 @@ void Character::Damage(int power)
 	if (power - guardPower <= 0) return;
 
 	HP -= (power - guardPower);
+}
+
+
+//---------------------------------------------------------------------------
+void Character::ChangeState(AttackState* state)
+{
+	delete this->attackState;
+	this->attackState = state;
+	state->SetChara(this);
+}
+
+void Character::InitializeBattle()
+{
+	attackTime = 0;
+
+	isAttack = false;
+
+	//攻撃力バフ
+	power = 0;
+	//攻撃力(0は戦闘ごと、1は元の戦闘力)
+	powertmp[0] = powertmp[1];
+
+	//上限じゃない限り回復
+	for (int i = 0; i < 5; i++)
+	{
+		if (HP >= hpMAX)break;
+		HP++;
+	}
+
+	guardPower = 0;
+
+	deBuffPower = 0;
+}
+
+
+//-------------------------------------------------------------------------------
+void NormalAttack::Update()
+{
+	chara->AddAttackTimer();
+
+	//通常こうげき　　　　　　　　　　　　　　　　　　　　　//デバフがかかっていたら攻撃が発動長くなる
+	if (chara->GetAttackTimer() >= chara->GetAttackCool() + (chara->GetAttackCool() * (chara->GetDeBuff() / 3.0f)))
+	{
+		chara->Attack();
+		chara->SetAttackTime(0);
+	}
+
+	//敵で、hpが半分以下、まだ強こうげき発動していない
+	if (chara->GetHP() <= chara->GetHpMAX() / 2 && !chara->GetIsSpecial() && chara->GetAttribute() == ENEMY)
+	{
+		chara->SetIsSpecial(true);
+		chara->ChangeState(new SpecialAttack);
+		
+	}
+}
+
+void NormalAttack::Draw(unsigned int* texhandle)
+{
+	
+}
+
+//-------------------------------------------------------------------------------
+void SpecialAttack::Update()
+{
+	specialGauge++;
+
+	DrawFormatString(0, 0, 0xffffff, "\n\n\n\n\n\ngauge%d", specialGauge);
+
+	//ゲージいっぱいになったら通常の攻撃力の2倍の攻撃
+	if (specialGauge >= specialGaugeMAX)
+	{
+		chara->Attack(chara->GetPower() * 2);
+		chara->SetAttackTime(0);
+
+		chara->ChangeState(new NormalAttack);
+
+		return;
+	}
+
+	//ある程度まで体力削れば死ぬ
+	if (chara->GetHP() < chara->GetHpMAX() / 5 && chara->GetIsSpecial() && chara->GetAttribute() == ENEMY)
+	{
+		chara->AddHP(-chara->GetHpMAX() / 3);
+		chara->ChangeState(new NormalAttack);
+	}
+}
+
+void SpecialAttack::Draw(unsigned int* texhandle)
+{
+	//強攻撃時、スケール変える
+	count ++;
+
+	if (count % 5 == 0)
+	{
+		chara->AddScale((float)(GetRand(2) + 1) * 0.1f);
+	}
+
+	DrawBox(chara->GetPos().x - gaugeLength.x / 2, 
+		chara->GetPos().y - gaugeLength.y / 2 - 70,
+		chara->GetPos().x - gaugeLength.x / 2 + gaugeLength.x * (float)((float)specialGauge / (float)specialGaugeMAX),
+		chara->GetPos().y + gaugeLength.y / 2 - 70,
+		0xffffff, true);
 }
