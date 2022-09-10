@@ -59,6 +59,8 @@ public:
 	CardInfo card[CARD_CONST];
 
 	Vec2 cardSize = { 160,240 };
+
+	Vec2 deckSpace = { 1500,800 };
 	Vec2 handSpace1 = { 400,800 };
 	Vec2 handSpace2 = { 600,800 };
 	Vec2 handSpace3 = { 800,800 };

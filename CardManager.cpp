@@ -14,7 +14,7 @@ void CardManager::Initialize()
 
 	//初期化
 	for (int i = 0; i < CARD_CONST; i++) {
-		card[i].pos_ = { 1500,800 };
+		card[i].pos_ = deckSpace;
 		card[i].move_ = { 0,0 };
 		card[i].space_ = 0;
 		card[i].isMove_ = 0;
@@ -22,10 +22,10 @@ void CardManager::Initialize()
 		card[i].chengeSize_ = { 0,0 };
 		card[i].alpha_ = 255;
 	}
-	LoadDivGraph("resources/card_attack-Sheet.png", 2, 2, 1, 100, 130, cardGraph_[0]);
+	LoadDivGraph("resources/card_attack-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[0]);
 	LoadDivGraph("resources/card_defense_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[1]);
-	LoadDivGraph("resources/card_buff_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[2]);
-	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 130, cardGraph_[3]);
+	LoadDivGraph("resources/card_buff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[2]);
+	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[3]);
 
 
 	/*for (int i = 0; i < deck.size(); i++) {
@@ -96,8 +96,35 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	//手札を指定の場所まで動かす
 	for (int i = 0; i < CARD_CONST; i++) {
 		Vec2 spaceLen;
+		//山札
+		if (card[i].space_ == CardSpace::Deck) {
+			//カードと捨て場の距離
+			spaceLen = deckSpace - card[i].pos_;
+			if (card[i].pos_.x != deckSpace.x) {
+				//距離が20pixel以上離れていたら20pixel動かす
+				if (spaceLen.GetLength() >= cardSpeed_) {
+					card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
+				}
+				//距離が20pixel以下なら捨て場まで動かす
+				else {
+					card[i].pos_.x += spaceLen.x;
+				}
+				card[i].isMove_ = true;
+			}
+			if (card[i].pos_.y != deckSpace.y) {
+				//距離が20pixel以上離れていたら20pixel動かす
+				if (spaceLen.GetLength() >= cardSpeed_) {
+					card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
+				}
+				//距離が20pixel以下なら捨て場まで動かす
+				else {
+					card[i].pos_.y += spaceLen.y;
+				}
+				card[i].isMove_ = true;
+			}
+		}
 		//右から1番目
-		if (card[i].space_ == CardSpace::Hand1) {
+		else if (card[i].space_ == CardSpace::Hand1) {
 			if (card[i].isSelect_ == false) {
 				//カードと捨て場の距離
 				spaceLen = handSpace1 - card[i].pos_;
@@ -373,12 +400,12 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 							cost->UseCost(itr->get()->GetCost());
 							deck.erase(itr);
 
-							card[i].space_ = CardSpace::Trash;
 							for (int j = 0; j < CARD_CONST; j++) {
 								if (card[j].space_ >= card[i].space_ + 1 && card[j].space_ <= 5) {
 									card[j].space_--;
 								}
 							}
+							card[i].space_ = CardSpace::Trash;
 						}
 					}
 				}
@@ -408,6 +435,11 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				if (deck.size() <= 0)
 				{
 					DeckSet();
+					for (int i = 0; i < CARD_CONST; i++) {
+						if (card[i].space_ != CardSpace::Delete) {
+							card[i].space_ = CardSpace::Deck;
+						}
+					}
 				}
 			}
 			//掴んでいるかを管理する変数をfalseに
@@ -433,34 +465,34 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	for (int i = 0; i < CARD_CONST; i++) {
 		//右から1番目
 		if (isSpace[0] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand1;
+			if (card[0].space_ == CardSpace::Deck) {
+				card[0].space_ = CardSpace::Hand1;
 				isSpace[0] = true;
 			}
 		}
 		//右から2番目
 		else if (isSpace[1] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand2;
+			if (card[1].space_ == CardSpace::Deck) {
+				card[1].space_ = CardSpace::Hand2;
 				isSpace[1] = true;
 			}
 		}
 		//右から3番目
 		else if (isSpace[2] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand3;
+			if (card[2].space_ == CardSpace::Deck) {
+				card[2].space_ = CardSpace::Hand3;
 				isSpace[2] = true;
 			}
 		}
 		//右から4番目
 		else if (isSpace[3] == false) {
-			if (card[i].space_ == CardSpace::Deck) {
-				card[i].space_ = CardSpace::Hand4;
+			if (card[3].space_ == CardSpace::Deck) {
+				card[3].space_ = CardSpace::Hand4;
 				isSpace[3] = true;
 			}
 		}
 		//右から5番目
-		else if (isSpace[4] == false) {
+		if (isSpace[4] == false) {
 			if (card[i].space_ == CardSpace::Deck) {
 				card[i].space_ = CardSpace::Hand5;
 				isSpace[4] = true;
