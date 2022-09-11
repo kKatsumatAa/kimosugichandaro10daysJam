@@ -76,6 +76,7 @@ public:
 	int mouseClickPosY_;
 
 	int cardGraph_[4][2];
+	int deckGraph_;
 	int trashGraph_;
 
 	const int cardSpeed_ = 20;
