@@ -13,6 +13,8 @@ private:
 
 	bool isEnd = false;
 
+	const int enemyMax = 4;
+
 public:
 	void Initialize(Player* player, Enemy* enemy);
 
