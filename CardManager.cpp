@@ -38,46 +38,52 @@ void CardManager::Initialize()
 
 void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle)
 {
-
-	if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
 	{
-		handNum++;
-		if (handNum > handAllNum - 1) handNum = 0;
-	}
-	if (key->GetKeyTrigger(KEY_INPUT_LEFT))
-	{
-		handNum--;
-		if (handNum < 0) handNum = handNumtmp - 1;
-	}
+	//if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
+	//{
+	//	handNum++;
+	//	if (handNum > handAllNum - 1) handNum = 0;
+	//}
+	//if (key->GetKeyTrigger(KEY_INPUT_LEFT))
+	//{
+	//	handNum--;
+	//	if (handNum < 0) handNum = handNumtmp - 1;
+	//}
 
-	DrawFormatString(0, 0, 0xffffff, "\n\n\n\nhandNum:%d", handNum);
+	//DrawFormatString(0, 0, 0xffffff, "\n\n\n\nhandNum:%d", handNum);
 
-	//デッキにカードがあるなら
-	if (deck.size() > 0)
-	{
-		std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
+	////デッキにカードがあるなら
+	//if (deck.size() > 0)
+	//{
+	//	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
-		if (key->GetKeyTrigger(KEY_INPUT_RETURN))
-		{
-			for (int i = 0; i < handNum; i++)
-			{
-				itr++;
-			}
+	//	if (key->GetKeyTrigger(KEY_INPUT_RETURN))
+	//	{
+	//		for (int i = 0; i < handNum; i++)
+	//		{
+	//			itr++;
+	//		}
 
-			//カードのコストと現在のコストを比較
-			if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
-			{
-				itr->get()->Effect(player, enemy);
-				cost->UseCost(itr->get()->GetCost());
-				deck.erase(itr);
-			}
-		}
-	}
-	//デッキをセット
-	if (deck.size() <= 0)
-	{
-		DeckSet();
-	}
+	//		//カードのコストと現在のコストを比較
+	//		if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
+	//		{
+	//			itr->get()->Effect(player, enemy);
+	//			cost->UseCost(itr->get()->GetCost());
+	//			deck.erase(itr);
+	//		}
+	//	}
+	//}
+	////デッキをセット
+	//if (deck.size() <= 0)
+	//{
+	//	DeckSet();
+	//	for (int i = 0; i < CARD_CONST; i++) {
+	//		if (card[i].space_ != CardSpace::Delete) {
+	//			card[i].space_ = CardSpace::Deck;
+	//		}
+	//	}
+	//}
+}
 
 	////////////////////////////////////////////////////////////////////////////////////
 	//マウス座標の取得
@@ -339,7 +345,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		card[i].isHit_ = false;
 
 		//デッキと捨て札以外の場所にあるカードとマウスの判定を取る
-		if (card[i].space_ != CardSpace::Deck && card[i].space_ != CardSpace::Trash && card[i].isMove_ == false) {
+		if (card[i].space_ != CardSpace::Deck && card[i].space_ != CardSpace::Trash && card[i].isMove_ == false
+			&& card[i].space_ != CardSpace::Delete) {
 			if (card[i].pos_.x - cardSize.x / 2 < mouseX && card[i].pos_.x + cardSize.x / 2 > mouseX) {
 				if (card[i].pos_.y - cardSize.y / 2 + card[i].move_.y < mouseY && card[i].pos_.y + cardSize.y / 2 > mouseY) {
 					card[i].isHit_ = true;
@@ -361,12 +368,67 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	}
 
 	///カードの選択
+	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\nattacknum:%d", attackMaxBattle);
+	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\nguardnum:%d", guardMaxBattle);
+	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\nbuffnum:%d", buffMaxBattle);
+	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\n\ndenum:%d", deBuffMaxBattle);
 
 	//掴んでいない時右クリックで廃棄
-	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0 && isCatch == false) {
+	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0 && isCatch == false && deck.size() > 0) {
+
+
+
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
+
+				int count = 0;
+				//リストの方の廃棄処理
+				std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
+				for (int j = 0; j < (card[i].space_ - 1); j++)
+				{
+					itr++;
+					count++;
+				}
+
+				switch (itr->get()->GetAttribute())
+				{
+				case Attibute::ATTACK:
+					attackMaxBattle--;
+					break;
+				case Attibute::GUARD:
+					guardMaxBattle--;
+					break;
+				case Attibute::BUFF:
+					buffMaxBattle--;
+					break;
+				case Attibute::DEBUFF:
+					deBuffMaxBattle--;
+					break;
+				}
+
+				cost->AddCost(itr->get()->GetCost());
+
+				deck.erase(itr);
+
+				//-----------------------------------------------
+				for (int j = 0; j < CARD_CONST; j++) {
+					if (card[j].space_ >= card[i].space_ + 1 && card[j].space_ <= 5) {
+						card[j].space_--;
+					}
+				}
+
+				isSpace[card[i].space_ - 1] = false;
 				card[i].space_ = CardSpace::Delete;
+			}
+		}
+
+		if (deck.size() <= 0)
+		{
+			DeckSet();
+			for (int i = 0; i < CARD_CONST; i++) {
+				if (card[i].space_ != CardSpace::Delete) {
+					card[i].space_ = CardSpace::Deck;
+				}
 			}
 		}
 	}
@@ -384,7 +446,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			//カードを上に持っていったら捨て札に
 			if (card[i].pos_.y <= 630) {
 
-				if (card[i].isSelect_ == true) {
+				if (card[i].isSelect_ == true && card[i].space_ != CardSpace::Delete) {
 					if (deck.size() > 0) {
 						std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
@@ -399,6 +461,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 							itr->get()->Effect(player, enemy);
 							cost->UseCost(itr->get()->GetCost());
 							deck.erase(itr);
+
+							/*if (deck.size() <= 0)DeckSet();*/
 
 							for (int j = 0; j < CARD_CONST; j++) {
 								if (card[j].space_ >= card[i].space_ + 1 && card[j].space_ <= 5) {
@@ -434,12 +498,13 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				//デッキをセット
 				if (deck.size() <= 0)
 				{
-					DeckSet();
+					
 					for (int i = 0; i < CARD_CONST; i++) {
 						if (card[i].space_ != CardSpace::Delete) {
 							card[i].space_ = CardSpace::Deck;
 						}
 					}
+					DeckSet();
 				}
 			}
 			//掴んでいるかを管理する変数をfalseに
@@ -465,29 +530,29 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	for (int i = 0; i < CARD_CONST; i++) {
 		//右から1番目
 		if (isSpace[0] == false) {
-			if (card[0].space_ == CardSpace::Deck) {
-				card[0].space_ = CardSpace::Hand1;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand1;
 				isSpace[0] = true;
 			}
 		}
 		//右から2番目
 		else if (isSpace[1] == false) {
-			if (card[1].space_ == CardSpace::Deck) {
-				card[1].space_ = CardSpace::Hand2;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand2;
 				isSpace[1] = true;
 			}
 		}
 		//右から3番目
 		else if (isSpace[2] == false) {
-			if (card[2].space_ == CardSpace::Deck) {
-				card[2].space_ = CardSpace::Hand3;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand3;
 				isSpace[2] = true;
 			}
 		}
 		//右から4番目
 		else if (isSpace[3] == false) {
-			if (card[3].space_ == CardSpace::Deck) {
-				card[3].space_ = CardSpace::Hand4;
+			if (card[i].space_ == CardSpace::Deck) {
+				card[i].space_ = CardSpace::Hand4;
 				isSpace[3] = true;
 			}
 		}
@@ -609,112 +674,138 @@ std::vector<int> make_rand_array_shuffle(const size_t size, int rand_min, int ra
 
 void CardManager::DeckSet()
 {
-	deck.clear();
-
-	//使うカードを生成
-	std::unique_ptr<AttackCard> attackC[attackMax];
-	std::unique_ptr<GuardCard> guardC[guardMax];
-	std::unique_ptr<BuffCard> buffC[buffMax];
-	std::unique_ptr<DeBuffCard> deBuffC[deBuffMax];
-
-	for (int i = 0; i < attackMax; i++)
+	if (deckMaxBattle > 0)
 	{
-		attackC[i] = std::make_unique<AttackCard>();
-		attackC[i]->Initialize(1,3);
-	}
-	for (int i = 0; i < guardMax; i++)
-	{
-		guardC[i] = std::make_unique<GuardCard>();
-		guardC[i]->Initialize();
-	}
-	for (int i = 0; i < buffMax; i++)
-	{
-		buffC[i] = std::make_unique<BuffCard>();
-		buffC[i]->Initialize(2);
-	}
-	for (int i = 0; i < deBuffMax; i++)
-	{
-		deBuffC[i] = std::make_unique<DeBuffCard>();
-		deBuffC[i]->Initialize(2);
-	}
+		deck.clear();
+		deck2.clear();
 
-	//重複なしランダムな数字の配列
-	std::vector<int> cardOrder;
+		//重複なしランダムな数字の配列
+		std::vector<int> cardOrder;
 
-	cardOrder = make_rand_array_shuffle(deckMax, 0, deckMax - 1);
-	std::vector<int>::iterator ITR = cardOrder.begin();
+		//廃棄したうえでのデッキの最大枚数
+		deckMaxBattle = attackMaxBattle + guardMaxBattle + buffMaxBattle + deBuffMaxBattle;
+
+		cardOrder = make_rand_array_shuffle(deckMaxBattle, 0, deckMaxBattle - 1);
+		std::vector<int>::iterator ITR = cardOrder.begin();
 
 
-	//デッキ上でのカードの順番をここで入れてあげる
-	for (int i = 0; i < cardOrder.size(); i++)
-	{
-		if (i < attackMax)
+		//使うカードを生成
+		//std::unique_ptr<AttackCard> attackC[attackMax];
+		//std::unique_ptr<GuardCard> guardC[guardMax];
+		//std::unique_ptr<BuffCard> buffC[buffMax];
+		//std::unique_ptr<DeBuffCard> deBuffC[deBuffMax];
+
+		//生成、デッキ上でのカードの順番をここで入れてあげて、仮のリスト（デッキ）に順番関係なくとりあえず入れる
+
+		for (int i = 0; i < attackMaxBattle; i++)
 		{
-			attackC[i]->SetCardOrder(*ITR);
+			std::unique_ptr<AttackCard> attackC = std::make_unique<AttackCard>();
+			attackC->Initialize(1, 3);
+			attackC->SetCardOrder(*ITR);
+			deck2.push_back(std::move(attackC));
+
+			ITR++;
 		}
-		else if (i < attackMax + guardMax)
+		for (int i = 0; i < guardMaxBattle; i++)
 		{
-			guardC[i - attackMax]->SetCardOrder(*ITR);
+			std::unique_ptr<GuardCard> guardC = std::make_unique<GuardCard>();
+			guardC->Initialize();
+			guardC->SetCardOrder(*ITR);
+			deck2.push_back(std::move(guardC));
+
+			ITR++;
 		}
-		else if (i < attackMax + guardMax + buffMax)
+		for (int i = 0; i < buffMaxBattle; i++)
 		{
-			buffC[i - (attackMax + guardMax)]->SetCardOrder(*ITR);
+			std::unique_ptr<BuffCard> buffC = std::make_unique<BuffCard>();
+			buffC->Initialize(2);
+			buffC->SetCardOrder(*ITR);
+			deck2.push_back(std::move(buffC));
+
+			ITR++;
 		}
-		else if (i < attackMax + guardMax + buffMax + deBuffMax)
+		for (int i = 0; i < deBuffMaxBattle; i++)
 		{
-			deBuffC[i - (attackMax + guardMax + buffMax)]->SetCardOrder(*ITR);
+			std::unique_ptr<DeBuffCard> deBuffC = std::make_unique<DeBuffCard>();
+			deBuffC->Initialize(2);
+			deBuffC->SetCardOrder(*ITR);
+			deck2.push_back(std::move(deBuffC));
+
+			ITR++;
 		}
 
-		ITR++;
-	}
 
 
-	//仮のリスト（デッキ）に順番関係なくとりあえず入れる
-	std::list<std::unique_ptr<Card>> deck2;
 
-	for (int i = 0; i < deckMax; i++)
-	{
-		if (i < attackMax)
+		////デッキ上でのカードの順番をここで入れてあげる
+		//for (int i = 0; i < cardOrder.size(); i++)
+		//{
+		//	if (i < attackMax)
+		//	{
+		//		attackC[i]->SetCardOrder(*ITR);
+		//	}
+		//	else if (i < attackMax + guardMax)
+		//	{
+		//		guardC[i - attackMax]->SetCardOrder(*ITR);
+		//	}
+		//	else if (i < attackMax + guardMax + buffMax)
+		//	{
+		//		buffC[i - (attackMax + guardMax)]->SetCardOrder(*ITR);
+		//	}
+		//	else if (i < attackMax + guardMax + buffMax + deBuffMax)
+		//	{
+		//		deBuffC[i - (attackMax + guardMax + buffMax)]->SetCardOrder(*ITR);
+		//	}
+
+		//	ITR++;
+		//}
+
+
+		//
+		//for (int i = 0; i < deckMax; i++)
+		//{
+		//	if (i < attackMax)
+		//	{
+		//		deck2.push_back(std::move(attackC[i]));
+		//	}
+		//	else if (i < attackMax + guardMax)
+		//	{
+		//		deck2.push_back(std::move(guardC[i - attackMax]));
+		//	}
+		//	else if (i < attackMax + guardMax + buffMax)
+		//	{
+		//		deck2.push_back(std::move(buffC[i - (attackMax + guardMax)]));
+		//	}
+		//	else if (i < attackMax + guardMax + buffMax + deBuffMax)
+		//	{
+		//		deck2.push_back(std::move(deBuffC[i - (attackMax + guardMax + buffMax)]));
+		//	}
+		//}
+
+		//仮のリストの中のカードを調べて、デッキ上での順にデッキのリストに入れてあげる
+		int orderCount = 0;
+		while (orderCount < deckMaxBattle)
 		{
-			deck2.push_back(std::move(attackC[i]));
-		}
-		else if (i < attackMax + guardMax)
-		{
-			deck2.push_back(std::move(guardC[i - attackMax]));
-		}
-		else if (i < attackMax + guardMax + buffMax)
-		{
-			deck2.push_back(std::move(buffC[i - (attackMax + guardMax)]));
-		}
-		else if (i < attackMax + guardMax + buffMax + deBuffMax)
-		{
-			deck2.push_back(std::move(deBuffC[i - (attackMax + guardMax + buffMax)]));
-		}
-	}
+			//std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
 
-	//仮のリストの中のカードを調べて、デッキ上での順にデッキのリストに入れてあげる
-	int orderCount = 0;
-	while (orderCount < deckMax)
-	{
-		//std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
-
-		for (int i = 0; i < deck2.size(); i++)
-		{
-			std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
-
-			std::advance(itr2, i);
-			if (itr2->get()->GetCardOrder() == orderCount)
+			for (int i = 0; i < deck2.size(); i++)
 			{
+				std::list<std::unique_ptr<Card>>::iterator itr2 = deck2.begin();
 
-				deck.push_back(std::move(*itr2));
-				deck2.erase(itr2);
+				std::advance(itr2, i);
+				if (itr2->get()->GetCardOrder() == orderCount)
+				{
 
-				orderCount++;
+					deck.push_back(std::move(*itr2));
+					deck2.erase(itr2);
+
+					orderCount++;
+				}
 			}
-		}
-		if (orderCount >= deckMax)
-		{
-			break;
+			if (orderCount >= deckMaxBattle)
+			{
+				break;
+			}
 		}
 	}
 }

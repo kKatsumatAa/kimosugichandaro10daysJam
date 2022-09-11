@@ -40,10 +40,18 @@ enum CardSpace {
 class CardManager
 {
 private:
+	int attackMaxBattle = attackMax;
+	int guardMaxBattle = guardMax;
+	int buffMaxBattle = buffMax;
+	int deBuffMaxBattle = deBuffMax;
+
+	int deckMaxBattle = attackMax + guardMax + buffMax + deBuffMax;
+
 	int handNum = 0;
 	int handAllNum = 0;
 	const int handNumtmp = 5;
 	std::list<std::unique_ptr<Card>> deck;
+	std::list<std::unique_ptr<Card>> deck2;
 
 public:
 	void Initialize();
