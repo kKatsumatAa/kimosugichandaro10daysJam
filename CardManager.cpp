@@ -417,15 +417,20 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				{
 				case Attibute::ATTACK:
 					attackMaxBattle--;
+					particle->OrbGenerate(card[i].pos_, Vec2(950, 180));
 					break;
 				case Attibute::GUARD:
 					guardMaxBattle--;
+					particle->OrbGenerate(card[i].pos_, Vec2(950, 180));
 					break;
 				case Attibute::BUFF:
 					buffMaxBattle--;
+					particle->OrbGenerate(card[i].pos_, Vec2(950, 180));
+					particle->OrbGenerate(card[i].pos_, Vec2(950, 180));
 					break;
 				case Attibute::DEBUFF:
 					deBuffMaxBattle--;
+					particle->OrbGenerate(card[i].pos_, Vec2(950, 180));
 					break;
 				}
 

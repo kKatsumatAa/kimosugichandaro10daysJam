@@ -63,8 +63,8 @@ void GameScene::Update()
 	if (key.GetKey(KEY_INPUT_7)) {
 		particle_->SlashGenerate(Vec2(1125, 340));
 	}
-	if (key.GetKey(KEY_INPUT_8)) {
-		particle_->OrbGenerate();
+	if (key.GetKeyTrigger(KEY_INPUT_8)) {
+		particle_->OrbGenerate(Vec2(200,200),Vec2 (1000,1000));
 	}
 
 	particle_->Update();

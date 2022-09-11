@@ -107,9 +107,13 @@ void Particle::SlashGenerate(Vec2 pos)
 		slash_.push_back(std::move(newSlash));
 }
 
-void Particle::OrbGenerate()
+void Particle::OrbGenerate(Vec2 start ,Vec2 end)
 {
 	std::unique_ptr<Orb> newOrb = std::make_unique<Orb>();
+	newOrb->startPos_ = start;
+	newOrb->pos_ = start;
+	newOrb->endPos_ = end;
+	newOrb->Initialize();
 	orb_.push_back(std::move(newOrb));
 }
 

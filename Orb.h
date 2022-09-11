@@ -11,7 +11,14 @@ public:
 
 	void Draw();
 
-	Vec2 pos_ = {100,100};
+	Vec2 startPos_;
+	Vec2 midPos_;
+	Vec2 endPos_;
+	Vec2 pos_ = startPos_;
+
+	int moveNum = 0;
+	int speed = 20;
+	int stopTimer = 80;
 
 	bool isDead_;
 };
