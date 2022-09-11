@@ -26,6 +26,7 @@ void CardManager::Initialize()
 	LoadDivGraph("resources/card_defense_-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[1]);
 	LoadDivGraph("resources/card_buff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[2]);
 	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[3]);
+	deckGraph_ = LoadGraph("resources/UI_deckPile.png");
 	trashGraph_ = LoadGraph("resources/UI_discardPile_icon.png");
 
 	particle = new Particle;
@@ -124,6 +125,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				}
 				card[i].isMove_ = true;
 			}
+			card[i].chengeSize_ = { -60,-90 };
 		}
 		//右から1番目
 		else if (card[i].space_ == CardSpace::Hand1) {
@@ -152,6 +154,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 					}
 					card[i].isMove_ = true;
 				}
+			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 2;
+				card[i].chengeSize_.y += 3;
 			}
 		}
 		//右から2番目
@@ -182,6 +188,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 					card[i].isMove_ = true;
 				}
 			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 2;
+				card[i].chengeSize_.y += 3;
+			}
 		}
 		//右から3番目
 		else if (card[i].space_ == CardSpace::Hand3) {
@@ -210,6 +220,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 					}
 					card[i].isMove_ = true;
 				}
+			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 2;
+				card[i].chengeSize_.y += 3;
 			}
 		}
 		//右から4番目
@@ -240,6 +254,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 					card[i].isMove_ = true;
 				}
 			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 2;
+				card[i].chengeSize_.y += 3;
+			}
 		}
 		//右から5番目
 		else if (card[i].space_ == CardSpace::Hand5) {
@@ -268,6 +286,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 					}
 					card[i].isMove_ = true;
 				}
+			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
 			}
 		}
 		//捨て札
@@ -563,14 +585,7 @@ void CardManager::Draw(unsigned int* texhandle)
 	for (int i = 0; i < CARD_CONST; i++) {
 		//カードがデッキにある時
 		if (card[i].space_ == CardSpace::Deck) {
-			DrawBox(
-				card[i].pos_.x - (cardSize.x / 2),
-				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y,
-				card[i].pos_.x + (cardSize.x / 2),
-				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y,
-				GetColor(100, 100, 100),
-				true
-			);
+
 		}
 		//カードが捨て札か廃棄にある時
 		else if (card[i].space_ == CardSpace::Trash || card[i].space_ == CardSpace::Delete) {
@@ -601,16 +616,17 @@ void CardManager::Draw(unsigned int* texhandle)
 		//カードが手札にある時
 		else {
 			DrawExtendGraph(
-				card[i].pos_.x - (cardSize.x / 2),
-				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y,
-				card[i].pos_.x + (cardSize.x / 2),
-				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y,
+				card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
+				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
+				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
+				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
 				cardGraph_[card[i].type_][card[i].isHit_],
 				true
 			);
 		}
 	}
 
+	DrawRotaGraph(deckSpace.x, deckSpace.y, 2, 0, deckGraph_, true);
 	DrawRotaGraph(handSpace6.x, handSpace6.y,2,0, trashGraph_, true);
 	particle->Draw();
 }
