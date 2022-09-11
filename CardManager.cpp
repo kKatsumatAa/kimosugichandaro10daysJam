@@ -579,7 +579,7 @@ void CardManager::Draw(unsigned int* texhandle)
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
 				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
 				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
-				cardGraph_[1][card[i].isHit_],
+				cardGraph_[card[i].type_][card[i].isHit_],
 				true
 			);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
