@@ -23,11 +23,13 @@ void CardManager::Initialize()
 		card[i].alpha_ = 255;
 	}
 	LoadDivGraph("resources/card_attack-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[0]);
-	LoadDivGraph("resources/card_defense_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[1]);
+	LoadDivGraph("resources/card_defense_-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[1]);
 	LoadDivGraph("resources/card_buff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[2]);
 	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[3]);
+	trashGraph_ = LoadGraph("resources/UI_discardPile_icon.png");
 
-
+	particle = new Particle;
+	particle->Initialize();
 	/*for (int i = 0; i < deck.size(); i++) {
 		Card temp = deck[i];
 		int randomIndex = Random.Range(i, deck.Count);
@@ -359,13 +361,17 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			card[i].move_.y = 0;
 		}
 	}
-
 	///カードの選択
 
 	//掴んでいない時右クリックで廃棄
 	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0 && isCatch == false) {
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
+				for (int j = 0; j < CARD_CONST; j++) {
+					if (card[j].space_ >= card[i].space_ + 1 && card[j].space_ <= 5) {
+						card[j].space_--;
+					}
+				}
 				card[i].space_ = CardSpace::Delete;
 			}
 		}
@@ -404,6 +410,19 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 								if (card[j].space_ >= card[i].space_ + 1 && card[j].space_ <= 5) {
 									card[j].space_--;
 								}
+							}
+							if (card[i].type_ == 0) {
+								particle->BurstGenerate(Vec2(1175, 390), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
+								particle->SlashGenerate(Vec2(1125, 340));
+							}
+							else if (card[i].type_ == 1) {
+
+							}
+							else if (card[i].type_ == 2) {
+								buffTimer = 50;
+							}
+							else if (card[i].type_ == 3) {
+								debuffTimer = 50;
 							}
 							card[i].space_ = CardSpace::Trash;
 						}
@@ -499,7 +518,15 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			}
 		}
 	}
+	//パーティクル関連
+	if (--buffTimer >= 0) {
+		particle->BuffGenerate(Vec2(775, 390), Vec2(100, 50), 15);
+	}
+	if (--debuffTimer >= 0) {
+		particle->DebuffGenerate(Vec2(1175, 390), Vec2(100, 50), 15);
+	}
 
+	particle->Update();
 }
 
 void CardManager::Draw(unsigned int* texhandle)
@@ -523,8 +550,13 @@ void CardManager::Draw(unsigned int* texhandle)
 	}
 	itr = deck.begin();
 	for (int i = 0; i < deck.size(); i++) {
-		color[i] = itr->get()->GetColorNum();
-		itr++;
+		for (int j = 0; j < CARD_CONST; j++) {
+			if (card[j].space_ == i + 1 && card[j].space_ <= 5) {
+				card[j].type_ = itr->get()->GetColorNum();
+				itr++;
+				break;
+			}
+		}
 	}
 	itr = deck.begin();
 	//カードの描画
@@ -548,7 +580,7 @@ void CardManager::Draw(unsigned int* texhandle)
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
 				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
 				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
-				cardGraph_[1][card[i].isHit_],
+				cardGraph_[card[i].type_][card[i].isHit_],
 				true
 			);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -573,11 +605,14 @@ void CardManager::Draw(unsigned int* texhandle)
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y,
 				card[i].pos_.x + (cardSize.x / 2),
 				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y,
-				cardGraph_[color[card[i].space_ - 1]][card[i].isHit_],
+				cardGraph_[card[i].type_][card[i].isHit_],
 				true
 			);
 		}
 	}
+
+	DrawRotaGraph(handSpace6.x, handSpace6.y,2,0, trashGraph_, true);
+	particle->Draw();
 }
 
 std::mt19937 create_rand_engine() {
@@ -620,7 +655,7 @@ void CardManager::DeckSet()
 	for (int i = 0; i < attackMax; i++)
 	{
 		attackC[i] = std::make_unique<AttackCard>();
-		attackC[i]->Initialize(1,3);
+		attackC[i]->Initialize(1, 3);
 	}
 	for (int i = 0; i < guardMax; i++)
 	{
