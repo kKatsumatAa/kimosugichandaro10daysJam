@@ -47,13 +47,24 @@ void Character::Draw()
 		if (angle > 0.0f) angle = 0.0f;
 	}
 
-	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle, true);
+	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle[0], true);
 
-	attackState->Draw(&texhandle);
+	attackState->Draw(texhandle);
 
 	//êîílï`âÊ
 	DrawFormatString(pos.x + 50, pos.y - 20, 0xffffff, "power:%d", GetPower());
 	DrawFormatString(pos.x + 50, pos.y - 20, 0xffff00, "\nguard:%d", guardPower);
+
+	//hp,çUåÇÉQÅ[ÉW
+	DrawRotaGraph(pos.x , pos.y - 100, 1.5f, 0.0f, texhandle[1], true);
+
+	SetDrawBright(255, 255, 255);
+	DrawBox(pos.x - 77 * 1.5f, pos.y - 93,
+		pos.x - 77 * 1.5f + ((float)168 * 1.5f * GetAttackGauge()), pos.y - 76, 
+		0x00ffff, true);
+	DrawBox(pos.x - 78 * 1.5f, pos.y - 123,
+		pos.x - 78 * 1.5f + ((float)168 * 1.5f * ((float)HP / (float)hpMAX)), pos.y - 95,
+		0xff0000, true);
 }
 
 

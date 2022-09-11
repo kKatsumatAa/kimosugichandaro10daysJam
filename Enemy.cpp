@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-void Enemy::Initialize(const unsigned int textureHandle, Vec2 pos, int hp, int power, int attackCool)
+void Enemy::Initialize( unsigned int* textureHandle, Vec2 pos, int hp, int power, int attackCool)
 {
 	this->pos = pos;
 
