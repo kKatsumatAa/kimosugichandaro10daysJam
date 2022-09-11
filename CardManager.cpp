@@ -360,17 +360,6 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			card[i].move_.y = 0;
 		}
 	}
-
-	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
-	for (int i = 0; i < deck.size(); i++) {
-		for (int j = 0; j < CARD_CONST; j++) {
-			if (card[j].space_ == i + 1) {
-				card[j].type_ = itr->get()->GetColorNum();
-				itr++;
-			}
-		}
-	}
-	itr = deck.begin();
 	///カードの選択
 
 	//掴んでいない時右クリックで廃棄
@@ -426,7 +415,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 								particle->SlashGenerate(Vec2(1125, 340));
 							}
 							else if (card[i].type_ == 1) {
-								
+
 							}
 							else if (card[i].type_ == 2) {
 								buffTimer = 50;
@@ -535,7 +524,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	if (--debuffTimer >= 0) {
 		particle->DebuffGenerate(Vec2(1175, 390), Vec2(100, 50), 15);
 	}
-	
+
 	particle->Update();
 }
 
@@ -557,6 +546,16 @@ void CardManager::Draw(unsigned int* texhandle)
 		itr->get()->Draw(texhandle[0], { (double)(400 + i * 300),(double)800 + selectPos });
 
 		itr++;
+	}
+	itr = deck.begin();
+	for (int i = 0; i < deck.size(); i++) {
+		for (int j = 0; j < CARD_CONST; j++) {
+			if (card[j].space_ == i + 1 && card[j].space_ <= 5) {
+				card[j].type_ = itr->get()->GetColorNum();
+				itr++;
+				break;
+			}
+		}
 	}
 	itr = deck.begin();
 	//カードの描画
@@ -610,7 +609,7 @@ void CardManager::Draw(unsigned int* texhandle)
 			);
 		}
 	}
-	
+
 
 	particle->Draw();
 }
@@ -655,7 +654,7 @@ void CardManager::DeckSet()
 	for (int i = 0; i < attackMax; i++)
 	{
 		attackC[i] = std::make_unique<AttackCard>();
-		attackC[i]->Initialize(1,3);
+		attackC[i]->Initialize(1, 3);
 	}
 	for (int i = 0; i < guardMax; i++)
 	{
