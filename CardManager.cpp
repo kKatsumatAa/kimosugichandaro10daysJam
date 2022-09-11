@@ -704,7 +704,7 @@ std::mt19937 create_rand_engine() {
 std::vector<int> make_rand_array_shuffle(const size_t size, int rand_min, int rand_max) {
 	if (rand_min > rand_max) std::swap(rand_min, rand_max);
 	const size_t max_min_diff = static_cast<size_t>(rand_max - rand_min + 1);
-	if (max_min_diff < size) throw std::runtime_error("引数が異常です");
+	//if (max_min_diff < size) throw std::runtime_error("引数が異常です");
 
 	std::vector<int> tmp;
 	tmp.reserve(max_min_diff);
