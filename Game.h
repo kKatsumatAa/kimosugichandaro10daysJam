@@ -22,7 +22,7 @@ private:
 	
 	Cost cost;
 	//
-	unsigned int texhandle = LoadGraph("resources/a.png");
+	unsigned int texhandle[10];
 	
 
 public:

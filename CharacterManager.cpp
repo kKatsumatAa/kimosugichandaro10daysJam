@@ -88,18 +88,18 @@ void CharacterManager::Draw()
 	DrawFormatString(5, 0, 0xffffff, "\n\nisEnd:%d", isEnd);
 	DrawFormatString(5, 0, 0xffffff, "\n\n\nenemyNumber:%d", enemyNum);
 
-	//hp
-	DrawFormatString(player->GetPos().x -32, player->GetPos().y - 100, 0xffffff, "playerHP:%d", player->GetHP());
-	DrawFormatString(enemy[enemyNum].GetPos().x -32, enemy[enemyNum].GetPos().y - 100, 0xffffff, "enemyHP:%d", enemy[enemyNum].GetHP());
+	////hp
+	//DrawFormatString(player->GetPos().x -32, player->GetPos().y - 100, 0xffffff, "playerHP:%d", player->GetHP());
+	//DrawFormatString(enemy[enemyNum].GetPos().x -32, enemy[enemyNum].GetPos().y - 100, 0xffffff, "enemyHP:%d", enemy[enemyNum].GetHP());
 
-	//
-	//DrawRotaGraph3(player->GetPos().x - 32, 1080 / 2 -50, 32, 32, 1.0 * player->GetAttackGauge(), 0.3f, 0, player->GetTexHandle(), false);
-	//DrawRotaGraph3(enemy[enemyNum].GetPos().x - 32, 1080 / 2 -50, 32, 32, 1.0 * enemy[enemyNum].GetAttackGauge(), 0.3f, 0, player->GetTexHandle(), false);
+	////
+	////DrawRotaGraph3(player->GetPos().x - 32, 1080 / 2 -50, 32, 32, 1.0 * player->GetAttackGauge(), 0.3f, 0, player->GetTexHandle(), false);
+	////DrawRotaGraph3(enemy[enemyNum].GetPos().x - 32, 1080 / 2 -50, 32, 32, 1.0 * enemy[enemyNum].GetAttackGauge(), 0.3f, 0, player->GetTexHandle(), false);
 
-	//UŒ‚ƒQ[ƒW
-	DrawBox(player->GetPos().x - 32, player->GetPos().y - 50, 
-		(player->GetPos().x - 32) + player->GetAttackGauge() * 64, player->GetPos().y - 40, 0xffffff, false);
+	////UŒ‚ƒQ[ƒW
+	//DrawBox(player->GetPos().x - 32, player->GetPos().y - 50, 
+	//	(player->GetPos().x - 32) + player->GetAttackGauge() * 64, player->GetPos().y - 40, 0xffffff, false);
 
-	DrawBox(enemy[enemyNum].GetPos().x - 32, enemy[enemyNum].GetPos().y - 50,
-		(enemy[enemyNum].GetPos().x - 32) + enemy[enemyNum].GetAttackGauge() * 64, enemy[enemyNum].GetPos().y - 40, 0xffffff, false);
+	//DrawBox(enemy[enemyNum].GetPos().x - 32, enemy[enemyNum].GetPos().y - 50,
+	//	(enemy[enemyNum].GetPos().x - 32) + enemy[enemyNum].GetAttackGauge() * 64, enemy[enemyNum].GetPos().y - 40, 0xffffff, false);
 }

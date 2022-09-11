@@ -620,7 +620,7 @@ void CardManager::DeckSet()
 	for (int i = 0; i < attackMax; i++)
 	{
 		attackC[i] = std::make_unique<AttackCard>();
-		attackC[i]->Initialize();
+		attackC[i]->Initialize(1,3);
 	}
 	for (int i = 0; i < guardMax; i++)
 	{
@@ -630,12 +630,12 @@ void CardManager::DeckSet()
 	for (int i = 0; i < buffMax; i++)
 	{
 		buffC[i] = std::make_unique<BuffCard>();
-		buffC[i]->Initialize();
+		buffC[i]->Initialize(2);
 	}
 	for (int i = 0; i < deBuffMax; i++)
 	{
 		deBuffC[i] = std::make_unique<DeBuffCard>();
-		deBuffC[i]->Initialize();
+		deBuffC[i]->Initialize(2);
 	}
 
 	//d•¡‚È‚µƒ‰ƒ“ƒ_ƒ€‚È”š‚Ì”z—ñ

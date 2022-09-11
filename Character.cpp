@@ -47,13 +47,26 @@ void Character::Draw()
 		if (angle > 0.0f) angle = 0.0f;
 	}
 
-	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle, true);
+	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle[0], true);
 
-	attackState->Draw(&texhandle);
+	
 
 	//数値描画
 	DrawFormatString(pos.x + 50, pos.y - 20, 0xffffff, "power:%d", GetPower());
 	DrawFormatString(pos.x + 50, pos.y - 20, 0xffff00, "\nguard:%d", guardPower);
+
+	//hp,攻撃ゲージ
+	DrawRotaGraph(pos.x , pos.y - 100, 1.5f, 0.0f, texhandle[1], true);
+
+	SetDrawBright(255, 255, 255);
+	DrawBox(pos.x - 77 * 1.5f, pos.y - 93,
+		pos.x - 77 * 1.5f + ((float)168 * 1.5f * GetAttackGauge()), pos.y - 76, 
+		0x00ffff, true);
+	DrawBox(pos.x - 78 * 1.5f, pos.y - 123,
+		pos.x - 78 * 1.5f + ((float)168 * 1.5f * ((float)HP / (float)hpMAX)), pos.y - 95,
+		0xff0000, true);
+
+	attackState->Draw(texhandle);
 }
 
 
@@ -149,10 +162,10 @@ void SpecialAttack::Update()
 		return;
 	}
 
-	//ある程度まで体力削れば死ぬ
-	if (chara->GetHP() < chara->GetHpMAX() / 5 && chara->GetIsSpecial() && chara->GetAttribute() == ENEMY)
+	//ある程度まで体力削ればデバフを２与える
+	if ((float)chara->GetHP() <= (float)chara->GetHpMAX() / 5.0f && chara->GetIsSpecial() && chara->GetAttribute() == ENEMY)
 	{
-		chara->AddHP(-chara->GetHpMAX() / 3);
+		chara->AddDeBuff(2);
 		chara->ChangeState(new NormalAttack);
 	}
 }
@@ -168,8 +181,12 @@ void SpecialAttack::Draw(unsigned int* texhandle)
 	}
 
 	DrawBox(chara->GetPos().x - gaugeLength.x / 2, 
-		chara->GetPos().y - gaugeLength.y / 2 - 70,
+		chara->GetPos().y - gaugeLength.y / 2 + 70,
 		chara->GetPos().x - gaugeLength.x / 2 + gaugeLength.x * (float)((float)specialGauge / (float)specialGaugeMAX),
-		chara->GetPos().y + gaugeLength.y / 2 - 70,
+		chara->GetPos().y + gaugeLength.y / 2 + 70,
 		0xffffff, true);
+
+	//ブレークするhp
+	DrawLine(chara->GetPos().x - 77 * 1.5f + ((float)168 * 1.5f / 5.0f), chara->GetPos().y - 123,
+		chara->GetPos().x - 77 * 1.5f + ((float)168 * 1.5f / 5.0f), chara->GetPos().y - 95, 0xffffff, 3);
 }

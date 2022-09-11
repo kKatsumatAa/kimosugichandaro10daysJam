@@ -5,6 +5,6 @@
 class Player : public Character
 {
 public:
-	void Initialize(const unsigned int textureHandle, Vec2 pos, int hp = 30, int power = 1, int attackCool = 100) override;
+	void Initialize( unsigned int* textureHandle, Vec2 pos, int hp = 30, int power = 1, int attackCool = 100) override;
 };
 

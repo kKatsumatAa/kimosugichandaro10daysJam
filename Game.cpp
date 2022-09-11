@@ -4,7 +4,7 @@
 #include "Title.h"
 #include "Burst.h"
 
-GameScene::GameScene(KeyboardInput& key):
+GameScene::GameScene(KeyboardInput& key) :
 	key(key), isEnd(false),
 	nextScene(new ResultScene(key))//元はリザルトが入ってる
 {
@@ -12,11 +12,17 @@ GameScene::GameScene(KeyboardInput& key):
 	particle_->Initialize();
 	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
 	enemy[0].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 10);
-	enemy[1].Initialize(texhandle, { 2100,1080 / 2 - 150}, 15, 3, 170);
-	enemy[2].Initialize(texhandle, { 2100,1080 / 2 - 150}, 20, 5, 100);
+	enemy[1].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 15, 3, 170);
+	enemy[2].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 100);
 	charaM.Initialize(&player, enemy);
 	cardM.Initialize();
 	cost.Initialize();
+
+	{
+		texhandle[0] = LoadGraph("resources/a.png");
+		texhandle[1] = LoadGraph("resources/healthUI_frame.png");
+		texhandle[2] = LoadGraph("resources/UI_energy_orb.png");
+	}
 }
 
 GameScene::~GameScene() {
@@ -78,9 +84,9 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	charaM.Draw();
-	cardM.Draw(&texhandle);
+	cardM.Draw(texhandle);
 
-	cost.Draw(&texhandle);
+	cost.Draw(texhandle);
 
 	DrawFormatString(0, 0, 0xFFFFFF, "GAME");
 	particle_->Draw();

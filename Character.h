@@ -30,7 +30,7 @@ private:
 
 	
 protected:
-	unsigned int texhandle;
+	unsigned int* texhandle;
 
 	int attackCool = 240;
 	int attackTime = 0;
@@ -65,7 +65,7 @@ protected:
 	int hpMAX = 0;
 
 public:
-	virtual void Initialize(const unsigned int textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240) = 0;
+	virtual void Initialize(unsigned int* textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240) = 0;
 	void Update();
 	void Draw();
 
@@ -98,7 +98,7 @@ public:
 
 	float GetAttackGauge() { return (float)attackTime / (float)(attackCool + (attackCool * (deBuffPower / 3.0f))); }
 
-	unsigned int GetTexHandle() { return texhandle; }
+	unsigned int* GetTexHandle() { return texhandle; }
 
 	void AddGuardPower(int guardPower) { this->guardPower += guardPower; }
 
