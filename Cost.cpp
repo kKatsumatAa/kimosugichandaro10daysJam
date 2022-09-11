@@ -8,7 +8,7 @@ void Cost::Initialize()
 
 void Cost::Update()
 {
-	if (costGauge < 4.0f)
+	if (costGauge < costMax)
 	{
 		costGauge += 0.01f;
 	}
@@ -38,4 +38,10 @@ void Cost::Draw(unsigned int* texhandle)
 	DrawCircle(1920 / 2 - 5.0f * 2.5f, 130, 17.0f * min(costGauge - 1.0f, 1.0f), color[1]);
 	DrawCircle(1920 / 2 + 27.0f * 2.5f, 130, 17.0f * min(costGauge - 2.0f, 1.0f), color[2]);
 	DrawCircle(1920 / 2 + 58.0f * 2.5f, 130, 17.0f * min(costGauge - 3.0f, 1.0f), color[3]);
+}
+
+void Cost::AddCost(int cost)
+{
+	if (costGauge + cost >= costMax) costGauge = costMax;
+	else                             costGauge += cost;
 }
