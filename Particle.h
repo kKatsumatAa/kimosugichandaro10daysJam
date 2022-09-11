@@ -6,6 +6,7 @@
 #include "Lightning.h"
 #include "Buff.h"
 #include "Debuff.h"
+#include "Slash.h"
 
 #include <list>
 #include <memory>
@@ -27,6 +28,8 @@ public:
 	void BuffGenerate(Vec2 pos, Vec2 random,int r);
 	//デバフ(中心位置,ランダムで出る場所の範囲,半径)
 	void DebuffGenerate(Vec2 pos, Vec2 random,int r);
+	//斬撃
+	void SlashGenerate(Vec2 pos);
 
 	void Update();
 
@@ -45,6 +48,8 @@ public:
 	std::list<std::unique_ptr<Buff>> buff_;
 	//デバフ
 	std::list<std::unique_ptr<Debuff>> debuff_;
+	//斬撃
+	std::list<std::unique_ptr<Slash>> slash_;
 
 };
 

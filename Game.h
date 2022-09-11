@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "KeyboardInput.h"
-#include "Particle.h"
+//#include "Particle.h"
 #include "CharacterManager.h"
 #include "CardManager.h"
 
@@ -33,5 +33,5 @@ public:
 	bool IsEnd() override;
 	Iscene* GetNextScene() override;
 
-	Particle* particle_ = nullptr;
+	//Particle* particle_ = nullptr;
 };

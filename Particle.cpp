@@ -100,6 +100,13 @@ void Particle::DebuffGenerate(Vec2 pos, Vec2 random,int r)
 	}
 }
 
+void Particle::SlashGenerate(Vec2 pos)
+{
+		std::unique_ptr<Slash> newSlash = std::make_unique<Slash>();
+		newSlash->pos_ = pos;
+		slash_.push_back(std::move(newSlash));
+}
+
 void Particle::Update()
 {
 	//”ò‚ÑŽU‚é
@@ -132,6 +139,11 @@ void Particle::Update()
 	for (std::unique_ptr<Debuff>& debuff : debuff_) {
 		debuff->Update();
 	}
+	//ŽaŒ‚
+	slash_.remove_if([](std::unique_ptr<Slash>& slash) {return slash->isDead_; });
+	for (std::unique_ptr<Slash>& slash : slash_) {
+		slash->Update();
+	}
 }
 
 void Particle::Draw()
@@ -153,5 +165,8 @@ void Particle::Draw()
 	}
 	for (std::unique_ptr<Debuff>& debuff : debuff_) {
 		debuff->Draw();
+	}
+	for (std::unique_ptr<Slash>& slash : slash_) {
+		slash->Draw();
 	}
 }

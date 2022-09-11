@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Cost.h"
 #include "Mouse.h"
+#include "Particle.h"
 
 static const int attackMax = 8;
 static const int guardMax = 5;
@@ -24,6 +25,7 @@ struct CardInfo
 	bool isSelect_;
 	Vec2 chengeSize_;
 	int alpha_;
+	int type_;
 };
 
 enum CardSpace {
@@ -74,7 +76,11 @@ public:
 	int mouseClickPosY_;
 	int cardGraph_[4][2];
 	const int cardSpeed_ = 20;
-	int color[20];
 	int handCount = 0;
+
+	//パーティクル関連
+	Particle* particle = nullptr;
+	int buffTimer = 0;
+	int debuffTimer = 0;
 };
 

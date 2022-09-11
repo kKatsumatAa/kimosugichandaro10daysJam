@@ -8,8 +8,8 @@ GameScene::GameScene(KeyboardInput& key) :
 	key(key), isEnd(false),
 	nextScene(new ResultScene(key))//元はリザルトが入ってる
 {
-	particle_ = new Particle;
-	particle_->Initialize();
+	//particle_ = new Particle;
+	//particle_->Initialize();
 	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
 	enemy[0].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 10);
 	enemy[1].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 15, 3, 170);
@@ -26,7 +26,7 @@ GameScene::GameScene(KeyboardInput& key) :
 }
 
 GameScene::~GameScene() {
-	delete particle_;
+	//delete particle_;
 }
 
 void GameScene::Update()
@@ -41,26 +41,29 @@ void GameScene::Update()
 	}
 #endif 
 
-	if (key.GetKeyTrigger(KEY_INPUT_1)) {
-		particle_->BurstGenerate(Vec2(775, 550),5,50,60,225,15.0f,GetColor(200,0,0));
-	}
-	if (key.GetKey(KEY_INPUT_2)) {
-		particle_->FireGenerate(Vec2(775, 550),16);
-	}
-	if (key.GetKey(KEY_INPUT_3)) {
-		particle_->WaterGenerate(Vec2(775, 550), 16);
-	}
-	if (key.GetKeyTrigger(KEY_INPUT_4)) {
-		particle_->LightningGenerate(Vec2(775, 550),500,3,60,1);
-	}
-	if (key.GetKey(KEY_INPUT_5)) {
-		particle_->BuffGenerate(Vec2(775, 550), Vec2(100, 50),15);
-	}
-	if (key.GetKey(KEY_INPUT_6)) {
-		particle_->DebuffGenerate(Vec2(775, 550), Vec2(100, 50),15);
-	}
+	//if (key.GetKeyTrigger(KEY_INPUT_1)) {
+	//	particle_->BurstGenerate(Vec2(775, 550),5,50,60,225,15.0f,GetColor(200,0,0));
+	//}
+	//if (key.GetKey(KEY_INPUT_2)) {
+	//	particle_->FireGenerate(Vec2(775, 550),16);
+	//}
+	//if (key.GetKey(KEY_INPUT_3)) {
+	//	particle_->WaterGenerate(Vec2(775, 550), 16);
+	//}
+	//if (key.GetKeyTrigger(KEY_INPUT_4)) {
+	//	particle_->LightningGenerate(Vec2(775, 550),500,3,60,1);
+	//}
+	//if (key.GetKey(KEY_INPUT_5)) {
+	//	particle_->BuffGenerate(Vec2(775, 550), Vec2(100, 50),15);
+	//}
+	//if (key.GetKey(KEY_INPUT_6)) {
+	//	particle_->DebuffGenerate(Vec2(775, 550), Vec2(100, 50),15);
+	//}
+	//if (key.GetKey(KEY_INPUT_7)) {
+	//	particle_->SlashGenerate(Vec2(1125, 340));
+	//}
 
-	particle_->Update();
+	//particle_->Update();
 
 	cost.Update();
 	charaM.Update();
@@ -89,7 +92,7 @@ void GameScene::Draw()
 	cost.Draw(texhandle);
 
 	DrawFormatString(0, 0, 0xFFFFFF, "GAME");
-	particle_->Draw();
+	/*particle_->Draw();*/
 }
 
 bool GameScene::IsEnd()
