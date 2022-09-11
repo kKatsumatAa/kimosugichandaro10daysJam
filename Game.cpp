@@ -60,6 +60,12 @@ void GameScene::Update()
 	if (key.GetKey(KEY_INPUT_6)) {
 		particle_->DebuffGenerate(Vec2(775, 550), Vec2(100, 50),15);
 	}
+	if (key.GetKey(KEY_INPUT_7)) {
+		particle_->SlashGenerate(Vec2(1125, 340));
+	}
+	if (key.GetKey(KEY_INPUT_8)) {
+		particle_->OrbGenerate();
+	}
 
 	particle_->Update();
 

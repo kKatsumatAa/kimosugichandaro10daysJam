@@ -145,11 +145,13 @@
     <ClCompile Include="Lightning.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Orb.cpp" />
     <ClCompile Include="PadInput.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Slash.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Water.cpp" />
@@ -170,11 +172,13 @@
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="Lightning.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Orb.h" />
     <ClInclude Include="PadInput.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Slash.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Water.h" />

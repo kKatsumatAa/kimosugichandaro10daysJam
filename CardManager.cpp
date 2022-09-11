@@ -12,7 +12,7 @@ void CardManager::Initialize()
 {
 	DeckSet();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	for (int i = 0; i < CARD_CONST; i++) {
 		card[i].pos_ = deckSpace;
 		card[i].move_ = { 0,0 };
@@ -23,11 +23,14 @@ void CardManager::Initialize()
 		card[i].alpha_ = 255;
 	}
 	LoadDivGraph("resources/card_attack-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[0]);
-	LoadDivGraph("resources/card_defense_prototype-Sheet.png", 2, 2, 1, 90, 130, cardGraph_[1]);
+	LoadDivGraph("resources/card_defense_-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[1]);
 	LoadDivGraph("resources/card_buff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[2]);
 	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[3]);
+	deckGraph_ = LoadGraph("resources/UI_deckPile.png");
+	trashGraph_ = LoadGraph("resources/UI_discardPile_icon.png");
 
-
+	particle = new Particle;
+	particle->Initialize();
 	/*for (int i = 0; i < deck.size(); i++) {
 		Card temp = deck[i];
 		int randomIndex = Random.Range(i, deck.Count);
@@ -52,7 +55,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 
 	//DrawFormatString(0, 0, 0xffffff, "\n\n\n\nhandNum:%d", handNum);
 
-	////ƒfƒbƒL‚ÉƒJ[ƒh‚ª‚ ‚é‚È‚ç
+	////ãƒ‡ãƒƒã‚­ã«ã‚«ãƒ¼ãƒ‰ãŒã‚ã‚‹ãªã‚‰
 	//if (deck.size() > 0)
 	//{
 	//	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
@@ -64,7 +67,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	//			itr++;
 	//		}
 
-	//		//ƒJ[ƒh‚ÌƒRƒXƒg‚ÆŒ»İ‚ÌƒRƒXƒg‚ğ”äŠr
+	//		//ã‚«ãƒ¼ãƒ‰ã®ã‚³ã‚¹ãƒˆã¨ç¾åœ¨ã®ã‚³ã‚¹ãƒˆã‚’æ¯”è¼ƒ
 	//		if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
 	//		{
 	//			itr->get()->Effect(player, enemy);
@@ -73,7 +76,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	//		}
 	//	}
 	//}
-	////ƒfƒbƒL‚ğƒZƒbƒg
+	////ãƒ‡ãƒƒã‚­ã‚’ã‚»ãƒƒãƒˆ
 	//if (deck.size() <= 0)
 	//{
 	//	DeckSet();
@@ -86,221 +89,242 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 }
 
 	////////////////////////////////////////////////////////////////////////////////////
-	//ƒ}ƒEƒXÀ•W‚Ìæ“¾
+	//ãƒã‚¦ã‚¹åº§æ¨™ã®å–å¾—
 	GetMousePoint(&mouseX, &mouseY);
 
 	for (int i = 0; i < 5; i++) {
-		//èD‚ÉƒJ[ƒh‚ª‚ ‚é‚©
+		//æ‰‹æœ­ã«ã‚«ãƒ¼ãƒ‰ãŒã‚ã‚‹ã‹
 		isSpace[i] = false;
 	}
 
-	//ƒJ[ƒh‚ª“®‚¢‚Ä‚¢‚é‚©ŠÇ—‚·‚é•Ï”‚Ì‰Šú‰»
+	//ã‚«ãƒ¼ãƒ‰ãŒå‹•ã„ã¦ã„ã‚‹ã‹ç®¡ç†ã™ã‚‹å¤‰æ•°ã®åˆæœŸåŒ–
 	for (int i = 0; i < CARD_CONST; i++) {
 		card[i].isMove_ = false;
 	}
 
-	//èD‚ğw’è‚ÌêŠ‚Ü‚Å“®‚©‚·
+	//æ‰‹æœ­ã‚’æŒ‡å®šã®å ´æ‰€ã¾ã§å‹•ã‹ã™
 	for (int i = 0; i < CARD_CONST; i++) {
 		Vec2 spaceLen;
-		//RD
+		//å±±æœ­
 		if (card[i].space_ == CardSpace::Deck) {
-			//ƒJ[ƒh‚ÆÌ‚Äê‚Ì‹——£
+			//ã‚«ãƒ¼ãƒ‰ã¨æ¨ã¦å ´ã®è·é›¢
 			spaceLen = deckSpace - card[i].pos_;
 			if (card[i].pos_.x != deckSpace.x) {
-				//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+				//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 				if (spaceLen.GetLength() >= cardSpeed_) {
 					card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
 				}
-				//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+				//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 				else {
 					card[i].pos_.x += spaceLen.x;
 				}
 				card[i].isMove_ = true;
 			}
 			if (card[i].pos_.y != deckSpace.y) {
-				//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+				//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 				if (spaceLen.GetLength() >= cardSpeed_) {
 					card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
 				}
-				//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+				//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 				else {
 					card[i].pos_.y += spaceLen.y;
 				}
 				card[i].isMove_ = true;
 			}
+			card[i].chengeSize_ = { -60,-90 };
 		}
-		//‰E‚©‚ç1”Ô–Ú
+		//å³ã‹ã‚‰1ç•ªç›®
 		else if (card[i].space_ == CardSpace::Hand1) {
 			if (card[i].isSelect_ == false) {
-				//ƒJ[ƒh‚ÆÌ‚Äê‚Ì‹——£
+				//ã‚«ãƒ¼ãƒ‰ã¨æ¨ã¦å ´ã®è·é›¢
 				spaceLen = handSpace1 - card[i].pos_;
 				if (card[i].pos_.x != handSpace1.x) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.x += spaceLen.x;
 					}
 					card[i].isMove_ = true;
 				}
 				if (card[i].pos_.y != handSpace1.y) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.y += spaceLen.y;
 					}
 					card[i].isMove_ = true;
 				}
 			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
+			}
 		}
-		//‰E‚©‚ç2”Ô–Ú
+		//å³ã‹ã‚‰2ç•ªç›®
 		else if (card[i].space_ == CardSpace::Hand2) {
 			if (card[i].isSelect_ == false) {
-				//ƒJ[ƒh‚ÆÌ‚Äê‚Ì‹——£
+				//ã‚«ãƒ¼ãƒ‰ã¨æ¨ã¦å ´ã®è·é›¢
 				spaceLen = handSpace2 - card[i].pos_;
 				if (card[i].pos_.x != handSpace2.x) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.x += spaceLen.x;
 					}
 					card[i].isMove_ = true;
 				}
 				if (card[i].pos_.y != handSpace2.y) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.y += spaceLen.y;
 					}
 					card[i].isMove_ = true;
 				}
 			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
+			}
 		}
-		//‰E‚©‚ç3”Ô–Ú
+		//å³ã‹ã‚‰3ç•ªç›®
 		else if (card[i].space_ == CardSpace::Hand3) {
 			if (card[i].isSelect_ == false) {
-				//ƒJ[ƒh‚ÆÌ‚Äê‚Ì‹——£
+				//ã‚«ãƒ¼ãƒ‰ã¨æ¨ã¦å ´ã®è·é›¢
 				spaceLen = handSpace3 - card[i].pos_;
 				if (card[i].pos_.x != handSpace3.x) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.x += spaceLen.x;
 					}
 					card[i].isMove_ = true;
 				}
 				if (card[i].pos_.y != handSpace3.y) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.y += spaceLen.y;
 					}
 					card[i].isMove_ = true;
 				}
 			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
+			}
 		}
-		//‰E‚©‚ç4”Ô–Ú
+		//å³ã‹ã‚‰4ç•ªç›®
 		else if (card[i].space_ == CardSpace::Hand4) {
 			if (card[i].isSelect_ == false) {
-				//ƒJ[ƒh‚ÆÌ‚Äê‚Ì‹——£
+				//ã‚«ãƒ¼ãƒ‰ã¨æ¨ã¦å ´ã®è·é›¢
 				spaceLen = handSpace4 - card[i].pos_;
 				if (card[i].pos_.x != handSpace4.x) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.x += spaceLen.x;
 					}
 					card[i].isMove_ = true;
 				}
 				if (card[i].pos_.y != handSpace4.y) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.y += spaceLen.y;
 					}
 					card[i].isMove_ = true;
 				}
 			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
+			}
 		}
-		//‰E‚©‚ç5”Ô–Ú
+		//å³ã‹ã‚‰5ç•ªç›®
 		else if (card[i].space_ == CardSpace::Hand5) {
 			if (card[i].isSelect_ == false) {
-				//ƒJ[ƒh‚ÆèD5‚Ì‹——£
+				//ã‚«ãƒ¼ãƒ‰ã¨æ‰‹æœ­5ã®è·é›¢
 				spaceLen = handSpace5 - card[i].pos_;
 				if (card[i].pos_.x != handSpace5.x) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çèD5‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ‰‹æœ­5ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.x += spaceLen.x;
 					}
 					card[i].isMove_ = true;
 				}
 				if (card[i].pos_.y != handSpace5.y) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çèD5‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ‰‹æœ­5ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.y += spaceLen.y;
 					}
 					card[i].isMove_ = true;
 				}
 			}
+			if (card[i].chengeSize_.x < 0) {
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
+			}
 		}
-		//Ì‚ÄD
+		//æ¨ã¦æœ­
 		else if (card[i].space_ == CardSpace::Trash) {
 			if (card[i].isSelect_ == false) {
-				//ƒJ[ƒh‚ÆÌ‚Äê‚Ì‹——£
+				//ã‚«ãƒ¼ãƒ‰ã¨æ¨ã¦å ´ã®è·é›¢
 				spaceLen = handSpace6 - card[i].pos_;
-				//g‚Á‚½ƒJ[ƒh‚ªÌ‚Äê‚É–³‚¯‚ê‚ÎˆÚ“®‚³‚¹‚é
+				//ä½¿ã£ãŸã‚«ãƒ¼ãƒ‰ãŒæ¨ã¦å ´ã«ç„¡ã‘ã‚Œã°ç§»å‹•ã•ã›ã‚‹
 				if (card[i].pos_.x != handSpace6.x) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.x += spaceLen.x / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.x += spaceLen.x;
 					}
 				}
 				if (card[i].pos_.y != handSpace6.y) {
-					//‹——£‚ª20pixelˆÈã—£‚ê‚Ä‚¢‚½‚ç20pixel“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸Šé›¢ã‚Œã¦ã„ãŸã‚‰20pixelå‹•ã‹ã™
 					if (spaceLen.GetLength() >= cardSpeed_) {
 						card[i].pos_.y += spaceLen.y / spaceLen.GetLength() * cardSpeed_;
 					}
-					//‹——£‚ª20pixelˆÈ‰º‚È‚çÌ‚Äê‚Ü‚Å“®‚©‚·
+					//è·é›¢ãŒ20pixelä»¥ä¸‹ãªã‚‰æ¨ã¦å ´ã¾ã§å‹•ã‹ã™
 					else {
 						card[i].pos_.y += spaceLen.y;
 					}
 				}
-				//ƒJ[ƒh‚Ì‘å‚«‚³‚ğ¬‚³‚­‚·‚é
+				//ã‚«ãƒ¼ãƒ‰ã®å¤§ãã•ã‚’å°ã•ãã™ã‚‹
 				if (card[i].chengeSize_.x > -60) {
 					card[i].chengeSize_.x -= 2;
 					card[i].chengeSize_.y -= 3;
@@ -309,7 +333,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				card[i].isMove_ = true;
 			}
 		}
-		//”pŠü‚µ‚½D
+		//å»ƒæ£„ã—ãŸæœ­
 		else if (card[i].space_ == CardSpace::Delete) {
 			if (card[i].alpha_ > 0) {
 				card[i].chengeSize_ += {2, 3};
@@ -323,28 +347,28 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 
 
 
-	///èD‚Æƒ}ƒEƒX‚Ì“–‚½‚è”»’è
-	//‚·‚Å‚Éƒ}ƒEƒX‚Å‚Â‚©‚ñ‚Å‚¢‚½‚ç”»’è‚ğ‚Æ‚ç‚È‚¢
+	///æ‰‹æœ­ã¨ãƒã‚¦ã‚¹ã®å½“ãŸã‚Šåˆ¤å®š
+	//ã™ã§ã«ãƒã‚¦ã‚¹ã§ã¤ã‹ã‚“ã§ã„ãŸã‚‰åˆ¤å®šã‚’ã¨ã‚‰ãªã„
 
-	//‚Â‚©‚ñ‚Å‚¢‚é‚©‚Ì”»’è—p•Ï”‚Æ‰Šú‰»
+	//ã¤ã‹ã‚“ã§ã„ã‚‹ã‹ã®åˆ¤å®šç”¨å¤‰æ•°ã¨åˆæœŸåŒ–
 	bool isCatch = false;
 
 	for (int i = 0; i < CARD_CONST; i++) {
-		//Šù‚É‚Â‚©‚ñ‚Å‚¢‚é
+		//æ—¢ã«ã¤ã‹ã‚“ã§ã„ã‚‹æ™‚
 		if (card[i].isSelect_ == true) {
 			isCatch = true;
 		}
 	}
 	for (int i = 0; i < CARD_CONST; i++) {
-		//Šù‚É’Í‚ñ‚Å‚¢‚½‚ç‚±‚Ìˆ—‚ğƒXƒLƒbƒv‚·‚é
+		//æ—¢ã«æ´ã‚“ã§ã„ãŸã‚‰ã“ã®å‡¦ç†ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
 		if (isCatch == true) {
 			break;
 		}
 
-		//‰Šú‰»
+		//åˆæœŸåŒ–
 		card[i].isHit_ = false;
 
-		//ƒfƒbƒL‚ÆÌ‚ÄDˆÈŠO‚ÌêŠ‚É‚ ‚éƒJ[ƒh‚Æƒ}ƒEƒX‚Ì”»’è‚ğæ‚é
+		//ãƒ‡ãƒƒã‚­ã¨æ¨ã¦æœ­ä»¥å¤–ã®å ´æ‰€ã«ã‚ã‚‹ã‚«ãƒ¼ãƒ‰ã¨ãƒã‚¦ã‚¹ã®åˆ¤å®šã‚’å–ã‚‹
 		if (card[i].space_ != CardSpace::Deck && card[i].space_ != CardSpace::Trash && card[i].isMove_ == false
 			&& card[i].space_ != CardSpace::Delete) {
 			if (card[i].pos_.x - cardSize.x / 2 < mouseX && card[i].pos_.x + cardSize.x / 2 > mouseX) {
@@ -355,25 +379,24 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		}
 	}
 
-	//èD‚Æƒ}ƒEƒX‚Ì“–‚½‚è”»’è‚ğƒvƒŒƒCƒ„[‚É•ª‚©‚è‚â‚·‚­
+	//æ‰‹æœ­ã¨ãƒã‚¦ã‚¹ã®å½“ãŸã‚Šåˆ¤å®šã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«åˆ†ã‹ã‚Šã‚„ã™ã
 	for (int i = 0; i < CARD_CONST; i++) {
-		//“–‚½‚Á‚Ä‚¢‚ê‚Î­‚µã‚É“®‚©‚·
+		//å½“ãŸã£ã¦ã„ã‚Œã°å°‘ã—ä¸Šã«å‹•ã‹ã™
 		if (card[i].isHit_ == true) {
 			card[i].move_.y = -50;
 		}
-		//“–‚½‚Á‚Ä‚¢‚È‚¢‚Í–ß‚·
+		//å½“ãŸã£ã¦ã„ãªã„æ™‚ã¯æˆ»ã™
 		else {
 			card[i].move_.y = 0;
 		}
 	}
-
-	///ƒJ[ƒh‚Ì‘I‘ğ
+	///ã‚«ãƒ¼ãƒ‰ã®é¸æŠ
 	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\nattacknum:%d", attackMaxBattle);
 	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\nguardnum:%d", guardMaxBattle);
 	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\nbuffnum:%d", buffMaxBattle);
 	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\n\ndenum:%d", deBuffMaxBattle);
 
-	//’Í‚ñ‚Å‚¢‚È‚¢‰EƒNƒŠƒbƒN‚Å”pŠü
+	//æ´ã‚“ã§ã„ãªã„æ™‚å³ã‚¯ãƒªãƒƒã‚¯ã§å»ƒæ£„
 	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0 && isCatch == false && deck.size() > 0) {
 
 
@@ -382,7 +405,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			if (card[i].isHit_ == true) {
 
 				int count = 0;
-				//ƒŠƒXƒg‚Ì•û‚Ì”pŠüˆ—
+				//ãƒªã‚¹ãƒˆã®æ–¹ã®å»ƒæ£„å‡¦ç†
 				std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 				for (int j = 0; j < (card[i].space_ - 1); j++)
 				{
@@ -411,6 +434,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				deck.erase(itr);
 
 				//-----------------------------------------------
+
 				for (int j = 0; j < CARD_CONST; j++) {
 					if (card[j].space_ >= card[i].space_ + 1 && card[j].space_ <= 5) {
 						card[j].space_--;
@@ -418,6 +442,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				}
 
 				isSpace[card[i].space_ - 1] = false;
+
 				card[i].space_ = CardSpace::Delete;
 			}
 		}
@@ -432,7 +457,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			}
 		}
 	}
-	//¶ƒNƒŠƒbƒN‚ÅƒJ[ƒh‚ğ’Í‚Ş
+	//å·¦ã‚¯ãƒªãƒƒã‚¯ã§ã‚«ãƒ¼ãƒ‰ã‚’æ´ã‚€
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
@@ -440,10 +465,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			}
 		}
 	}
-	//¶ƒNƒŠƒbƒN‚ğ—£‚µ‚½A’Í‚ñ‚Å‚¢‚½ƒJ[ƒh‚ÌêŠ‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚é
+	//å·¦ã‚¯ãƒªãƒƒã‚¯ã‚’é›¢ã—ãŸæ™‚ã€æ´ã‚“ã§ã„ãŸã‚«ãƒ¼ãƒ‰ã®å ´æ‰€ã«ã‚ˆã£ã¦å‡¦ç†ã‚’å¤‰ãˆã‚‹
 	else {
 		for (int i = 0; i < CARD_CONST; i++) {
-			//ƒJ[ƒh‚ğã‚É‚Á‚Ä‚¢‚Á‚½‚çÌ‚ÄD‚É
+			//ã‚«ãƒ¼ãƒ‰ã‚’ä¸Šã«æŒã£ã¦ã„ã£ãŸã‚‰æ¨ã¦æœ­ã«
 			if (card[i].pos_.y <= 630) {
 
 				if (card[i].isSelect_ == true && card[i].space_ != CardSpace::Delete) {
@@ -455,7 +480,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 							itr++;
 						}
 
-						//ƒJ[ƒh‚ÌƒRƒXƒg‚ÆŒ»İ‚ÌƒRƒXƒg‚ğ”äŠr
+						//ã‚«ãƒ¼ãƒ‰ã®ã‚³ã‚¹ãƒˆã¨ç¾åœ¨ã®ã‚³ã‚¹ãƒˆã‚’æ¯”è¼ƒ
 						if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
 						{
 							itr->get()->Effect(player, enemy);
@@ -469,33 +494,46 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 									card[j].space_--;
 								}
 							}
+							if (card[i].type_ == 0) {
+								particle->BurstGenerate(Vec2(1175, 390), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
+								particle->SlashGenerate(Vec2(1125, 340));
+							}
+							else if (card[i].type_ == 1) {
+
+							}
+							else if (card[i].type_ == 2) {
+								buffTimer = 50;
+							}
+							else if (card[i].type_ == 3) {
+								debuffTimer = 50;
+							}
 							card[i].space_ = CardSpace::Trash;
 						}
 					}
 				}
 				else if (card[i].isMove_ == false) {
-					//‰E‚©‚ç1”Ô–Ú‚ÌƒJ[ƒh‚ğŒ³‚ÌêŠ‚É–ß‚·
+					//å³ã‹ã‚‰1ç•ªç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’å…ƒã®å ´æ‰€ã«æˆ»ã™
 					if (card[i].space_ == CardSpace::Hand1) {
 						card[i].pos_ = handSpace1;
 					}
-					//‰E‚©‚ç2”Ô–Ú‚ÌƒJ[ƒh‚ğŒ³‚ÌêŠ‚É–ß‚·
+					//å³ã‹ã‚‰2ç•ªç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’å…ƒã®å ´æ‰€ã«æˆ»ã™
 					else if (card[i].space_ == CardSpace::Hand2) {
 						card[i].pos_ = handSpace2;
 					}
-					//‰E‚©‚ç3”Ô–Ú‚ÌƒJ[ƒh‚ğŒ³‚ÌêŠ‚É–ß‚·
+					//å³ã‹ã‚‰3ç•ªç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’å…ƒã®å ´æ‰€ã«æˆ»ã™
 					else if (card[i].space_ == CardSpace::Hand3) {
 						card[i].pos_ = handSpace3;
 					}
-					//‰E‚©‚ç4”Ô–Ú‚ÌƒJ[ƒh‚ğŒ³‚ÌêŠ‚É–ß‚·
+					//å³ã‹ã‚‰4ç•ªç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’å…ƒã®å ´æ‰€ã«æˆ»ã™
 					else if (card[i].space_ == CardSpace::Hand4) {
 						card[i].pos_ = handSpace4;
 					}
-					//‰E‚©‚ç5”Ô–Ú‚ÌƒJ[ƒh‚ğŒ³‚ÌêŠ‚É–ß‚·
+					//å³ã‹ã‚‰5ç•ªç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’å…ƒã®å ´æ‰€ã«æˆ»ã™
 					else if (card[i].space_ == CardSpace::Hand5) {
 						card[i].pos_ = handSpace5;
 					}
 				}
-				//ƒfƒbƒL‚ğƒZƒbƒg
+				//ãƒ‡ãƒƒã‚­ã‚’ã‚»ãƒƒãƒˆ
 				if (deck.size() <= 0)
 				{
 					
@@ -507,12 +545,12 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 					DeckSet();
 				}
 			}
-			//’Í‚ñ‚Å‚¢‚é‚©‚ğŠÇ—‚·‚é•Ï”‚ğfalse‚É
+			//æ´ã‚“ã§ã„ã‚‹ã‹ã‚’ç®¡ç†ã™ã‚‹å¤‰æ•°ã‚’falseã«
 			card[i].isSelect_ = false;
 		}
 	}
 	for (int i = 0; i < CARD_CONST; i++) {
-		//’Í‚ñ‚Å‚¢‚é‚©‚ğŠÇ—‚·‚é•Ï”‚ªtrue‚È‚çƒ}ƒEƒX‚ÌÀ•W‚É‚à‚Á‚Ä‚¢‚­
+		//æ´ã‚“ã§ã„ã‚‹ã‹ã‚’ç®¡ç†ã™ã‚‹å¤‰æ•°ãŒtrueãªã‚‰ãƒã‚¦ã‚¹ã®åº§æ¨™ã«ã‚‚ã£ã¦ã„ã
 		if (card[i].isSelect_ == true) {
 			card[i].pos_.x = mouseX;
 			card[i].pos_.y = mouseY;
@@ -521,42 +559,42 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 
 
 	for (int i = 0; i < CARD_CONST; i++) {
-		//èD‚ÉƒJ[ƒh‚ª‚ ‚ê‚Îtrue‚É
+		//æ‰‹æœ­ã«ã‚«ãƒ¼ãƒ‰ãŒã‚ã‚Œã°trueã«
 		if (card[i].space_ - 1 >= 0) {
 			isSpace[card[i].space_ - 1] = true;
 		}
 	}
-	//èD‚ÉƒJ[ƒh‚ª–³‚¯‚ê‚Î‚»‚ÌêŠ‚ÉƒJ[ƒh‚ğ”z•z
+	//æ‰‹æœ­ã«ã‚«ãƒ¼ãƒ‰ãŒç„¡ã‘ã‚Œã°ãã®å ´æ‰€ã«ã‚«ãƒ¼ãƒ‰ã‚’é…å¸ƒ
 	for (int i = 0; i < CARD_CONST; i++) {
-		//‰E‚©‚ç1”Ô–Ú
+		//å³ã‹ã‚‰1ç•ªç›®
 		if (isSpace[0] == false) {
 			if (card[i].space_ == CardSpace::Deck) {
 				card[i].space_ = CardSpace::Hand1;
 				isSpace[0] = true;
 			}
 		}
-		//‰E‚©‚ç2”Ô–Ú
+		//å³ã‹ã‚‰2ç•ªç›®
 		else if (isSpace[1] == false) {
 			if (card[i].space_ == CardSpace::Deck) {
 				card[i].space_ = CardSpace::Hand2;
 				isSpace[1] = true;
 			}
 		}
-		//‰E‚©‚ç3”Ô–Ú
+		//å³ã‹ã‚‰3ç•ªç›®
 		else if (isSpace[2] == false) {
 			if (card[i].space_ == CardSpace::Deck) {
 				card[i].space_ = CardSpace::Hand3;
 				isSpace[2] = true;
 			}
 		}
-		//‰E‚©‚ç4”Ô–Ú
+		//å³ã‹ã‚‰4ç•ªç›®
 		else if (isSpace[3] == false) {
 			if (card[i].space_ == CardSpace::Deck) {
 				card[i].space_ = CardSpace::Hand4;
 				isSpace[3] = true;
 			}
 		}
-		//‰E‚©‚ç5”Ô–Ú
+		//å³ã‹ã‚‰5ç•ªç›®
 		if (isSpace[4] == false) {
 			if (card[i].space_ == CardSpace::Deck) {
 				card[i].space_ = CardSpace::Hand5;
@@ -564,18 +602,26 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			}
 		}
 	}
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é–¢é€£
+	if (--buffTimer >= 0) {
+		particle->BuffGenerate(Vec2(775, 390), Vec2(100, 50), 15);
+	}
+	if (--debuffTimer >= 0) {
+		particle->DebuffGenerate(Vec2(1175, 390), Vec2(100, 50), 15);
+	}
 
+	particle->Update();
 }
 
 void CardManager::Draw(unsigned int* texhandle)
 {
 	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
-	//èD‚Ì”
+	//æ‰‹æœ­ã®æ•°
 	if (deck.size() < handNumtmp) handAllNum = deck.size();
 	else                          handAllNum = handNumtmp;
 
-	//èD‚ÌÅ‘å–‡”‚É‡‚í‚¹‚Ä‘I‘ğ‚µ‚Ä‚éƒJ[ƒh‚ğ•ÏX
+	//æ‰‹æœ­ã®æœ€å¤§æšæ•°ã«åˆã‚ã›ã¦é¸æŠã—ã¦ã‚‹ã‚«ãƒ¼ãƒ‰ã‚’å¤‰æ›´
 	if (handNum + 1 > handAllNum) handNum = handAllNum - 1;
 	for (int i = 0; i < handAllNum; i++)
 	{
@@ -588,24 +634,22 @@ void CardManager::Draw(unsigned int* texhandle)
 	}
 	itr = deck.begin();
 	for (int i = 0; i < deck.size(); i++) {
-		color[i] = itr->get()->GetColorNum();
-		itr++;
+		for (int j = 0; j < CARD_CONST; j++) {
+			if (card[j].space_ == i + 1 && card[j].space_ <= 5) {
+				card[j].type_ = itr->get()->GetColorNum();
+				itr++;
+				break;
+			}
+		}
 	}
 	itr = deck.begin();
-	//ƒJ[ƒh‚Ì•`‰æ
+	//ã‚«ãƒ¼ãƒ‰ã®æç”»
 	for (int i = 0; i < CARD_CONST; i++) {
-		//ƒJ[ƒh‚ªƒfƒbƒL‚É‚ ‚é
+		//ã‚«ãƒ¼ãƒ‰ãŒãƒ‡ãƒƒã‚­ã«ã‚ã‚‹æ™‚
 		if (card[i].space_ == CardSpace::Deck) {
-			DrawBox(
-				card[i].pos_.x - (cardSize.x / 2),
-				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y,
-				card[i].pos_.x + (cardSize.x / 2),
-				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y,
-				GetColor(100, 100, 100),
-				true
-			);
+
 		}
-		//ƒJ[ƒh‚ªÌ‚ÄD‚©”pŠü‚É‚ ‚é
+		//ã‚«ãƒ¼ãƒ‰ãŒæ¨ã¦æœ­ã‹å»ƒæ£„ã«ã‚ã‚‹æ™‚
 		else if (card[i].space_ == CardSpace::Trash || card[i].space_ == CardSpace::Delete) {
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, card[i].alpha_);
 			DrawExtendGraph(
@@ -613,11 +657,11 @@ void CardManager::Draw(unsigned int* texhandle)
 				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
 				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
 				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
-				cardGraph_[1][card[i].isHit_],
+				cardGraph_[card[i].type_][card[i].isHit_],
 				true
 			);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-			//ƒJ[ƒh‚ªÌ‚ÄD‚É‚ ‚é
+			//ã‚«ãƒ¼ãƒ‰ãŒæ¨ã¦æœ­ã«ã‚ã‚‹æ™‚
 			if (card[i].space_ == CardSpace::Trash) {
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 				DrawBox(
@@ -631,32 +675,36 @@ void CardManager::Draw(unsigned int* texhandle)
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			}
 		}
-		//ƒJ[ƒh‚ªèD‚É‚ ‚é
+		//ã‚«ãƒ¼ãƒ‰ãŒæ‰‹æœ­ã«ã‚ã‚‹æ™‚
 		else {
 			DrawExtendGraph(
-				card[i].pos_.x - (cardSize.x / 2),
-				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y,
-				card[i].pos_.x + (cardSize.x / 2),
-				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y,
-				cardGraph_[color[card[i].space_ - 1]][card[i].isHit_],
+				card[i].pos_.x - (cardSize.x / 2) - card[i].chengeSize_.x,
+				card[i].pos_.y - (cardSize.y / 2) + card[i].move_.y - card[i].chengeSize_.y,
+				card[i].pos_.x + (cardSize.x / 2) + card[i].chengeSize_.x,
+				card[i].pos_.y + (cardSize.y / 2) + card[i].move_.y + card[i].chengeSize_.y,
+				cardGraph_[card[i].type_][card[i].isHit_],
 				true
 			);
 		}
 	}
+
+	DrawRotaGraph(deckSpace.x, deckSpace.y, 2, 0, deckGraph_, true);
+	DrawRotaGraph(handSpace6.x, handSpace6.y,2,0, trashGraph_, true);
+	particle->Draw();
 }
 
 std::mt19937 create_rand_engine() {
 	std::random_device rnd;
-	std::vector<std::uint_least32_t> v(10);// ‰Šú‰»—pƒxƒNƒ^
-	std::generate(v.begin(), v.end(), std::ref(rnd));// ƒxƒNƒ^‚Ì‰Šú‰»
+	std::vector<std::uint_least32_t> v(10);// åˆæœŸåŒ–ç”¨ãƒ™ã‚¯ã‚¿
+	std::generate(v.begin(), v.end(), std::ref(rnd));// ãƒ™ã‚¯ã‚¿ã®åˆæœŸåŒ–
 	std::seed_seq seed(v.begin(), v.end());
-	return std::mt19937(seed);// —”ƒGƒ“ƒWƒ“
+	return std::mt19937(seed);// ä¹±æ•°ã‚¨ãƒ³ã‚¸ãƒ³
 }
 
 std::vector<int> make_rand_array_shuffle(const size_t size, int rand_min, int rand_max) {
 	if (rand_min > rand_max) std::swap(rand_min, rand_max);
 	const size_t max_min_diff = static_cast<size_t>(rand_max - rand_min + 1);
-	if (max_min_diff < size) throw std::runtime_error("ˆø”‚ªˆÙí‚Å‚·");
+	if (max_min_diff < size) throw std::runtime_error("å¼•æ•°ãŒç•°å¸¸ã§ã™");
 
 	std::vector<int> tmp;
 	tmp.reserve(max_min_diff);
@@ -679,23 +727,23 @@ void CardManager::DeckSet()
 		deck.clear();
 		deck2.clear();
 
-		//d•¡‚È‚µƒ‰ƒ“ƒ_ƒ€‚È”š‚Ì”z—ñ
+		//é‡è¤‡ãªã—ãƒ©ãƒ³ãƒ€ãƒ ãªæ•°å­—ã®é…åˆ—
 		std::vector<int> cardOrder;
 
-		//”pŠü‚µ‚½‚¤‚¦‚Å‚ÌƒfƒbƒL‚ÌÅ‘å–‡”
+		//å»ƒæ£„ã—ãŸã†ãˆã§ã®ãƒ‡ãƒƒã‚­ã®æœ€å¤§æšæ•°
 		deckMaxBattle = attackMaxBattle + guardMaxBattle + buffMaxBattle + deBuffMaxBattle;
 
 		cardOrder = make_rand_array_shuffle(deckMaxBattle, 0, deckMaxBattle - 1);
 		std::vector<int>::iterator ITR = cardOrder.begin();
 
 
-		//g‚¤ƒJ[ƒh‚ğ¶¬
+		//ä½¿ã†ã‚«ãƒ¼ãƒ‰ã‚’ç”Ÿæˆ
 		//std::unique_ptr<AttackCard> attackC[attackMax];
 		//std::unique_ptr<GuardCard> guardC[guardMax];
 		//std::unique_ptr<BuffCard> buffC[buffMax];
 		//std::unique_ptr<DeBuffCard> deBuffC[deBuffMax];
 
-		//¶¬AƒfƒbƒLã‚Å‚ÌƒJ[ƒh‚Ì‡”Ô‚ğ‚±‚±‚Å“ü‚ê‚Ä‚ ‚°‚ÄA‰¼‚ÌƒŠƒXƒgiƒfƒbƒLj‚É‡”ÔŠÖŒW‚È‚­‚Æ‚è‚ ‚¦‚¸“ü‚ê‚é
+		//ç”Ÿæˆã€ãƒ‡ãƒƒã‚­ä¸Šã§ã®ã‚«ãƒ¼ãƒ‰ã®é †ç•ªã‚’ã“ã“ã§å…¥ã‚Œã¦ã‚ã’ã¦ã€ä»®ã®ãƒªã‚¹ãƒˆï¼ˆãƒ‡ãƒƒã‚­ï¼‰ã«é †ç•ªé–¢ä¿‚ãªãã¨ã‚Šã‚ãˆãšå…¥ã‚Œã‚‹
 
 		for (int i = 0; i < attackMaxBattle; i++)
 		{
@@ -737,7 +785,7 @@ void CardManager::DeckSet()
 
 
 
-		////ƒfƒbƒLã‚Å‚ÌƒJ[ƒh‚Ì‡”Ô‚ğ‚±‚±‚Å“ü‚ê‚Ä‚ ‚°‚é
+		////ãƒ‡ãƒƒã‚­ä¸Šã§ã®ã‚«ãƒ¼ãƒ‰ã®é †ç•ªã‚’ã“ã“ã§å…¥ã‚Œã¦ã‚ã’ã‚‹
 		//for (int i = 0; i < cardOrder.size(); i++)
 		//{
 		//	if (i < attackMax)
@@ -782,7 +830,7 @@ void CardManager::DeckSet()
 		//	}
 		//}
 
-		//‰¼‚ÌƒŠƒXƒg‚Ì’†‚ÌƒJ[ƒh‚ğ’²‚×‚ÄAƒfƒbƒLã‚Å‚Ì‡‚ÉƒfƒbƒL‚ÌƒŠƒXƒg‚É“ü‚ê‚Ä‚ ‚°‚é
+		//ä»®ã®ãƒªã‚¹ãƒˆã®ä¸­ã®ã‚«ãƒ¼ãƒ‰ã‚’èª¿ã¹ã¦ã€ãƒ‡ãƒƒã‚­ä¸Šã§ã®é †ã«ãƒ‡ãƒƒã‚­ã®ãƒªã‚¹ãƒˆã«å…¥ã‚Œã¦ã‚ã’ã‚‹
 		int orderCount = 0;
 		while (orderCount < deckMaxBattle)
 		{
