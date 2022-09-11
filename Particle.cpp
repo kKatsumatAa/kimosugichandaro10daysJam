@@ -107,6 +107,12 @@ void Particle::SlashGenerate(Vec2 pos)
 		slash_.push_back(std::move(newSlash));
 }
 
+void Particle::OrbGenerate()
+{
+	std::unique_ptr<Orb> newOrb = std::make_unique<Orb>();
+	orb_.push_back(std::move(newOrb));
+}
+
 void Particle::Update()
 {
 	//îÚÇ—éUÇÈ
@@ -144,6 +150,11 @@ void Particle::Update()
 	for (std::unique_ptr<Slash>& slash : slash_) {
 		slash->Update();
 	}
+	//ÉIÅ[Éu
+	orb_.remove_if([](std::unique_ptr<Orb>& orb) {return orb->isDead_; });
+	for (std::unique_ptr<Orb>& orb : orb_) {
+		orb->Update();
+	}
 }
 
 void Particle::Draw()
@@ -168,5 +179,8 @@ void Particle::Draw()
 	}
 	for (std::unique_ptr<Slash>& slash : slash_) {
 		slash->Draw();
+	}
+	for (std::unique_ptr<Orb>& orb : orb_) {
+		orb->Draw();
 	}
 }

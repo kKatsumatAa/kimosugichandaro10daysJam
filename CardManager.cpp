@@ -26,6 +26,7 @@ void CardManager::Initialize()
 	LoadDivGraph("resources/card_defense_-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[1]);
 	LoadDivGraph("resources/card_buff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[2]);
 	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[3]);
+	trashGraph_ = LoadGraph("resources/UI_discardPile_icon.png");
 
 	particle = new Particle;
 	particle->Initialize();
@@ -610,7 +611,7 @@ void CardManager::Draw(unsigned int* texhandle)
 		}
 	}
 
-
+	DrawRotaGraph(handSpace6.x, handSpace6.y,2,0, trashGraph_, true);
 	particle->Draw();
 }
 

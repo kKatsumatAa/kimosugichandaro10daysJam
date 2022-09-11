@@ -74,7 +74,10 @@ public:
 
 	int mouseX, mouseY;
 	int mouseClickPosY_;
+
 	int cardGraph_[4][2];
+	int trashGraph_;
+
 	const int cardSpeed_ = 20;
 	int handCount = 0;
 

@@ -7,6 +7,7 @@
 #include "Buff.h"
 #include "Debuff.h"
 #include "Slash.h"
+#include "Orb.h"
 
 #include <list>
 #include <memory>
@@ -30,6 +31,8 @@ public:
 	void DebuffGenerate(Vec2 pos, Vec2 random,int r);
 	//斬撃
 	void SlashGenerate(Vec2 pos);
+	//オーブ
+	void OrbGenerate();
 
 	void Update();
 
@@ -50,6 +53,8 @@ public:
 	std::list<std::unique_ptr<Debuff>> debuff_;
 	//斬撃
 	std::list<std::unique_ptr<Slash>> slash_;
+	//オーブ
+	std::list<std::unique_ptr<Orb>> orb_;
 
 };
 

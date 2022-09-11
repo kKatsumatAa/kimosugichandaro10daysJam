@@ -145,6 +145,7 @@
     <ClCompile Include="Lightning.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Orb.cpp" />
     <ClCompile Include="PadInput.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="Lightning.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Orb.h" />
     <ClInclude Include="PadInput.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Player.h" />
