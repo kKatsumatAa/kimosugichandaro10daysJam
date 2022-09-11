@@ -32,7 +32,7 @@ public:
 	//éaåÇ
 	void SlashGenerate(Vec2 pos);
 	//ÉIÅ[Éu
-	void OrbGenerate();
+	void OrbGenerate(Vec2 start, Vec2 end);
 
 	void Update();
 
