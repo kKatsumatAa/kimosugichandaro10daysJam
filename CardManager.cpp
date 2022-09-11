@@ -156,8 +156,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				}
 			}
 			if (card[i].chengeSize_.x < 0) {
-				card[i].chengeSize_.x += 2;
-				card[i].chengeSize_.y += 3;
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
 			}
 		}
 		//右から2番目
@@ -189,8 +189,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				}
 			}
 			if (card[i].chengeSize_.x < 0) {
-				card[i].chengeSize_.x += 2;
-				card[i].chengeSize_.y += 3;
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
 			}
 		}
 		//右から3番目
@@ -222,8 +222,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				}
 			}
 			if (card[i].chengeSize_.x < 0) {
-				card[i].chengeSize_.x += 2;
-				card[i].chengeSize_.y += 3;
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
 			}
 		}
 		//右から4番目
@@ -255,8 +255,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				}
 			}
 			if (card[i].chengeSize_.x < 0) {
-				card[i].chengeSize_.x += 2;
-				card[i].chengeSize_.y += 3;
+				card[i].chengeSize_.x += 4;
+				card[i].chengeSize_.y += 6;
 			}
 		}
 		//右から5番目
