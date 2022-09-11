@@ -21,6 +21,7 @@ GameScene::GameScene(KeyboardInput& key) :
 	{
 		texhandle[0] = LoadGraph("resources/a.png");
 		texhandle[1] = LoadGraph("resources/healthUI_frame.png");
+		texhandle[2] = LoadGraph("resources/UI_energy_orb.png");
 	}
 }
 

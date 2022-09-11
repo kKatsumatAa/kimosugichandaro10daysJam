@@ -3,6 +3,7 @@ class Cost
 {
 private:
 	float costGauge = 0;
+	int color[4] = { 0 };
 
 
 public:
