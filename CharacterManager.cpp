@@ -5,6 +5,8 @@ void CharacterManager::Initialize(Player* player, Enemy* enemy)
 {
 	this->player = player;
 	this->enemy = enemy;
+	particle = new Particle;
+	particle->Initialize();
 
 	isBattle = false;
 	isEnd = false;
@@ -25,6 +27,7 @@ void CharacterManager::Update()
 		if (enemy[enemyNum].GetIsAttack())
 		{
 			player->Damage(enemy[enemyNum].GetPower());
+			particle->DamageGecerate(Vec2(player->GetPos().x - 70, player->GetPos().y - 70), 0, enemy[enemyNum].GetPower());
 			enemy[enemyNum].SetIsAttack(false);
 
 			player->AddScale(0.6f);
@@ -35,6 +38,7 @@ void CharacterManager::Update()
 		if (player->GetIsAttack())
 		{
 			enemy[enemyNum].Damage(player->GetPower());
+			particle->DamageGecerate(Vec2(enemy[enemyNum].GetPos().x + 50,enemy[enemyNum].GetPos().y - 50), 0, player->GetPower());
 			player->SetIsAttack(false);
 
 			enemy[enemyNum].AddScale(0.6f);
@@ -69,6 +73,7 @@ void CharacterManager::Update()
 			player->InitializeBattle();//
 		}
 	}
+	particle->Update();
 }
 
 void CharacterManager::Draw()
@@ -84,6 +89,7 @@ void CharacterManager::Draw()
 	}
 
 	player->Draw();
+	particle->Draw();
 
 	DrawFormatString(5, 0, 0xffffff, "\nisBattle:%d", isBattle);
 	DrawFormatString(5, 0, 0xffffff, "\n\nisEnd:%d", isEnd);
