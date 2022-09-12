@@ -1,11 +1,13 @@
 #pragma once
 #include"Enemy.h"
+#include"Particle.h"
 
 class CharacterManager
 {
 private:
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
+	Particle* particle = nullptr;
 
 	bool isBattle = false;
 

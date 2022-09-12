@@ -66,12 +66,15 @@ void GameScene::Update()
 	if (key.GetKeyTrigger(KEY_INPUT_8)) {
 		particle_->OrbGenerate(Vec2(200,200),Vec2 (1000,1000));
 	}
+	if (key.GetKeyTrigger(KEY_INPUT_9)) {
+		particle_->DamageGecerate(Vec2(200, 200),1,279);
+	}
 
-	particle_->Update();
 
 	cost.Update();
 	charaM.Update();
 	cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle());
+	particle_->Update();
 
 	//クリアしたらリザルト画面
 	if (charaM.GetIsEnd())

@@ -42,51 +42,51 @@ void CardManager::Initialize()
 void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle)
 {
 	{
-	//if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
-	//{
-	//	handNum++;
-	//	if (handNum > handAllNum - 1) handNum = 0;
-	//}
-	//if (key->GetKeyTrigger(KEY_INPUT_LEFT))
-	//{
-	//	handNum--;
-	//	if (handNum < 0) handNum = handNumtmp - 1;
-	//}
+		//if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
+		//{
+		//	handNum++;
+		//	if (handNum > handAllNum - 1) handNum = 0;
+		//}
+		//if (key->GetKeyTrigger(KEY_INPUT_LEFT))
+		//{
+		//	handNum--;
+		//	if (handNum < 0) handNum = handNumtmp - 1;
+		//}
 
-	//DrawFormatString(0, 0, 0xffffff, "\n\n\n\nhandNum:%d", handNum);
+		//DrawFormatString(0, 0, 0xffffff, "\n\n\n\nhandNum:%d", handNum);
 
-	////デッキにカードがあるなら
-	//if (deck.size() > 0)
-	//{
-	//	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
+		////デッキにカードがあるなら
+		//if (deck.size() > 0)
+		//{
+		//	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
-	//	if (key->GetKeyTrigger(KEY_INPUT_RETURN))
-	//	{
-	//		for (int i = 0; i < handNum; i++)
-	//		{
-	//			itr++;
-	//		}
+		//	if (key->GetKeyTrigger(KEY_INPUT_RETURN))
+		//	{
+		//		for (int i = 0; i < handNum; i++)
+		//		{
+		//			itr++;
+		//		}
 
-	//		//カードのコストと現在のコストを比較
-	//		if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
-	//		{
-	//			itr->get()->Effect(player, enemy);
-	//			cost->UseCost(itr->get()->GetCost());
-	//			deck.erase(itr);
-	//		}
-	//	}
-	//}
-	////デッキをセット
-	//if (deck.size() <= 0)
-	//{
-	//	DeckSet();
-	//	for (int i = 0; i < CARD_CONST; i++) {
-	//		if (card[i].space_ != CardSpace::Delete) {
-	//			card[i].space_ = CardSpace::Deck;
-	//		}
-	//	}
-	//}
-}
+		//		//カードのコストと現在のコストを比較
+		//		if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
+		//		{
+		//			itr->get()->Effect(player, enemy);
+		//			cost->UseCost(itr->get()->GetCost());
+		//			deck.erase(itr);
+		//		}
+		//	}
+		//}
+		////デッキをセット
+		//if (deck.size() <= 0)
+		//{
+		//	DeckSet();
+		//	for (int i = 0; i < CARD_CONST; i++) {
+		//		if (card[i].space_ != CardSpace::Delete) {
+		//			card[i].space_ = CardSpace::Deck;
+		//		}
+		//	}
+		//}
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////
 	//マウス座標の取得
@@ -500,6 +500,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 								}
 							}
 							if (card[i].type_ == 0) {
+								particle->DamageGecerate(Vec2(enemy->GetPos().x + 50, enemy->GetPos().y - 50), 0, 3);
 								particle->BurstGenerate(Vec2(1175, 390), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
 								particle->SlashGenerate(Vec2(1125, 340));
 							}
@@ -541,7 +542,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 				//デッキをセット
 				if (deck.size() <= 0)
 				{
-					
+
 					for (int i = 0; i < CARD_CONST; i++) {
 						if (card[i].space_ != CardSpace::Delete) {
 							card[i].space_ = CardSpace::Deck;
@@ -694,7 +695,7 @@ void CardManager::Draw(unsigned int* texhandle)
 	}
 
 	DrawRotaGraph(deckSpace.x, deckSpace.y, 2, 0, deckGraph_, true);
-	DrawRotaGraph(handSpace6.x, handSpace6.y,2,0, trashGraph_, true);
+	DrawRotaGraph(handSpace6.x, handSpace6.y, 2, 0, trashGraph_, true);
 	particle->Draw();
 }
 
