@@ -5,6 +5,7 @@ void Enemy::Initialize(unsigned int* playertexture, unsigned int* textureHandle,
 	this->pos = pos;
 
 	this->texhandle = textureHandle;
+	this->modelTexture = playertexture;
 
 	attribute = ENEMY;
 
