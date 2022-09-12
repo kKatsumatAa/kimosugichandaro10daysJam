@@ -1,10 +1,12 @@
 #include "CharacterManager.h"
 
 
-void CharacterManager::Initialize(Player* player, Enemy* enemy)
+void CharacterManager::Initialize(Player* player, Enemy* enemy, int enemyMax)
 {
 	this->player = player;
 	this->enemy = enemy;
+
+	this->enemyMax = enemyMax;
 
 	isBattle = false;
 	isEnd = false;
@@ -12,7 +14,7 @@ void CharacterManager::Initialize(Player* player, Enemy* enemy)
 }
 
 
-void CharacterManager::Update()
+void CharacterManager::Update(Tutorial* tutorial)
 {
 	bool oldIsBattle = isBattle;
 
@@ -69,6 +71,16 @@ void CharacterManager::Update()
 			player->InitializeBattle();//
 		}
 	}
+
+	//ブレークのチュートリアルになって、説明を読み進めたら、相手のhpを半分にしてブレーク発動
+	if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::BREAK && tutorial->GetStateNum() >= tutorial->GetStateNumMax())
+	{
+		while (enemy[enemyNum].GetHP() > enemy[enemyNum].GetHpMAX() / 2.0f)
+		{
+			enemy[enemyNum].Damage(1);
+		}
+		
+	}
 }
 
 void CharacterManager::Draw()
@@ -79,6 +91,7 @@ void CharacterManager::Draw()
 		if(enemyNum==1)SetDrawBright(0, 255, 0);
 		if(enemyNum==2)SetDrawBright(100, 100, 0);
 		if(enemyNum==3)SetDrawBright(255, 255, 255);
+		if(enemyNum==4)SetDrawBright(255, 0, 255);
 		enemy[enemyNum].Draw();
 		SetDrawBright(255, 255, 255);
 	}

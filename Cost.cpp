@@ -1,5 +1,6 @@
 #include "Cost.h"
 #include "DxLib.h"
+#include <math.h>
 
 void Cost::Initialize()
 {
@@ -38,6 +39,26 @@ void Cost::Draw(unsigned int* texhandle)
 	DrawCircle(1920 / 2 - 5.0f * 2.5f, 130, 17.0f * min(costGauge - 1.0f, 1.0f), color[1]);
 	DrawCircle(1920 / 2 + 27.0f * 2.5f, 130, 17.0f * min(costGauge - 2.0f, 1.0f), color[2]);
 	DrawCircle(1920 / 2 + 58.0f * 2.5f, 130, 17.0f * min(costGauge - 3.0f, 1.0f), color[3]);
+
+	count += 0.2f;
+
+	float  R = 30.0f + sinf(count);
+
+	for (int i = 1; i <= selectCost; i++)
+	{
+		switch (i)
+		{
+		case 1:
+			DrawCircle(1920 / 2 - 36.0f * 2.5f, 130, R, 0xffff00, false, 3);
+			break;
+		case 2:
+			DrawCircle(1920 / 2 - 5.0f * 2.5f, 130, R, 0xffff00, false, 3);
+			break;
+		case 3:
+			DrawCircle(1920 / 2 + 27.0f * 2.5f, 130, R, 0xffff00, false, 3);
+			break;
+		}
+	}
 }
 
 void Cost::AddCost(int cost)

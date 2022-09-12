@@ -27,6 +27,7 @@
     <ClCompile Include="Debuff.cpp" />
     <ClCompile Include="Slash.cpp" />
     <ClCompile Include="Orb.cpp" />
+    <ClCompile Include="Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Burst.h" />
@@ -54,5 +55,6 @@
     <ClInclude Include="Debuff.h" />
     <ClInclude Include="Slash.h" />
     <ClInclude Include="Orb.h" />
+    <ClInclude Include="Tutorial.h" />
   </ItemGroup>
 </Project>
