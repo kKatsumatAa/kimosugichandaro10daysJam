@@ -80,9 +80,9 @@ void CharacterManager::Draw()
 {
 	if (!isEnd)
 	{
-		if(enemyNum==0)SetDrawBright(255, 0, 0);
-		if(enemyNum==1)SetDrawBright(0, 255, 0);
-		if(enemyNum==2)SetDrawBright(100, 100, 0);
+		if(enemyNum==0)SetDrawBright(255, 255, 255);
+		if(enemyNum==1)SetDrawBright(255, 255, 255);
+		if(enemyNum==2)SetDrawBright(255, 255, 255);
 		if(enemyNum==3)SetDrawBright(255, 255, 255);
 		enemy[enemyNum].Draw();
 		SetDrawBright(255, 255, 255);
