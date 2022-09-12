@@ -623,22 +623,6 @@ void CardManager::Draw(unsigned int* texhandle)
 {
 	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
-	//手札の数
-	if (deck.size() < handNumtmp) handAllNum = deck.size();
-	else                          handAllNum = handNumtmp;
-
-	//手札の最大枚数に合わせて選択してるカードを変更
-	if (handNum + 1 > handAllNum) handNum = handAllNum - 1;
-	for (int i = 0; i < handAllNum; i++)
-	{
-		double selectPos = 0;
-		if (handNum == i) selectPos = -40;
-
-		itr->get()->Draw(texhandle[0], { (double)(400 + i * 300),(double)800 + selectPos });
-
-		itr++;
-	}
-	itr = deck.begin();
 	for (int i = 0; i < deck.size(); i++) {
 		for (int j = 0; j < CARD_CONST; j++) {
 			if (card[j].space_ == i + 1 && card[j].space_ <= 5) {

@@ -46,9 +46,16 @@ void Character::Draw()
 		angle += 0.02f;
 		if (angle > 0.0f) angle = 0.0f;
 	}
+	if (animeTimer >= 8.8f) {
+		animeTimer = 0;
+	}
+	else {
+		animeTimer += 0.2f;
+	}
 
-	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle[0], true);
-
+	if (attribute == PLAYER) {
+		DrawRotaGraph2(pos.x - 80, pos.y, 32.0f, 32.0f, scale * 1.7f, angle, modelTexture[static_cast<int>(animeTimer)], true);
+	}
 	
 
 	//êîílï`âÊ
