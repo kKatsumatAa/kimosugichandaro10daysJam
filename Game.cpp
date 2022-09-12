@@ -8,13 +8,14 @@ GameScene::GameScene(KeyboardInput& key) :
 	key(key), isEnd(false),
 	nextScene(new ResultScene(key))//元はリザルトが入ってる
 {
+	LoadDivGraph("resources/player_idle-Animation-Sheet.png", 9, 9, 1, 160,160, (int*)playerTexture,true);
 	particle_ = new Particle;
 	particle_->Initialize();
-	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
-	enemy[0].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 10);
-	enemy[1].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 15, 3, 170);
-	enemy[2].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 100);
-	enemy[3].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 20, 12, 300);
+	player.Initialize(playerTexture,texhandle, { 780,1080 / 2 - 150 });
+	enemy[0].Initialize(texhandle, texhandle, { 2100,1080 / 2 - 150 }, 10);
+	enemy[1].Initialize(texhandle, texhandle, { 2100,1080 / 2 - 150 }, 15, 3, 170);
+	enemy[2].Initialize(texhandle, texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 100);
+	enemy[3].Initialize(texhandle, texhandle, { 2100,1080 / 2 - 150 }, 20, 12, 300);
 	charaM.Initialize(&player, enemy);
 	cardM.Initialize();
 	cost.Initialize();

@@ -23,6 +23,7 @@ private:
 	Cost cost;
 	//
 	unsigned int texhandle[10];
+	unsigned int playerTexture[9];
 	
 
 public:
