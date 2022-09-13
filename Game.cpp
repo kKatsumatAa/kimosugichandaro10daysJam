@@ -9,20 +9,23 @@ GameScene::GameScene(KeyboardInput& key) :
 	nextScene(new ResultScene(key))//元はリザルトが入ってる
 {
 	LoadDivGraph("resources/player_idle-Animation-Sheet.png", 9, 9, 1, 160, 160, (int*)playerTexture, true);
-	LoadDivGraph("resources/enemy_dammy-sheet.png", 6, 6, 1, 160, 160, (int*)enemy1Texture, true);
-	LoadDivGraph("resources/enemy_slime.png", 6, 6, 1, 160, 160, (int*)enemy2Texture, true);
-	LoadDivGraph("resources/enemy_mashroom.png", 6, 6, 1, 160, 160, (int*)enemy3Texture, true);
+	LoadDivGraph("resources/enemy_slime.png", 6, 6, 1, 160, 160, (int*)enemy1Texture, true);
+	LoadDivGraph("resources/enemy_mashroom.png", 6, 6, 1, 160, 160, (int*)enemy2Texture, true);
+	LoadDivGraph("resources/enemy_mob-Sheet.png", 6, 6, 1, 128, 80, (int*)enemy3Texture, true);
 	LoadDivGraph("resources/enemy_monster.png", 6, 6, 1, 160, 160, (int*)enemy4Texture, true);
+	LoadDivGraph("resources/enemy_boss-Sheet.png", 6, 6, 1, 305, 188, (int*)enemy5Texture, true);
+	LoadDivGraph("resources/UI_number.png", 10, 10, 1, 32, 32, numText);
+
 	background = LoadGraph("resources/game_background.png");
 	particle_ = new Particle;
 	particle_->Initialize();
 
-	player.Initialize(playerTexture, texhandle, { 780,1080 / 2 - 150 });
-	enemy[0].Initialize(enemy1Texture, texhandle, { 2100,1080 / 2 - 150 }, 10);
-	enemy[1].Initialize(enemy2Texture, texhandle, { 2100,1080 / 2 - 150 }, 15, 3, 170);
-	enemy[2].Initialize(enemy3Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 100);
-	enemy[3].Initialize(enemy4Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 12, 300);
-	enemy[4].Initialize(enemy4Texture, texhandle, { 2100,1080 / 2 - 150 }, 30, 15, 250);
+	player.Initialize(playerTexture, texhandle, { 780,1080 / 2 - 150 }, 50);
+	enemy[0].Initialize(enemy1Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 300);
+	enemy[1].Initialize(enemy2Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 7, 250);
+	enemy[2].Initialize(enemy3Texture, texhandle, { 2100,1080 / 2 - 150 }, 60, 15, 220);
+	enemy[3].Initialize(enemy4Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 8, 50);
+	enemy[4].Initialize(enemy5Texture, texhandle, { 2100,1080 / 2 - 150 }, 120, 30, 500);
 
 	charaM.Initialize(&player, enemy);
 	cardM.Initialize();
@@ -53,36 +56,35 @@ void GameScene::Update()
 		nextScene = new TitleScene(key);
 	}
 #endif 
+	if (key.GetKeyTrigger(KEY_INPUT_1)) {
+		particle_->BurstGenerate(Vec2(775, 550), 5, 50, 60, 225, 15.0f, GetColor(200, 0, 0));
+	}
+	if (key.GetKey(KEY_INPUT_2)) {
+		particle_->FireGenerate(Vec2(775, 550), 16);
+	}
+	if (key.GetKey(KEY_INPUT_3)) {
+		particle_->WaterGenerate(Vec2(775, 550), 16);
+	}
+	if (key.GetKeyTrigger(KEY_INPUT_4)) {
+		particle_->LightningGenerate(Vec2(775, 550), 500, 3, 60, 1);
+	}
+	if (key.GetKey(KEY_INPUT_5)) {
+		particle_->BuffGenerate(Vec2(775, 550), Vec2(100, 50), 15);
+	}
+	if (key.GetKey(KEY_INPUT_6)) {
+		particle_->DebuffGenerate(Vec2(775, 550), Vec2(100, 50), 15);
+	}
+	if (key.GetKey(KEY_INPUT_7)) {
+		particle_->SlashGenerate(Vec2(1125, 340));
+	}
+	if (key.GetKeyTrigger(KEY_INPUT_8)) {
+		particle_->OrbGenerate(Vec2(200, 200), Vec2(1000, 1000));
+	}
+	if (key.GetKey(KEY_INPUT_9)) {
+		particle_->NumberGecerate(Vec2(200, 200), 0, 279);
+	}
 
 	if (--hitStopTimer < 0) {
-
-		if (key.GetKeyTrigger(KEY_INPUT_1)) {
-			particle_->BurstGenerate(Vec2(775, 550), 5, 50, 60, 225, 15.0f, GetColor(200, 0, 0));
-		}
-		if (key.GetKey(KEY_INPUT_2)) {
-			particle_->FireGenerate(Vec2(775, 550), 16);
-		}
-		if (key.GetKey(KEY_INPUT_3)) {
-			particle_->WaterGenerate(Vec2(775, 550), 16);
-		}
-		if (key.GetKeyTrigger(KEY_INPUT_4)) {
-			particle_->LightningGenerate(Vec2(775, 550), 500, 3, 60, 1);
-		}
-		if (key.GetKey(KEY_INPUT_5)) {
-			particle_->BuffGenerate(Vec2(775, 550), Vec2(100, 50), 15);
-		}
-		if (key.GetKey(KEY_INPUT_6)) {
-			particle_->DebuffGenerate(Vec2(775, 550), Vec2(100, 50), 15);
-		}
-		if (key.GetKey(KEY_INPUT_7)) {
-			particle_->SlashGenerate(Vec2(1125, 340));
-		}
-		if (key.GetKeyTrigger(KEY_INPUT_8)) {
-			particle_->OrbGenerate(Vec2(200, 200), Vec2(1000, 1000));
-		}
-		if (key.GetKey(KEY_INPUT_9)) {
-			particle_->NumberGecerate(Vec2(200, 200), 0, 279);
-		}
 
 		cost.Update();
 		charaM.Update();

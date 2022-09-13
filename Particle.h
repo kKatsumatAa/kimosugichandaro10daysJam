@@ -34,7 +34,7 @@ public:
 	void SlashGenerate(Vec2 pos);
 	//オーブ
 	void OrbGenerate(Vec2 start, Vec2 end);
-	//ダメージ
+	//数字
 	void NumberGecerate(Vec2 pos, int way,int num);
 	//シェイク
 	Vec2 Shake(int &timer);
@@ -60,7 +60,7 @@ public:
 	std::list<std::unique_ptr<Slash>> slash_;
 	//オーブ
 	std::list<std::unique_ptr<Orb>> orb_;
-	//ダメージ
+	//数字
 	std::list<std::unique_ptr<Number>> number_;
 };
 

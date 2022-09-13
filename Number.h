@@ -22,7 +22,7 @@ public:
 	int alpha_ = 255;
 
 	//ŒÀ
-	int timer = 2;
+	int timer = 1;
 	//‘¶İ‚·‚é‚©
 	bool isDead_ = false;
 };

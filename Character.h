@@ -69,6 +69,11 @@ protected:
 	float animeTimer = 0.0f;
 
 	bool isHitStop = false;
+	int numText = 0;
+
+	bool isIni = false;
+	int attackHandle[4];
+	bool isAttackTex = false;
 
 public:
 	virtual void Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240) = 0;
