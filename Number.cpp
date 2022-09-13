@@ -30,19 +30,19 @@ void Number::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha_);
 	if (num_ < 0) {
-		DrawGraph(pos_.x, pos_.y, texture_[0], true);
+		DrawRotaGraph(pos_.x, pos_.y, 2.0, 0.0, texture_[0], true);
 	}
 	else if (num_ < 10) {
-		DrawGraph(pos_.x, pos_.y, texture_[num_], true);
+		DrawRotaGraph(pos_.x, pos_.y, 2.0, 0.0, texture_[num_], true);
 	}
 	else if (num_ < 100) {
-		DrawGraph(pos_.x - 10, pos_.y, texture_[num_ / 10], true);
-		DrawGraph(pos_.x + 10, pos_.y, texture_[num_ % 10], true);
+		DrawRotaGraph(pos_.x - 20, pos_.y, 2.0, 0.0, texture_[num_ / 10], true);
+		DrawRotaGraph(pos_.x + 20, pos_.y, 2.0, 0.0, texture_[num_ % 10], true);
 	}
 	else if (num_ < 1000) {
-		DrawGraph(pos_.x - 20, pos_.y, texture_[num_ / 100], true);
-		DrawGraph(pos_.x, pos_.y, texture_[num_ % 100 / 10], true);
-		DrawGraph(pos_.x + 20, pos_.y, texture_[num_ % 10], true);
+		DrawRotaGraph(pos_.x - 40, pos_.y, 2.0, 0.0, texture_[num_ / 100], true);
+		DrawRotaGraph(pos_.x, pos_.y, 2.0, 0.0, texture_[num_ % 100 / 10], true);
+		DrawRotaGraph(pos_.x + 40, pos_.y, 2.0, 0.0, texture_[num_ % 10], true);
 	}
 	DrawFormatString(200, 0, GetColor(255, 255, 255), "num = %d", num_);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
