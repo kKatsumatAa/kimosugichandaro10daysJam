@@ -1,6 +1,7 @@
 #pragma once
 #include"Util.h"
 #include "Assert.h"
+#include "Particle.h"
 
 enum 
 {
@@ -27,7 +28,7 @@ public:
 class Character
 {
 private:
-
+	Particle* particle = new Particle;
 	
 protected:
 	unsigned int* texhandle;

@@ -21,6 +21,8 @@ public:
 	//ƒAƒ‹ƒtƒ@
 	int alpha_ = 255;
 
+	//ŒÀ
+	int timer = 2;
 	//‘¶İ‚·‚é‚©
 	bool isDead_ = false;
 };

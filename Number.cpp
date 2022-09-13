@@ -7,12 +7,21 @@ void Number::initialize()
 
 void Number::Update()
 {
-	pos_.y -= 1;
-	if (alpha_ <= 0) {
-		isDead_ = true;
-	}
-	else {
-		alpha_ -= 3;
+	switch (way_)
+	{
+	case 0:
+		timer--;
+		if (timer <= 0) {
+			isDead_ = true;
+		}
+	case 1:
+		pos_.y -= 1;
+		if (alpha_ <= 0) {
+			isDead_ = true;
+		}
+		else {
+			alpha_ -= 3;
+		}
 	}
 }
 

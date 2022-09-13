@@ -20,6 +20,7 @@ void Character::Update()
 {
 	attackState->Update();
 
+
 	if (HP <= 0) isDead = true;
 }
 
@@ -70,8 +71,10 @@ void Character::Draw()
 	DrawGraph(pos.x + 40, pos.y - 55, texhandle[5], true);
 	DrawGraph(pos.x + 40, pos.y - 18, texhandle[6], true);
 
-	DrawFormatString(pos.x + 100, pos.y - 20, 0xffffff, "%d", GetPower());
-	DrawFormatString(pos.x + 100, pos.y - 20, 0xffff00, "\n%d", guardPower);
+	particle->NumberGecerate(Vec2(pos.x + 95, pos.y - 40), 0, GetPower());
+	particle->NumberGecerate(Vec2(pos.x + 95, pos.y - 5), 0, guardPower);
+	particle->Update();
+	particle->Draw();
 
 	//hp,攻撃ゲージ
 	DrawRotaGraph(pos.x, pos.y - 100, 1.5f, 0.0f, texhandle[1], true);

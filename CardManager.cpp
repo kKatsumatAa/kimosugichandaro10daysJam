@@ -531,7 +531,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 								}
 							}
 							if (card[i].type_ == 0) {
-								particle->NumberGecerate(Vec2(enemy->GetPos().x + 50, enemy->GetPos().y - 50), 0, 3);
+								particle->NumberGecerate(Vec2(enemy->GetPos().x + 50, enemy->GetPos().y - 50), 1, 3);
 								particle->BurstGenerate(Vec2(1175, 390), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
 								particle->SlashGenerate(Vec2(1125, 340));
 							}
