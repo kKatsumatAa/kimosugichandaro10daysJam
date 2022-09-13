@@ -62,6 +62,12 @@ public:
 	void Draw(unsigned int* texhandle);
 
 	void DeckSet();
+	int GetShakeTimer() {
+		return shakeTimer;
+	}
+	void ResetShakeTimer() {
+		shakeTimer = 0;
+	}
 
 public:
 	//èD‚ÌêŠ
@@ -95,5 +101,6 @@ public:
 	Particle* particle = nullptr;
 	int buffTimer = 0;
 	int debuffTimer = 0;
+	int shakeTimer = 0;
 };
 

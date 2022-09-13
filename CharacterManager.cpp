@@ -29,22 +29,28 @@ void CharacterManager::Update(Tutorial* tutorial)
 		if (enemy[enemyNum].GetIsAttack())
 		{
 			player->Damage(enemy[enemyNum].GetPower());
-			particle->DamageGecerate(Vec2(player->GetPos().x - 70, player->GetPos().y - 70), 0, enemy[enemyNum].GetPower());
+			particle->NumberGecerate(Vec2(player->GetPos().x - 70, player->GetPos().y - 70), 1, enemy[enemyNum].GetPower());
 			enemy[enemyNum].SetIsAttack(false);
 
 			player->AddScale(0.6f);
 			enemy[enemyNum].AddAngle(0.6f);
-
+			shakeTimer = 10;
 		}
 		//playerの〃
 		if (player->GetIsAttack())
 		{
 			enemy[enemyNum].Damage(player->GetPower());
-			particle->DamageGecerate(Vec2(enemy[enemyNum].GetPos().x + 50,enemy[enemyNum].GetPos().y - 50), 0, player->GetPower());
+			particle->NumberGecerate(Vec2(enemy[enemyNum].GetPos().x + 50,enemy[enemyNum].GetPos().y - 50), 1, player->GetPower());
 			player->SetIsAttack(false);
 
 			enemy[enemyNum].AddScale(0.6f);
 			player->AddAngle(-0.6f);
+			shakeTimer = 10;
+		}
+
+		if (enemy[enemyNum].GetIsHitStop()) {
+			enemy[enemyNum].SetIsHitStop(false);
+			SetHitStopTimer(30);
 		}
 
 		if (enemy[enemyNum].GetIsDead())
@@ -52,6 +58,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 			enemyNum++;
 
 			isBattle = false;
+			
 
 			if (enemyNum > enemyMax - 1)
 			{
@@ -68,6 +75,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 		{
 			isBattle = true;
 		}
+
 
 		//バトルが終わった瞬間
 		if (!isBattle && oldIsBattle)
@@ -94,7 +102,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 	}
 
 	particle->Update();
-
+	
 }
 
 void CharacterManager::Draw()

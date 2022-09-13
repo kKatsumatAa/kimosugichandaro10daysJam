@@ -8,7 +8,7 @@
 #include "Debuff.h"
 #include "Slash.h"
 #include "Orb.h"
-#include "Damage.h"
+#include "Number.h"
 
 #include <list>
 #include <memory>
@@ -35,7 +35,9 @@ public:
 	//オーブ
 	void OrbGenerate(Vec2 start, Vec2 end);
 	//ダメージ
-	void DamageGecerate(Vec2 pos, int way,int num);
+	void NumberGecerate(Vec2 pos, int way,int num);
+	//シェイク
+	Vec2 Shake(int &timer);
 
 	void Update();
 
@@ -59,6 +61,6 @@ public:
 	//オーブ
 	std::list<std::unique_ptr<Orb>> orb_;
 	//ダメージ
-	std::list<std::unique_ptr<Damage>> damage_;
+	std::list<std::unique_ptr<Number>> number_;
 };
 
