@@ -3,7 +3,6 @@
 #include <random>
 
 void Particle::Initialize() {
-	
 }
 
 void Particle::BurstGenerate(Vec2 pos,int r, int num, int timer, float angle,float pow, unsigned int color)
@@ -117,6 +116,15 @@ void Particle::OrbGenerate(Vec2 start ,Vec2 end)
 	orb_.push_back(std::move(newOrb));
 }
 
+void Particle::DamageGecerate(Vec2 pos, int way, int num) {
+	std::unique_ptr<Damage> newDamage = std::make_unique<Damage>();
+	newDamage->initialize();
+	newDamage->pos_ = pos;
+	newDamage->way_ = way;
+	newDamage->num_ = num;
+	damage_.push_back(std::move(newDamage));
+}
+
 void Particle::Update()
 {
 	//îÚÇ—éUÇÈ
@@ -159,6 +167,11 @@ void Particle::Update()
 	for (std::unique_ptr<Orb>& orb : orb_) {
 		orb->Update();
 	}
+	//É_ÉÅÅ[ÉW
+	damage_.remove_if([](std::unique_ptr<Damage>& damage) {return damage->isDead_; });
+	for (std::unique_ptr<Damage>& damage : damage_) {
+		damage->Update();
+	}
 }
 
 void Particle::Draw()
@@ -186,5 +199,8 @@ void Particle::Draw()
 	}
 	for (std::unique_ptr<Orb>& orb : orb_) {
 		orb->Draw();
+	}
+	for (std::unique_ptr<Damage>& damage : damage_) {
+		damage->Draw();
 	}
 }

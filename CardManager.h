@@ -71,13 +71,13 @@ public:
 
 	Vec2 cardSize = { 160,240 };
 
-	Vec2 deckSpace = { 1500,800 };
-	Vec2 handSpace1 = { 400,800 };
-	Vec2 handSpace2 = { 600,800 };
-	Vec2 handSpace3 = { 800,800 };
-	Vec2 handSpace4 = { 1000,800 };
-	Vec2 handSpace5 = { 1200,800 };
-	Vec2 handSpace6 = { 200,800 };
+	Vec2 deckSpace = { 1720,900 };
+	Vec2 handSpace1 = { 560,900 };
+	Vec2 handSpace2 = { 760,900 };
+	Vec2 handSpace3 = { 960,900 };
+	Vec2 handSpace4 = { 1160,900 };
+	Vec2 handSpace5 = { 1360,900 };
+	Vec2 handSpace6 = { 200,900 };
 
 	Mouse* mouse_ = new Mouse;
 

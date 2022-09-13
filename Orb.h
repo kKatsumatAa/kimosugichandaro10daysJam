@@ -18,7 +18,7 @@ public:
 
 	int moveNum = 0;
 	int speed = 20;
-	int stopTimer = 80;
+	int stopTimer = 0;
 
 	bool isDead_;
 };

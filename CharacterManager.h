@@ -1,5 +1,6 @@
 #pragma once
 #include"Enemy.h"
+
 #include"Tutorial.h"
 
 class CharacterManager
@@ -7,6 +8,7 @@ class CharacterManager
 private:
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
+	Particle* particle = nullptr;
 
 	bool isBattle = false;
 

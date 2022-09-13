@@ -23,7 +23,14 @@ private:
 	Cost cost;
 	//
 	unsigned int texhandle[10];
-	
+	unsigned int playerTexture[9];
+	unsigned int enemy1Texture[6];
+	unsigned int enemy2Texture[6];
+	unsigned int enemy3Texture[6];
+	unsigned int enemy4Texture[6];
+	unsigned int enemy5Texture[6];
+	unsigned int enemy6Texture[6];
+	unsigned int background;
 
 public:
 	GameScene(KeyboardInput& key);

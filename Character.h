@@ -31,6 +31,7 @@ private:
 	
 protected:
 	unsigned int* texhandle;
+	unsigned int* modelTexture;
 
 	int attackCool = 240;
 	int attackTime = 0;
@@ -64,8 +65,10 @@ protected:
 
 	int hpMAX = 0;
 
+	float animeTimer = 0.0f;
+
 public:
-	virtual void Initialize(unsigned int* textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240) = 0;
+	virtual void Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240) = 0;
 	void Update();
 	void Draw();
 

@@ -8,14 +8,22 @@ GameScene::GameScene(KeyboardInput& key) :
 	key(key), isEnd(false),
 	nextScene(new ResultScene(key))//元はリザルトが入ってる
 {
+	LoadDivGraph("resources/player_idle-Animation-Sheet.png", 9, 9, 1, 160,160, (int*)playerTexture,true);
+	LoadDivGraph("resources/enemy_dammy-sheet.png", 6, 6, 1, 160, 160, (int*)enemy1Texture, true);
+	LoadDivGraph("resources/enemy_slime.png", 6, 6, 1, 160, 160, (int*)enemy2Texture, true);
+	LoadDivGraph("resources/enemy_mashroom.png", 6, 6, 1, 160, 160, (int*)enemy3Texture, true);
+	LoadDivGraph("resources/enemy_monster.png", 6, 6, 1, 160, 160, (int*)enemy4Texture, true);
+	background = LoadGraph("resources/game_background.png");
 	particle_ = new Particle;
 	particle_->Initialize();
+
 	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
 	enemy[0].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 10);
 	enemy[1].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 15, 3, 170);
 	enemy[2].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 100);
 	enemy[3].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 20, 12, 300);
 	enemy[4].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 30, 15, 250);
+
 	charaM.Initialize(&player, enemy);
 	cardM.Initialize();
 	cost.Initialize();
@@ -70,12 +78,15 @@ void GameScene::Update()
 	if (key.GetKeyTrigger(KEY_INPUT_8)) {
 		particle_->OrbGenerate(Vec2(200,200),Vec2 (1000,1000));
 	}
+	if (key.GetKeyTrigger(KEY_INPUT_9)) {
+		particle_->DamageGecerate(Vec2(200, 200),1,279);
+	}
 
-	particle_->Update();
 
 	cost.Update();
 	charaM.Update();
 	cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle());
+	particle_->Update();
 
 	//クリアしたらリザルト画面
 	if (charaM.GetIsEnd())
@@ -94,6 +105,7 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+	DrawGraph(0, 0, background, true);
 	charaM.Draw();
 	cardM.Draw(texhandle);
 

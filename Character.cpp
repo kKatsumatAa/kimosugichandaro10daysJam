@@ -9,7 +9,7 @@
 //	//model_ = model;
 //	//textureHandle_ = textureHandle;
 //
-//	////ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+//	////ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 //	//input_ = Input::GetInstance();
 //	//debugText_ = DebugText::GetInstance();
 //
@@ -47,11 +47,25 @@ void Character::Draw()
 		if (angle > 0.0f) angle = 0.0f;
 	}
 
-	DrawRotaGraph2(pos.x, pos.y, 32.0f, 32.0f, scale, angle, texhandle[0], true);
+	if (attribute == PLAYER) {
+		animeTimer += 0.2f;
+		if (animeTimer >= 9) {
+			animeTimer = 0;
+		}
 
-	
+		DrawRotaGraph2(pos.x - 80, pos.y, 32.0f, 32.0f, scale * 1.7f, angle, modelTexture[static_cast<int>(animeTimer)], true);
+	}
+	else if (attribute == ENEMY) {
+		animeTimer += 0.2f;
+		if (animeTimer >= 6) {
+			animeTimer = 0;
+		}
 
-	//”’l•`‰æ
+		DrawRotaGraph2(pos.x - 80, pos.y, 32.0f, 32.0f, scale * 1.7f, angle, modelTexture[static_cast<int>(animeTimer)], true);
+	}
+
+
+	//æ•°å€¤æç”»
 	SetDrawBright(255, 255, 255);
 	DrawGraph(pos.x + 40, pos.y - 55, texhandle[5], true);
 	DrawGraph(pos.x + 40, pos.y - 18, texhandle[6], true);
@@ -59,12 +73,12 @@ void Character::Draw()
 	DrawFormatString(pos.x + 100, pos.y - 20, 0xffffff, "%d", GetPower());
 	DrawFormatString(pos.x + 100, pos.y - 20, 0xffff00, "\n%d", guardPower);
 
-	//hp,UŒ‚ƒQ[ƒW
-	DrawRotaGraph(pos.x , pos.y - 100, 1.5f, 0.0f, texhandle[1], true);
+	//hp,æ”»æ’ƒã‚²ãƒ¼ã‚¸
+	DrawRotaGraph(pos.x, pos.y - 100, 1.5f, 0.0f, texhandle[1], true);
 
 	//SetDrawBright(255, 255, 255);
 	DrawBox(pos.x - 77 * 1.5f, pos.y - 93,
-		pos.x - 77 * 1.5f + ((float)168 * 1.5f * GetAttackGauge()), pos.y - 76, 
+		pos.x - 77 * 1.5f + ((float)168 * 1.5f * GetAttackGauge()), pos.y - 76,
 		0x00ffff, true);
 	DrawBox(pos.x - 78 * 1.5f, pos.y - 123,
 		pos.x - 78 * 1.5f + ((float)168 * 1.5f * ((float)HP / (float)hpMAX)), pos.y - 95,
@@ -104,12 +118,12 @@ void Character::InitializeBattle()
 
 	isAttack = false;
 
-	////UŒ‚—Íƒoƒt
+	////æ”»æ’ƒåŠ›ãƒãƒ•
 	//power = 0;
-	////UŒ‚—Í(0‚Íí“¬‚²‚ÆA1‚ÍŒ³‚Ìí“¬—Í)
+	////æ”»æ’ƒåŠ›(0ã¯æˆ¦é—˜ã”ã¨ã€1ã¯å…ƒã®æˆ¦é—˜åŠ›)
 	//powertmp[0] = powertmp[1];
 
-	//ãŒÀ‚¶‚á‚È‚¢ŒÀ‚è‰ñ•œ
+	//ä¸Šé™ã˜ã‚ƒãªã„é™ã‚Šå›å¾©
 	for (int i = 0; i < 5; i++)
 	{
 		if (HP >= hpMAX)break;
@@ -127,25 +141,25 @@ void NormalAttack::Update()
 {
 	chara->AddAttackTimer();
 
-	//’Êí‚±‚¤‚°‚«@@@@@@@@@@@@@@@@@@@@@//ƒfƒoƒt‚ª‚©‚©‚Á‚Ä‚¢‚½‚çUŒ‚‚ª”­“®’·‚­‚È‚é
+	//é€šå¸¸ã“ã†ã’ãã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€//ãƒ‡ãƒãƒ•ãŒã‹ã‹ã£ã¦ã„ãŸã‚‰æ”»æ’ƒãŒç™ºå‹•é•·ããªã‚‹
 	if (chara->GetAttackTimer() >= chara->GetAttackCool() + (chara->GetAttackCool() * (chara->GetDeBuff() / 3.0f)))
 	{
 		chara->Attack();
 		chara->SetAttackTime(0);
 	}
 
-	//“G‚ÅAhp‚ª”¼•ªˆÈ‰ºA‚Ü‚¾‹­‚±‚¤‚°‚«”­“®‚µ‚Ä‚¢‚È‚¢
+	//æ•µã§ã€hpãŒåŠåˆ†ä»¥ä¸‹ã€ã¾ã å¼·ã“ã†ã’ãç™ºå‹•ã—ã¦ã„ãªã„
 	if (chara->GetHP() <= chara->GetHpMAX() / 2 && !chara->GetIsSpecial() && chara->GetAttribute() == ENEMY)
 	{
 		chara->SetIsSpecial(true);
 		chara->ChangeState(new SpecialAttack);
-		
+
 	}
 }
 
 void NormalAttack::Draw(unsigned int* texhandle)
 {
-	
+
 }
 
 //-------------------------------------------------------------------------------
@@ -155,7 +169,7 @@ void SpecialAttack::Update()
 
 	DrawFormatString(0, 0, 0xffffff, "\n\n\n\n\n\ngauge%d", specialGauge);
 
-	//ƒQ[ƒW‚¢‚Á‚Ï‚¢‚É‚È‚Á‚½‚ç’Êí‚ÌUŒ‚—Í‚Ì2”{‚ÌUŒ‚
+	//ã‚²ãƒ¼ã‚¸ã„ã£ã±ã„ã«ãªã£ãŸã‚‰é€šå¸¸ã®æ”»æ’ƒåŠ›ã®2å€ã®æ”»æ’ƒ
 	if (specialGauge >= specialGaugeMAX)
 	{
 		chara->Attack(chara->GetPower() * 2);
@@ -166,7 +180,7 @@ void SpecialAttack::Update()
 		return;
 	}
 
-	//‚ ‚é’ö“x‚Ü‚Å‘Ì—Íí‚ê‚Îƒfƒoƒt‚ğ‚Q—^‚¦‚é
+	//ã‚ã‚‹ç¨‹åº¦ã¾ã§ä½“åŠ›å‰Šã‚Œã°ãƒ‡ãƒãƒ•ã‚’ï¼’ä¸ãˆã‚‹
 	if ((float)chara->GetHP() <= (float)chara->GetHpMAX() / 5.0f && chara->GetIsSpecial() && chara->GetAttribute() == ENEMY)
 	{
 		chara->AddDeBuff(2);
@@ -176,8 +190,8 @@ void SpecialAttack::Update()
 
 void SpecialAttack::Draw(unsigned int* texhandle)
 {
-	//‹­UŒ‚AƒXƒP[ƒ‹•Ï‚¦‚é
-	count ++;
+	//å¼·æ”»æ’ƒæ™‚ã€ã‚¹ã‚±ãƒ¼ãƒ«å¤‰ãˆã‚‹
+	count++;
 
 	if (count % 5 == 0)
 	{
@@ -194,7 +208,7 @@ void SpecialAttack::Draw(unsigned int* texhandle)
 		chara->GetPos().y + gaugeLength.y / 2 + 100,
 		0xee0000, true);
 
-	//ƒuƒŒ[ƒN‚·‚éhp
+	//ãƒ–ãƒ¬ãƒ¼ã‚¯ã™ã‚‹hp
 	DrawLine(chara->GetPos().x - 77 * 1.5f + ((float)168 * 1.5f / 5.0f), chara->GetPos().y - 123,
 		chara->GetPos().x - 77 * 1.5f + ((float)168 * 1.5f / 5.0f), chara->GetPos().y - 95, 0xffffff, 3);
 }
