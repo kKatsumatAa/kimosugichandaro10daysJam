@@ -28,6 +28,7 @@
     <ClCompile Include="Slash.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="Tutorial.cpp" />
+    <ClCompile Include="Number.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Burst.h" />
@@ -56,5 +57,6 @@
     <ClInclude Include="Slash.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="Tutorial.h" />
+    <ClInclude Include="Number.h" />
   </ItemGroup>
 </Project>

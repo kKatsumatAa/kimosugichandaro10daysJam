@@ -29,7 +29,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 		if (enemy[enemyNum].GetIsAttack())
 		{
 			player->Damage(enemy[enemyNum].GetPower());
-			particle->DamageGecerate(Vec2(player->GetPos().x - 70, player->GetPos().y - 70), 0, enemy[enemyNum].GetPower());
+			particle->NumberGecerate(Vec2(player->GetPos().x - 70, player->GetPos().y - 70), 1, enemy[enemyNum].GetPower());
 			enemy[enemyNum].SetIsAttack(false);
 
 			player->AddScale(0.6f);
@@ -40,7 +40,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 		if (player->GetIsAttack())
 		{
 			enemy[enemyNum].Damage(player->GetPower());
-			particle->DamageGecerate(Vec2(enemy[enemyNum].GetPos().x + 50,enemy[enemyNum].GetPos().y - 50), 0, player->GetPower());
+			particle->NumberGecerate(Vec2(enemy[enemyNum].GetPos().x + 50,enemy[enemyNum].GetPos().y - 50), 1, player->GetPower());
 			player->SetIsAttack(false);
 
 			enemy[enemyNum].AddScale(0.6f);
