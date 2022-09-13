@@ -100,10 +100,10 @@ void Character::InitializeBattle()
 
 	isAttack = false;
 
-	//攻撃力バフ
-	power = 0;
-	//攻撃力(0は戦闘ごと、1は元の戦闘力)
-	powertmp[0] = powertmp[1];
+	////攻撃力バフ
+	//power = 0;
+	////攻撃力(0は戦闘ごと、1は元の戦闘力)
+	//powertmp[0] = powertmp[1];
 
 	//上限じゃない限り回復
 	for (int i = 0; i < 5; i++)
@@ -112,7 +112,7 @@ void Character::InitializeBattle()
 		HP++;
 	}
 
-	guardPower = 0;
+	//guardPower = 0;
 
 	deBuffPower = 0;
 }

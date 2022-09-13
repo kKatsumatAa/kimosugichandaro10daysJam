@@ -18,43 +18,66 @@ TitleScene::TitleScene(KeyboardInput& key):
 		texhandle[0] = LoadGraph("resources/a.png");
 		texhandle[1] = LoadGraph("resources/healthUI_frame.png");
 		texhandle[2] = LoadGraph("resources/UI_energy_orb.png");
+		texhandle[3] = LoadGraph("resources/menu_title.png");
 	}
 }
 
 void TitleScene::Update()
 {
-	particle_->Update();
+	mouse.Update();
 
-	cost.Update();
-	charaM.Update(&tutorial);
-	cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle(),&tutorial);
-
-	//クリアしたらリザルト画面
-	if (charaM.GetIsEnd())
+	if (state == TITLESTATE::TITLE)
 	{
-		isEnd = true;
+		if (mouse.GetLeftClickTrriger()) state = TITLESTATE::TUTORIAL;
 	}
-
-	tutorial.Update();
-
-	//チュートリアル終わったら遷移
-	if (tutorial.GetIsEnd())
+	else if (state == TITLESTATE::TUTORIAL)
 	{
-		isEnd = true;
+		particle_->Update();
+
+		cost.Update();
+		charaM.Update(&tutorial);
+		cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle(), &tutorial);
+
+		//クリアしたらリザルト画面
+		if (charaM.GetIsEnd())
+		{
+			isEnd = true;
+		}
+
+		tutorial.Update();
+
+		//チュートリアル終わったら遷移
+		if (tutorial.GetIsEnd())
+		{
+			isEnd = true;
+		}
+
+		//スキップ
+		if (key.GetKey(KEY_INPUT_SPACE)) skipGauge--;
+		else skipGauge = 120;
+
+		if (skipGauge <= 0) isEnd = true;
 	}
 }
 
 void TitleScene::Draw()
 {
-	DrawFormatString(0, 0, 0xFFFFFF, "TITLE");
-	charaM.Draw();
-	cardM.Draw(texhandle);
+	if (state == TITLESTATE::TITLE)
+	{
+		DrawGraph(0, 0, texhandle[3], true);
+	}
+	else if (state == TITLESTATE::TUTORIAL)
+	{
+		DrawFormatString(0, 0, 0xFFFFFF, "TITLE");
+		charaM.Draw();
+		cardM.Draw(texhandle);
 
-	cost.Draw(texhandle);
+		cost.Draw(texhandle);
 
-	particle_->Draw();
+		particle_->Draw();
 
-	tutorial.Draw(texhandle);
+		tutorial.Draw(texhandle);
+	}
 }
 
 bool TitleScene::IsEnd()

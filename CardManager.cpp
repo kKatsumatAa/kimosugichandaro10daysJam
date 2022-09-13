@@ -783,7 +783,7 @@ void CardManager::DeckSet()
 		for (int i = 0; i < attackMaxBattle; i++)
 		{
 			std::unique_ptr<AttackCard> attackC = std::make_unique<AttackCard>();
-			attackC->Initialize(1, 3);
+			attackC->Initialize(1, 5);
 			attackC->SetCardOrder(*ITR);
 			deck2.push_back(std::move(attackC));
 
@@ -792,7 +792,7 @@ void CardManager::DeckSet()
 		for (int i = 0; i < guardMaxBattle; i++)
 		{
 			std::unique_ptr<GuardCard> guardC = std::make_unique<GuardCard>();
-			guardC->Initialize();
+			guardC->Initialize(2);
 			guardC->SetCardOrder(*ITR);
 			deck2.push_back(std::move(guardC));
 
@@ -810,7 +810,7 @@ void CardManager::DeckSet()
 		for (int i = 0; i < deBuffMaxBattle; i++)
 		{
 			std::unique_ptr<DeBuffCard> deBuffC = std::make_unique<DeBuffCard>();
-			deBuffC->Initialize(2);
+			deBuffC->Initialize(1);
 			deBuffC->SetCardOrder(*ITR);
 			deck2.push_back(std::move(deBuffC));
 

@@ -6,9 +6,21 @@
 #include "CardManager.h"
 #include "Tutorial.h"
 
+enum TITLESTATE
+{
+	TITLE,
+	TUTORIAL
+};
+
 class TitleScene :public Iscene
 {
 private:
+
+	Mouse mouse;
+	int state = TITLE;
+
+	int skipGauge = 120;
+
 	KeyboardInput& key;
 	bool isEnd;
 
