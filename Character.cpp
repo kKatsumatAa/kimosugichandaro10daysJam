@@ -18,6 +18,11 @@
 
 void Character::Update()
 {
+	if (isIni == false) {
+		isIni = true;
+		LoadDivGraph("resources/player_attack_animation_-Sheet.png", 4, 4, 1, 192, 160,attackHandle);
+	}
+
 	attackState->Update();
 
 
@@ -53,8 +58,21 @@ void Character::Draw()
 		if (animeTimer >= 9) {
 			animeTimer = 0;
 		}
+		if (GetAttackGauge() > 0.7f) {
+			isAttackTex = true;
+			animeTimer = 0;
+		}
 
-		DrawRotaGraph2(pos.x - 80, pos.y, 32.0f, 32.0f, scale * 1.7f, angle, modelTexture[static_cast<int>(animeTimer)], true);
+		if (isAttackTex == false) {
+			DrawRotaGraph2(pos.x - 80, pos.y, 32.0f, 32.0f, scale * 1.7f, 0, modelTexture[static_cast<int>(animeTimer)], true);
+		}
+		else{
+			DrawRotaGraph2(pos.x - 80, pos.y, 32.0f, 32.0f, scale * 1.7f, 0, attackHandle[static_cast<int>(animeTimer)], true);
+			if (animeTimer > 4) {
+				animeTimer = 0;
+				isAttackTex = false;
+			}
+		}
 	}
 	else if (attribute == ENEMY) {
 		animeTimer += 0.2f;

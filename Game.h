@@ -29,7 +29,6 @@ private:
 	unsigned int enemy3Texture[6];
 	unsigned int enemy4Texture[6];
 	unsigned int enemy5Texture[6];
-	unsigned int enemy6Texture[6];
 	unsigned int background;
 	int shakeTimer = 0;
 	int hitStopTimer = 0;
