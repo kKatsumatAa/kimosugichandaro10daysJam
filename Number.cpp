@@ -1,11 +1,11 @@
-#include "Damage.h"
+#include "Number.h"
 
-void Damage::initialize()
+void Number::initialize()
 {
 	LoadDivGraph("resources/UI_number.png", 10, 10, 1, 32, 32, texture_);
 }
 
-void Damage::Update()
+void Number::Update()
 {
 	pos_.y -= 1;
 	if (alpha_ <= 0) {
@@ -16,7 +16,7 @@ void Damage::Update()
 	}
 }
 
-void Damage::Draw()
+void Number::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha_);
 	if (num_ < 0) {

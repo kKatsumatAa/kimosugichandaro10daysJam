@@ -375,8 +375,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		//デッキと捨て札以外の場所にあるカードとマウスの判定を取る
 		if (card[i].space_ != CardSpace::Deck && card[i].space_ != CardSpace::Trash && card[i].isMove_ == false
 			&& card[i].space_ != CardSpace::Delete) {
-			if (card[i].pos_.x - cardSize.x / 2 < mouseX && card[i].pos_.x + cardSize.x / 2 > mouseX) {
-				if (card[i].pos_.y - cardSize.y / 2 + card[i].move_.y < mouseY && card[i].pos_.y + cardSize.y / 2 > mouseY) {
+			if (card[i].pos_.x - cardSize.x / 2 - card[i].chengeSize_.x < mouseX && card[i].pos_.x + cardSize.x / 2 + card[i].chengeSize_.x > mouseX) {
+				if (card[i].pos_.y - cardSize.y / 2 + card[i].move_.y - card[i].chengeSize_.y < mouseY && card[i].pos_.y + cardSize.y / 2 + card[i].chengeSize_.y > mouseY) {
 					card[i].isHit_ = true;
 					
 					//コスト表示用の処理------------------------------------
@@ -438,6 +438,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 					break;
 				case Attibute::GUARD:
 					guardMaxBattle--;
+					particle->OrbGenerate(card[i].pos_, Vec2(950, 180));
 					particle->OrbGenerate(card[i].pos_, Vec2(950, 180));
 					break;
 				case Attibute::BUFF:
@@ -530,7 +531,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 								}
 							}
 							if (card[i].type_ == 0) {
-								particle->DamageGecerate(Vec2(enemy->GetPos().x + 50, enemy->GetPos().y - 50), 0, 3);
+								particle->NumberGecerate(Vec2(enemy->GetPos().x + 50, enemy->GetPos().y - 50), 0, 3);
 								particle->BurstGenerate(Vec2(1175, 390), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
 								particle->SlashGenerate(Vec2(1125, 340));
 							}

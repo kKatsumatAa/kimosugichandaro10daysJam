@@ -79,7 +79,7 @@ void GameScene::Update()
 		particle_->OrbGenerate(Vec2(200,200),Vec2 (1000,1000));
 	}
 	if (key.GetKeyTrigger(KEY_INPUT_9)) {
-		particle_->DamageGecerate(Vec2(200, 200),1,279);
+		particle_->NumberGecerate(Vec2(200, 200),1,279);
 	}
 
 

@@ -2,7 +2,7 @@
 #include "Dxlib.h"
 #include "Util.h"
 
-class Damage
+class Number
 {
 public:
 	void initialize();
