@@ -34,7 +34,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 
 			player->AddScale(0.6f);
 			enemy[enemyNum].AddAngle(0.6f);
-
+			shakeTimer = 10;
 		}
 		//playerの〃
 		if (player->GetIsAttack())
@@ -45,6 +45,12 @@ void CharacterManager::Update(Tutorial* tutorial)
 
 			enemy[enemyNum].AddScale(0.6f);
 			player->AddAngle(-0.6f);
+			shakeTimer = 10;
+		}
+
+		if (enemy[enemyNum].GetIsHitStop()) {
+			enemy[enemyNum].SetIsHitStop(false);
+			SetHitStopTimer(30);
 		}
 
 		if (enemy[enemyNum].GetIsDead())
@@ -52,6 +58,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 			enemyNum++;
 
 			isBattle = false;
+			
 
 			if (enemyNum > enemyMax - 1)
 			{
@@ -68,6 +75,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 		{
 			isBattle = true;
 		}
+
 
 		//バトルが終わった瞬間
 		if (!isBattle && oldIsBattle)
@@ -88,7 +96,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 	}
 
 	particle->Update();
-
+	
 }
 
 void CharacterManager::Draw()

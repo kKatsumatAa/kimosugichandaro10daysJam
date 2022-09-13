@@ -68,6 +68,8 @@ protected:
 
 	float animeTimer = 0.0f;
 
+	bool isHitStop = false;
+
 public:
 	virtual void Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240) = 0;
 	void Update();
@@ -131,6 +133,13 @@ public:
 	void AddHP(int hp) { HP += hp; }
 
 	void InitializeBattle();
+
+	int GetIsHitStop() {
+		return isHitStop;
+	}
+	void SetIsHitStop(bool isHitStop) {
+		this->isHitStop = isHitStop;
+	}
 };
 
 
@@ -159,4 +168,5 @@ private:
 public:
 	void Update() override;
 	void Draw(unsigned int* texhandle) override;
+
 };

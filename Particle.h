@@ -36,6 +36,8 @@ public:
 	void OrbGenerate(Vec2 start, Vec2 end);
 	//ダメージ
 	void NumberGecerate(Vec2 pos, int way,int num);
+	//シェイク
+	Vec2 Shake(int &timer);
 
 	void Update();
 

@@ -5,11 +5,11 @@
 void Particle::Initialize() {
 }
 
-void Particle::BurstGenerate(Vec2 pos,int r, int num, int timer, float angle,float pow, unsigned int color)
+void Particle::BurstGenerate(Vec2 pos, int r, int num, int timer, float angle, float pow, unsigned int color)
 {
 	for (int i = 0; i < num; i++) {
 		std::unique_ptr<Burst> newBurst = std::make_unique<Burst>();
-		newBurst->Initialize(angle,pow);
+		newBurst->Initialize(angle, pow);
 		newBurst->pos_ = pos;
 		newBurst->r_ = r;
 		newBurst->timer_ = timer;
@@ -47,7 +47,7 @@ void Particle::WaterGenerate(Vec2 pos, int r)
 	}
 }
 
-void Particle::LightningGenerate(Vec2 pos, int length, int num,int time,bool horizontal)
+void Particle::LightningGenerate(Vec2 pos, int length, int num, int time, bool horizontal)
 {
 	for (int i = 0; i < num; i++) {
 		std::unique_ptr<Lightning> newLightning = std::make_unique<Lightning>();
@@ -59,7 +59,7 @@ void Particle::LightningGenerate(Vec2 pos, int length, int num,int time,bool hor
 	}
 }
 
-void Particle::BuffGenerate(Vec2 pos,Vec2 random,int r)
+void Particle::BuffGenerate(Vec2 pos, Vec2 random, int r)
 {
 	//ƒ‰ƒ“ƒ_ƒ€
 	std::random_device seed_gen;
@@ -79,7 +79,7 @@ void Particle::BuffGenerate(Vec2 pos,Vec2 random,int r)
 	}
 }
 
-void Particle::DebuffGenerate(Vec2 pos, Vec2 random,int r)
+void Particle::DebuffGenerate(Vec2 pos, Vec2 random, int r)
 {
 	//ƒ‰ƒ“ƒ_ƒ€
 	std::random_device seed_gen;
@@ -101,12 +101,12 @@ void Particle::DebuffGenerate(Vec2 pos, Vec2 random,int r)
 
 void Particle::SlashGenerate(Vec2 pos)
 {
-		std::unique_ptr<Slash> newSlash = std::make_unique<Slash>();
-		newSlash->pos_ = pos;
-		slash_.push_back(std::move(newSlash));
+	std::unique_ptr<Slash> newSlash = std::make_unique<Slash>();
+	newSlash->pos_ = pos;
+	slash_.push_back(std::move(newSlash));
 }
 
-void Particle::OrbGenerate(Vec2 start ,Vec2 end)
+void Particle::OrbGenerate(Vec2 start, Vec2 end)
 {
 	std::unique_ptr<Orb> newOrb = std::make_unique<Orb>();
 	newOrb->startPos_ = start;
@@ -123,6 +123,21 @@ void Particle::NumberGecerate(Vec2 pos, int way, int num) {
 	newNumber->way_ = way;
 	newNumber->num_ = num;
 	number_.push_back(std::move(newNumber));
+}
+
+Vec2 Particle::Shake(int& timer)
+{
+	if (--timer > 0) {
+		//ƒ‰ƒ“ƒ_ƒ€
+		std::random_device seed_gen;
+		std::mt19937_64 engine(seed_gen());
+		std::uniform_real_distribution<float> x(-20.0f, 20.0f);
+		std::uniform_real_distribution<float> y(-20.0f, 20.0f);
+		return Vec2(x(engine), y(engine));
+	}
+	else {
+		return Vec2(0, 0);
+	}
 }
 
 void Particle::Update()
