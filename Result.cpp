@@ -9,7 +9,8 @@ ResultScene::ResultScene(KeyboardInput& key) :
 
 void ResultScene::Update()
 {
-	if (key.GetKeyTrigger(KEY_INPUT_SPACE)) isEnd = true;
+	mouse.Update();
+	if (mouse.GetLeftClick()) isEnd = true;
 }
 
 void ResultScene::Draw()
