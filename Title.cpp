@@ -9,6 +9,7 @@ TitleScene::TitleScene(KeyboardInput& key):
 	particle_->Initialize();
 	LoadDivGraph("resources/player_idle-Animation-Sheet.png", 9, 9, 1, 160, 160, (int*)playerTexture, true);
 	LoadDivGraph("resources/enemy_dammy-sheet.png", 6, 6, 1, 160, 160, (int*)enemy1Texture, true);
+	background = LoadGraph("resources/game_backGround.png");
 	player.Initialize(playerTexture,texhandle, { 780,1080 / 2 - 150 });
 	enemy.Initialize(enemy1Texture,texhandle, { 2100,1080 / 2 - 150 }, 50);
 	charaM.Initialize(&player, &enemy, 1);
@@ -36,6 +37,7 @@ void TitleScene::Update()
 	
 	if (state == TITLESTATE::TUTORIAL)
 	{
+
 		particle_->Update();
 
 		cost.Update();
@@ -76,6 +78,7 @@ void TitleScene::Draw()
 	}
 	else if (state == TITLESTATE::TUTORIAL)
 	{
+		DrawGraph(0, 0, background, true);
 		DrawFormatString(0, 0, 0xFFFFFF, "TITLE");
 		charaM.Draw();
 		cardM.Draw(texhandle);
