@@ -154,6 +154,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Slash.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Tutorial.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Water.cpp" />
   </ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Slash.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="Tutorial.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Water.h" />
   </ItemGroup>

@@ -16,11 +16,14 @@ GameScene::GameScene(KeyboardInput& key) :
 	background = LoadGraph("resources/game_background.png");
 	particle_ = new Particle;
 	particle_->Initialize();
-	player.Initialize(playerTexture,texhandle, { 780,1080 / 2 - 150 });
-	enemy[0].Initialize(enemy1Texture, texhandle, { 2100,1080 / 2 - 150 }, 10);
-	enemy[1].Initialize(enemy2Texture, texhandle, { 2100,1080 / 2 - 150 }, 15, 3, 170);
-	enemy[2].Initialize(enemy3Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 100);
-	enemy[3].Initialize(enemy4Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 12, 300);
+
+	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
+	enemy[0].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 10);
+	enemy[1].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 15, 3, 170);
+	enemy[2].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 100);
+	enemy[3].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 20, 12, 300);
+	enemy[4].Initialize(texhandle, { 2100,1080 / 2 - 150 }, 30, 15, 250);
+
 	charaM.Initialize(&player, enemy);
 	cardM.Initialize();
 	cost.Initialize();
@@ -29,6 +32,9 @@ GameScene::GameScene(KeyboardInput& key) :
 		texhandle[0] = LoadGraph("resources/a.png");
 		texhandle[1] = LoadGraph("resources/healthUI_frame.png");
 		texhandle[2] = LoadGraph("resources/UI_energy_orb.png");
+		texhandle[4] = LoadGraph("resources/UI_special_attack_gauge.png");
+		texhandle[5] = LoadGraph("resources/UI_attack_icon.png");
+		texhandle[6] = LoadGraph("resources/UI_defense_icon.png");
 	}
 }
 

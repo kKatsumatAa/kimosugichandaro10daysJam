@@ -1,6 +1,7 @@
 #pragma once
 #include"Enemy.h"
-#include"Particle.h"
+
+#include"Tutorial.h"
 
 class CharacterManager
 {
@@ -15,12 +16,12 @@ private:
 
 	bool isEnd = false;
 
-	const int enemyMax = 4;
+	int enemyMax = 4;
 
 public:
-	void Initialize(Player* player, Enemy* enemy);
+	void Initialize(Player* player, Enemy* enemy, int enemyMax = 5);
 
-	void Update();
+	void Update(Tutorial* tutorial = nullptr);
 	void Draw();
 
 	Player* GetPlayer() { return player; }

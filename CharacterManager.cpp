@@ -1,12 +1,14 @@
 #include "CharacterManager.h"
 
 
-void CharacterManager::Initialize(Player* player, Enemy* enemy)
+void CharacterManager::Initialize(Player* player, Enemy* enemy, int enemyMax)
 {
 	this->player = player;
 	this->enemy = enemy;
 	particle = new Particle;
 	particle->Initialize();
+
+	this->enemyMax = enemyMax;
 
 	isBattle = false;
 	isEnd = false;
@@ -14,7 +16,7 @@ void CharacterManager::Initialize(Player* player, Enemy* enemy)
 }
 
 
-void CharacterManager::Update()
+void CharacterManager::Update(Tutorial* tutorial)
 {
 	bool oldIsBattle = isBattle;
 
@@ -23,7 +25,7 @@ void CharacterManager::Update()
 		this->enemy[enemyNum].Update();
 		this->player->Update();
 
-		//“G‚ÌUŒ‚€”õ‚ª‚Å‚«‚½‚ç
+		//æ•µã®æ”»æ’ƒæº–å‚™ãŒã§ããŸã‚‰
 		if (enemy[enemyNum].GetIsAttack())
 		{
 			player->Damage(enemy[enemyNum].GetPower());
@@ -34,7 +36,7 @@ void CharacterManager::Update()
 			enemy[enemyNum].AddAngle(0.6f);
 
 		}
-		//player‚ÌV
+		//playerã®ã€ƒ
 		if (player->GetIsAttack())
 		{
 			enemy[enemyNum].Damage(player->GetPower());
@@ -67,13 +69,25 @@ void CharacterManager::Update()
 			isBattle = true;
 		}
 
-		//ƒoƒgƒ‹‚ªI‚í‚Á‚½uŠÔ
+		//ãƒãƒˆãƒ«ãŒçµ‚ã‚ã£ãŸçž¬é–“
 		if (!isBattle && oldIsBattle)
 		{
 			player->InitializeBattle();//
 		}
 	}
+
+	//ãƒ–ãƒ¬ãƒ¼ã‚¯ã®ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã«ãªã£ã¦ã€èª¬æ˜Žã‚’èª­ã¿é€²ã‚ãŸã‚‰ã€ç›¸æ‰‹ã®hpã‚’åŠåˆ†ã«ã—ã¦ãƒ–ãƒ¬ãƒ¼ã‚¯ç™ºå‹•
+	if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::BREAK && tutorial->GetStateNum() >= tutorial->GetStateNumMax())
+	{
+		while (enemy[enemyNum].GetHP() > enemy[enemyNum].GetHpMAX() / 2.0f)
+		{
+			enemy[enemyNum].Damage(1);
+		}
+		
+	}
+
 	particle->Update();
+
 }
 
 void CharacterManager::Draw()
@@ -84,6 +98,7 @@ void CharacterManager::Draw()
 		if(enemyNum==1)SetDrawBright(255, 255, 255);
 		if(enemyNum==2)SetDrawBright(255, 255, 255);
 		if(enemyNum==3)SetDrawBright(255, 255, 255);
+		if(enemyNum==4)SetDrawBright(255, 0, 255);
 		enemy[enemyNum].Draw();
 		SetDrawBright(255, 255, 255);
 	}
@@ -103,7 +118,7 @@ void CharacterManager::Draw()
 	////DrawRotaGraph3(player->GetPos().x - 32, 1080 / 2 -50, 32, 32, 1.0 * player->GetAttackGauge(), 0.3f, 0, player->GetTexHandle(), false);
 	////DrawRotaGraph3(enemy[enemyNum].GetPos().x - 32, 1080 / 2 -50, 32, 32, 1.0 * enemy[enemyNum].GetAttackGauge(), 0.3f, 0, player->GetTexHandle(), false);
 
-	////UŒ‚ƒQ[ƒW
+	////æ”»æ’ƒã‚²ãƒ¼ã‚¸
 	//DrawBox(player->GetPos().x - 32, player->GetPos().y - 50, 
 	//	(player->GetPos().x - 32) + player->GetAttackGauge() * 64, player->GetPos().y - 40, 0xffffff, false);
 

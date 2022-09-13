@@ -39,7 +39,7 @@ void CardManager::Initialize()
 	}*/
 }
 
-void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle)
+void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle, Tutorial* tutorial)
 {
 	{
 		//if (key->GetKeyTrigger(KEY_INPUT_RIGHT))
@@ -359,6 +359,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			isCatch = true;
 		}
 	}
+
+	
+	bool count = 0;
+
 	for (int i = 0; i < CARD_CONST; i++) {
 		//既に掴んでいたらこの処理をスキップする
 		if (isCatch == true) {
@@ -374,9 +378,22 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			if (card[i].pos_.x - cardSize.x / 2 < mouseX && card[i].pos_.x + cardSize.x / 2 > mouseX) {
 				if (card[i].pos_.y - cardSize.y / 2 + card[i].move_.y < mouseY && card[i].pos_.y + cardSize.y / 2 > mouseY) {
 					card[i].isHit_ = true;
+					
+					//コスト表示用の処理------------------------------------
+					count = true;
+					std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
+
+					for (int j = 0; j < card[i].space_ - 1; j++)
+					{
+						itr++;
+					}
+					
+					cost->SelectCost(itr->get()->GetCost());
 				}
 			}
 		}
+
+		if (count == false)cost->SelectCost(0);
 	}
 
 	//手札とマウスの当たり判定をプレイヤーに分かりやすく
@@ -436,6 +453,13 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 
 				cost->AddCost(itr->get()->GetCost());
 
+
+				//チュートリアル中で,かつ廃棄のチュートリアルなら
+				if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::WASTE)
+				{
+					tutorial->AddState();
+				}
+
 				deck.erase(itr);
 
 				//-----------------------------------------------
@@ -488,6 +512,12 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 						//カードのコストと現在のコストを比較
 						if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
 						{
+							//チュートリアル中で,かつカードのチュートリアルなら
+							if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::CARD)
+							{
+								tutorial->AddState();
+							}
+
 							itr->get()->Effect(player, enemy);
 							cost->UseCost(itr->get()->GetCost());
 							deck.erase(itr);
@@ -738,7 +768,7 @@ void CardManager::DeckSet()
 		for (int i = 0; i < attackMaxBattle; i++)
 		{
 			std::unique_ptr<AttackCard> attackC = std::make_unique<AttackCard>();
-			attackC->Initialize(1, 3);
+			attackC->Initialize(1, 5);
 			attackC->SetCardOrder(*ITR);
 			deck2.push_back(std::move(attackC));
 
@@ -747,7 +777,7 @@ void CardManager::DeckSet()
 		for (int i = 0; i < guardMaxBattle; i++)
 		{
 			std::unique_ptr<GuardCard> guardC = std::make_unique<GuardCard>();
-			guardC->Initialize();
+			guardC->Initialize(2);
 			guardC->SetCardOrder(*ITR);
 			deck2.push_back(std::move(guardC));
 
@@ -765,7 +795,7 @@ void CardManager::DeckSet()
 		for (int i = 0; i < deBuffMaxBattle; i++)
 		{
 			std::unique_ptr<DeBuffCard> deBuffC = std::make_unique<DeBuffCard>();
-			deBuffC->Initialize(2);
+			deBuffC->Initialize(1);
 			deBuffC->SetCardOrder(*ITR);
 			deck2.push_back(std::move(deBuffC));
 

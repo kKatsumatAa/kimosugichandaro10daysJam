@@ -5,16 +5,85 @@
 TitleScene::TitleScene(KeyboardInput& key):
 	key(key), isEnd(false)
 {
+	particle_ = new Particle;
+	particle_->Initialize();
+	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
+	enemy.Initialize(texhandle, { 2100,1080 / 2 - 150 }, 50);
+	charaM.Initialize(&player, &enemy, 1);
+	cardM.Initialize();
+	cost.Initialize();
+	tutorial.Initialize();
+
+	{
+		texhandle[0] = LoadGraph("resources/a.png");
+		texhandle[1] = LoadGraph("resources/healthUI_frame.png");
+		texhandle[2] = LoadGraph("resources/UI_energy_orb.png");
+		texhandle[3] = LoadGraph("resources/menu_title.png");
+		texhandle[4] = LoadGraph("resources/UI_special_attack_gauge.png");
+		texhandle[5] = LoadGraph("resources/UI_attack_icon.png");
+		texhandle[6] = LoadGraph("resources/UI_defense_icon.png");
+		texhandle[7] = LoadGraph("resources/UI_tutorial_text.png");
+		texhandle[8] = LoadGraph("resources/UI_tutorial_text2.png");
+	}
 }
 
 void TitleScene::Update()
 {
-	if (key.GetKeyTrigger(KEY_INPUT_SPACE)) isEnd = true;
+	mouse.Update();
+
+	
+	if (state == TITLESTATE::TUTORIAL)
+	{
+		particle_->Update();
+
+		cost.Update();
+		charaM.Update(&tutorial);
+		cardM.Update(&key, charaM.GetPlayer(), charaM.GetEnemy(), &cost, charaM.GetIsBattle(), &tutorial);
+
+		//クリアしたらリザルト画面
+		if (charaM.GetIsEnd())
+		{
+			isEnd = true;
+		}
+
+		tutorial.Update(&mouse);
+
+		//チュートリアル終わったら遷移
+		if (tutorial.GetIsEnd())
+		{
+			isEnd = true;
+		}
+
+		//スキップ
+		if (key.GetKey(KEY_INPUT_SPACE)) skipGauge--;
+		else skipGauge = 120;
+
+		if (skipGauge <= 0) isEnd = true;
+	}
+	else if (state == TITLESTATE::TITLE)
+	{
+		if (mouse.GetLeftClickTrriger()) state = TITLESTATE::TUTORIAL;
+	}
 }
 
 void TitleScene::Draw()
 {
-	DrawFormatString(0, 0, 0xFFFFFF, "TITLE");
+	if (state == TITLESTATE::TITLE)
+	{
+		DrawGraph(0, 0, texhandle[3], true);
+	}
+	else if (state == TITLESTATE::TUTORIAL)
+	{
+		DrawFormatString(0, 0, 0xFFFFFF, "TITLE");
+		charaM.Draw();
+		cardM.Draw(texhandle);
+
+		cost.Draw(texhandle);
+
+		particle_->Draw();
+
+		tutorial.Draw(texhandle);
+	}
 }
 
 bool TitleScene::IsEnd()

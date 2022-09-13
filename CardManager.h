@@ -7,6 +7,7 @@
 #include "Cost.h"
 #include "Mouse.h"
 #include "Particle.h"
+#include "Tutorial.h"
 
 static const int attackMax = 8;
 static const int guardMax = 5;
@@ -57,7 +58,7 @@ private:
 
 public:
 	void Initialize();
-	void Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle);
+	void Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle, Tutorial* tutorial = nullptr);
 	void Draw(unsigned int* texhandle);
 
 	void DeckSet();

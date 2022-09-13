@@ -14,7 +14,7 @@ private:
 
 	Player player;
 	
-	Enemy enemy[6];
+	Enemy enemy[5];
 
 	CharacterManager charaM;
 
