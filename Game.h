@@ -30,6 +30,7 @@ private:
 	unsigned int enemy4Texture[6];
 	unsigned int enemy5Texture[6];
 	unsigned int enemy6Texture[6];
+	unsigned int background;
 
 public:
 	GameScene(KeyboardInput& key);
