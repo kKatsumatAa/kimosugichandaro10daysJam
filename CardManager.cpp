@@ -23,7 +23,7 @@ void CardManager::Initialize()
 		card[i].alpha_ = 255;
 	}
 	LoadDivGraph("resources/card_attack-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[0]);
-	LoadDivGraph("resources/card_defense_-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[1]);
+	LoadDivGraph("resources/card_defense-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[1]);
 	LoadDivGraph("resources/card_buff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[2]);
 	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[3]);
 	deckGraph_ = LoadGraph("resources/UI_deckPile.png");
