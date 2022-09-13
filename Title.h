@@ -37,6 +37,8 @@ private:
 	Tutorial tutorial;
 	//
 	unsigned int texhandle[10];
+	unsigned int enemy1Texture[6];
+	unsigned int playerTexture[9];
 
 public:
 	TitleScene(KeyboardInput& key);

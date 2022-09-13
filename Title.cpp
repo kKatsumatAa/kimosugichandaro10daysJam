@@ -7,8 +7,10 @@ TitleScene::TitleScene(KeyboardInput& key):
 {
 	particle_ = new Particle;
 	particle_->Initialize();
-	player.Initialize(texhandle, { 780,1080 / 2 - 150 });
-	enemy.Initialize(texhandle, { 2100,1080 / 2 - 150 }, 50);
+	LoadDivGraph("resources/player_idle-Animation-Sheet.png", 9, 9, 1, 160, 160, (int*)playerTexture, true);
+	LoadDivGraph("resources/enemy_dammy-sheet.png", 6, 6, 1, 160, 160, (int*)enemy1Texture, true);
+	player.Initialize(playerTexture,texhandle, { 780,1080 / 2 - 150 });
+	enemy.Initialize(enemy1Texture,texhandle, { 2100,1080 / 2 - 150 }, 50);
 	charaM.Initialize(&player, &enemy, 1);
 	cardM.Initialize();
 	cost.Initialize();

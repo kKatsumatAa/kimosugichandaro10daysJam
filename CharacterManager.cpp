@@ -74,6 +74,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 		{
 			player->InitializeBattle();//
 		}
+		particle->Update();
 	}
 
 	//ブレークのチュートリアルになって、説明を読み進めたら、相手のhpを半分にしてブレーク発動

@@ -2,6 +2,7 @@
 #include"Enemy.h"
 
 #include"Tutorial.h"
+#include"Particle.h"
 
 class CharacterManager
 {
