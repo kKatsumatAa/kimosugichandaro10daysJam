@@ -187,7 +187,9 @@ void SpecialAttack::Update()
 	if ((float)chara->GetHP() <= (float)chara->GetHpMAX() / 5.0f && chara->GetIsSpecial() && chara->GetAttribute() == ENEMY)
 	{
 		chara->AddDeBuff(2);
+		chara->SetIsHitStop(true);
 		chara->ChangeState(new NormalAttack);
+		
 	}
 }
 

@@ -18,6 +18,8 @@ private:
 	bool isEnd = false;
 
 	int enemyMax = 4;
+	int shakeTimer = 0;
+	int hitStopTimer = 0;
 
 public:
 	void Initialize(Player* player, Enemy* enemy, int enemyMax = 5);
@@ -29,6 +31,21 @@ public:
 	Enemy* GetEnemy() { return &enemy[enemyNum]; }
 
 	bool GetIsBattle() { return isBattle; }
+	int GetShakeTimer() {
+		return shakeTimer;
+	}
+	void ResetShakeTimer() {
+		shakeTimer = 0;
+	}
+	int GetHitStopTimer() {
+		return hitStopTimer;
+	}
+	void SetHitStopTimer(int time) {
+		hitStopTimer = time;
+	}
+	void ResetHitStopTimer() {
+		hitStopTimer = 0;
+	}
 
 	bool GetIsEnd() { return isEnd; }
 };
