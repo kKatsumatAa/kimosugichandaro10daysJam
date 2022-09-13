@@ -24,6 +24,9 @@ GameScene::GameScene(KeyboardInput& key) :
 		texhandle[0] = LoadGraph("resources/a.png");
 		texhandle[1] = LoadGraph("resources/healthUI_frame.png");
 		texhandle[2] = LoadGraph("resources/UI_energy_orb.png");
+		texhandle[4] = LoadGraph("resources/UI_special_attack_gauge.png");
+		texhandle[5] = LoadGraph("resources/UI_attack_icon.png");
+		texhandle[6] = LoadGraph("resources/UI_defense_icon.png");
 	}
 }
 

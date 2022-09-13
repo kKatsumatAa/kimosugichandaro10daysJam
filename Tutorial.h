@@ -20,7 +20,7 @@ protected:
 
 public:
 	void SetTutorial(Tutorial* tutorial) { this->tutorial = tutorial; }
-	virtual void Update() = 0;
+	virtual void Update(Mouse* mouse) = 0;
 	virtual void Draw(unsigned int* texhandle) = 0;
 	void AddNum() { num++; }
 	int GetNum() { return num; }
@@ -36,13 +36,12 @@ private:
 	//外部から今行ってるチュートリアルが分かるようにした変数
 	int state2 = BATTLE;
 	bool isEnd = false;
+	float count = 0;
 
 public:
-	
-	Mouse mouse;
 
 	void Initialize();
-	void Update();
+	void Update(Mouse* mouse);
 	void Draw(unsigned int* texhandle);
 
 	int GetState() { return state2; }
@@ -70,7 +69,7 @@ class BattleTutrial :public TutorialState
 {
 private:
 public:
-	void Update() override;
+	void Update(Mouse* mouse) override;
 	void Draw(unsigned int* texhandle) override;
 };
 
@@ -78,7 +77,7 @@ class CardTutrial :public TutorialState
 {
 private:
 public:
-	void Update() override;
+	void Update(Mouse* mouse) override;
 	void Draw(unsigned int* texhandle) override;
 };
 
@@ -86,7 +85,7 @@ class WasteTutrial :public TutorialState
 {
 private:
 public:
-	void Update() override;
+	void Update(Mouse* mouse) override;
 	void Draw(unsigned int* texhandle) override;
 };
 
@@ -94,7 +93,7 @@ class BreakTutrial :public TutorialState
 {
 private:
 public:
-	void Update() override;
+	void Update(Mouse* mouse) override;
 	void Draw(unsigned int* texhandle) override;
 };
 

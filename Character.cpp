@@ -52,13 +52,17 @@ void Character::Draw()
 	
 
 	//”’l•`‰æ
-	DrawFormatString(pos.x + 50, pos.y - 20, 0xffffff, "power:%d", GetPower());
-	DrawFormatString(pos.x + 50, pos.y - 20, 0xffff00, "\nguard:%d", guardPower);
+	SetDrawBright(255, 255, 255);
+	DrawGraph(pos.x + 40, pos.y - 55, texhandle[5], true);
+	DrawGraph(pos.x + 40, pos.y - 18, texhandle[6], true);
+
+	DrawFormatString(pos.x + 100, pos.y - 20, 0xffffff, "%d", GetPower());
+	DrawFormatString(pos.x + 100, pos.y - 20, 0xffff00, "\n%d", guardPower);
 
 	//hp,UŒ‚ƒQ[ƒW
 	DrawRotaGraph(pos.x , pos.y - 100, 1.5f, 0.0f, texhandle[1], true);
 
-	SetDrawBright(255, 255, 255);
+	//SetDrawBright(255, 255, 255);
 	DrawBox(pos.x - 77 * 1.5f, pos.y - 93,
 		pos.x - 77 * 1.5f + ((float)168 * 1.5f * GetAttackGauge()), pos.y - 76, 
 		0x00ffff, true);
@@ -180,11 +184,15 @@ void SpecialAttack::Draw(unsigned int* texhandle)
 		chara->AddScale((float)(GetRand(2) + 1) * 0.1f);
 	}
 
-	DrawBox(chara->GetPos().x - gaugeLength.x / 2, 
-		chara->GetPos().y - gaugeLength.y / 2 + 70,
-		chara->GetPos().x - gaugeLength.x / 2 + gaugeLength.x * (float)((float)specialGauge / (float)specialGaugeMAX),
-		chara->GetPos().y + gaugeLength.y / 2 + 70,
-		0xffffff, true);
+	DrawRotaGraph(chara->GetPos().x,
+		chara->GetPos().y + 90,
+		2.0f, 0.0f, texhandle[4], true);
+
+	DrawBox(chara->GetPos().x - gaugeLength.x / 2.0f * 2.0f -10, 
+		chara->GetPos().y - gaugeLength.y / 2 + 100,
+		chara->GetPos().x - gaugeLength.x / 2 * 2.0f - 10 + gaugeLength.x  * (float)((float)specialGauge / (float)specialGaugeMAX * 2.2f),
+		chara->GetPos().y + gaugeLength.y / 2 + 100,
+		0xee0000, true);
 
 	//ƒuƒŒ[ƒN‚·‚éhp
 	DrawLine(chara->GetPos().x - 77 * 1.5f + ((float)168 * 1.5f / 5.0f), chara->GetPos().y - 123,

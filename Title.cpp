@@ -19,6 +19,11 @@ TitleScene::TitleScene(KeyboardInput& key):
 		texhandle[1] = LoadGraph("resources/healthUI_frame.png");
 		texhandle[2] = LoadGraph("resources/UI_energy_orb.png");
 		texhandle[3] = LoadGraph("resources/menu_title.png");
+		texhandle[4] = LoadGraph("resources/UI_special_attack_gauge.png");
+		texhandle[5] = LoadGraph("resources/UI_attack_icon.png");
+		texhandle[6] = LoadGraph("resources/UI_defense_icon.png");
+		texhandle[7] = LoadGraph("resources/UI_tutorial_text.png");
+		texhandle[8] = LoadGraph("resources/UI_tutorial_text2.png");
 	}
 }
 
@@ -26,11 +31,8 @@ void TitleScene::Update()
 {
 	mouse.Update();
 
-	if (state == TITLESTATE::TITLE)
-	{
-		if (mouse.GetLeftClickTrriger()) state = TITLESTATE::TUTORIAL;
-	}
-	else if (state == TITLESTATE::TUTORIAL)
+	
+	if (state == TITLESTATE::TUTORIAL)
 	{
 		particle_->Update();
 
@@ -44,7 +46,7 @@ void TitleScene::Update()
 			isEnd = true;
 		}
 
-		tutorial.Update();
+		tutorial.Update(&mouse);
 
 		//チュートリアル終わったら遷移
 		if (tutorial.GetIsEnd())
@@ -57,6 +59,10 @@ void TitleScene::Update()
 		else skipGauge = 120;
 
 		if (skipGauge <= 0) isEnd = true;
+	}
+	else if (state == TITLESTATE::TITLE)
+	{
+		if (mouse.GetLeftClickTrriger()) state = TITLESTATE::TUTORIAL;
 	}
 }
 
