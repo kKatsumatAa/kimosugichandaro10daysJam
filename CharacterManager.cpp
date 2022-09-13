@@ -107,7 +107,7 @@ void CharacterManager::Draw()
 		if(enemyNum==1)SetDrawBright(255, 255, 255);
 		if(enemyNum==2)SetDrawBright(255, 255, 255);
 		if(enemyNum==3)SetDrawBright(255, 255, 255);
-		if(enemyNum==4)SetDrawBright(255, 0, 255);
+		if(enemyNum==4)SetDrawBright(255, 255, 255);
 		enemy[enemyNum].Draw();
 		SetDrawBright(255, 255, 255);
 	}

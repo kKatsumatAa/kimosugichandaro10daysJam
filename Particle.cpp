@@ -182,7 +182,7 @@ void Particle::Update()
 	for (std::unique_ptr<Orb>& orb : orb_) {
 		orb->Update();
 	}
-	//ƒ_ƒ[ƒW
+	//”š
 	number_.remove_if([](std::unique_ptr<Number>& number) {return number->isDead_; });
 	for (std::unique_ptr<Number>& number : number_) {
 		number->Update();

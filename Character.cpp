@@ -71,10 +71,10 @@ void Character::Draw()
 	DrawGraph(pos.x + 40, pos.y - 55, texhandle[5], true);
 	DrawGraph(pos.x + 40, pos.y - 18, texhandle[6], true);
 
-	particle->NumberGecerate(Vec2(pos.x + 95, pos.y - 40), 0, GetPower());
-	particle->NumberGecerate(Vec2(pos.x + 95, pos.y - 5), 0, guardPower);
+	SetFontSize(32);
+	DrawFormatString(pos.x + 95, pos.y - 40, GetColor(250, 100, 100), "%d", GetPower());
+	DrawFormatString(pos.x + 95, pos.y - 5, GetColor(100, 200, 200), "%d", guardPower);
 	particle->Update();
-	particle->Draw();
 
 	//hp,攻撃ゲージ
 	DrawRotaGraph(pos.x, pos.y - 100, 1.5f, 0.0f, texhandle[1], true);
@@ -88,6 +88,7 @@ void Character::Draw()
 		0xff0000, true);
 
 	attackState->Draw(texhandle);
+	particle->Draw();
 }
 
 
@@ -189,7 +190,7 @@ void SpecialAttack::Update()
 		chara->AddDeBuff(2);
 		chara->SetIsHitStop(true);
 		chara->ChangeState(new NormalAttack);
-		
+
 	}
 }
 
@@ -207,9 +208,9 @@ void SpecialAttack::Draw(unsigned int* texhandle)
 		chara->GetPos().y + 90,
 		2.0f, 0.0f, texhandle[4], true);
 
-	DrawBox(chara->GetPos().x - gaugeLength.x / 2.0f * 2.0f -10, 
+	DrawBox(chara->GetPos().x - gaugeLength.x / 2.0f * 2.0f - 10,
 		chara->GetPos().y - gaugeLength.y / 2 + 100,
-		chara->GetPos().x - gaugeLength.x / 2 * 2.0f - 10 + gaugeLength.x  * (float)((float)specialGauge / (float)specialGaugeMAX * 2.2f),
+		chara->GetPos().x - gaugeLength.x / 2 * 2.0f - 10 + gaugeLength.x * (float)((float)specialGauge / (float)specialGaugeMAX * 2.2f),
 		chara->GetPos().y + gaugeLength.y / 2 + 100,
 		0xee0000, true);
 

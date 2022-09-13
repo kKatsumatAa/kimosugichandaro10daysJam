@@ -3,6 +3,7 @@
 void Number::initialize()
 {
 	LoadDivGraph("resources/UI_number.png", 10, 10, 1, 32, 32, texture_);
+	isDead_ = false;
 }
 
 void Number::Update()
@@ -10,10 +11,10 @@ void Number::Update()
 	switch (way_)
 	{
 	case 0:
-		timer--;
 		if (timer <= 0) {
 			isDead_ = true;
 		}
+		timer--;
 	case 1:
 		pos_.y -= 1;
 		if (alpha_ <= 0) {
@@ -43,6 +44,7 @@ void Number::Draw()
 		DrawGraph(pos_.x, pos_.y, texture_[num_ % 100 / 10], true);
 		DrawGraph(pos_.x + 20, pos_.y, texture_[num_ % 10], true);
 	}
+	DrawFormatString(200, 0, GetColor(255, 255, 255), "num = %d", num_);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 }

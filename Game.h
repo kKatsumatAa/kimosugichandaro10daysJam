@@ -33,6 +33,7 @@ private:
 	unsigned int background;
 	int shakeTimer = 0;
 	int hitStopTimer = 0;
+	int numText[10];
 public:
 	GameScene(KeyboardInput& key);
 	~GameScene();

@@ -9,10 +9,10 @@
 #include "Particle.h"
 #include "Tutorial.h"
 
-static const int attackMax = 8;
-static const int guardMax = 5;
-static const int buffMax = 5;
-static const int deBuffMax = 2;
+static const int attackMax = 10;
+static const int guardMax = 3;
+static const int buffMax = 3;
+static const int deBuffMax = 4;
 
 static const int deckMax = attackMax + guardMax + buffMax + deBuffMax;
 

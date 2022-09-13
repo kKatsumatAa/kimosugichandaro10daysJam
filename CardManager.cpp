@@ -531,7 +531,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 								}
 							}
 							if (card[i].type_ == 0) {
-								particle->NumberGecerate(Vec2(enemy->GetPos().x + 50, enemy->GetPos().y - 50), 1, 3);
+								(Vec2(enemy->GetPos().x + 50, enemy->GetPos().y - 50), 1, 3);
 								particle->BurstGenerate(Vec2(1175, 390), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
 								particle->SlashGenerate(Vec2(1125, 340));
 								shakeTimer = 10;
@@ -797,7 +797,7 @@ void CardManager::DeckSet()
 		for (int i = 0; i < deBuffMaxBattle; i++)
 		{
 			std::unique_ptr<DeBuffCard> deBuffC = std::make_unique<DeBuffCard>();
-			deBuffC->Initialize(1);
+			deBuffC->Initialize(1,2);
 			deBuffC->SetCardOrder(*ITR);
 			deck2.push_back(std::move(deBuffC));
 
