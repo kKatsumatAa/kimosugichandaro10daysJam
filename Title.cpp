@@ -59,10 +59,10 @@ void TitleScene::Update()
 		}
 
 		//スキップ
-		if (key.GetKey(KEY_INPUT_SPACE)) skipGauge--;
-		else skipGauge = 120;
+		if (key.GetKeyTrigger(KEY_INPUT_SPACE)) isEnd = true;
+		/*else skipGauge = 120;
 
-		if (skipGauge <= 0) isEnd = true;
+		if (skipGauge <= 0) isEnd = true;*/
 	}
 	else if (state == TITLESTATE::TITLE)
 	{

@@ -15,16 +15,16 @@ class TutorialState
 {
 protected:
 	Tutorial* tutorial;
-	int num = 0;
-	const int numMax = 3;
+	float count = 0;
 
 public:
 	void SetTutorial(Tutorial* tutorial) { this->tutorial = tutorial; }
 	virtual void Update(Mouse* mouse) = 0;
 	virtual void Draw(unsigned int* texhandle) = 0;
-	void AddNum() { num++; }
-	int GetNum() { return num; }
-	int GetMaxNum() { return numMax; }
+	
+	virtual void AddNum() = 0;
+	virtual int GetNum() = 0;
+	virtual int GetMaxNum() = 0;
 };
 
 
@@ -68,7 +68,18 @@ public:
 class BattleTutrial :public TutorialState
 {
 private:
+	int num = 0;
+	const int numMax = 2;
+	int texhandle[4];
+
 public:
+	BattleTutrial();
+
+
+	void AddNum()override { num++; }
+	int GetNum()override { return num; }
+	int GetMaxNum()override { return numMax; }
+
 	void Update(Mouse* mouse) override;
 	void Draw(unsigned int* texhandle) override;
 };
@@ -77,6 +88,16 @@ class CardTutrial :public TutorialState
 {
 private:
 public:
+	int num = 0;
+	const int numMax = 3;
+	int texhandle[7];
+
+	CardTutrial();
+
+	void AddNum()override { num++; }
+	int GetNum()override { return num; }
+	int GetMaxNum()override { return numMax; }
+
 	void Update(Mouse* mouse) override;
 	void Draw(unsigned int* texhandle) override;
 };
@@ -85,6 +106,16 @@ class WasteTutrial :public TutorialState
 {
 private:
 public:
+	int num = 0;
+	const int numMax = 3;
+	int texhandle[7];
+
+	WasteTutrial();
+
+	void AddNum()override { num++; }
+	int GetNum()override { return num; }
+	int GetMaxNum()override { return numMax; }
+
 	void Update(Mouse* mouse) override;
 	void Draw(unsigned int* texhandle) override;
 };
@@ -93,6 +124,17 @@ class BreakTutrial :public TutorialState
 {
 private:
 public:
+	int num = 0;
+	const int numMax = 3;
+	int texhandle[7];
+
+
+	BreakTutrial();
+
+	void AddNum()override { num++; }
+	int GetNum()override { return num; }
+	int GetMaxNum()override { return numMax; }
+
 	void Update(Mouse* mouse) override;
 	void Draw(unsigned int* texhandle) override;
 };
