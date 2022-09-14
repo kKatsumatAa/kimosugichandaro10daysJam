@@ -43,6 +43,9 @@ public:
 
 	void Draw();
 
+	int buffTexture;
+	int debuffTexture;
+
 
 	//’e‚¯”ò‚Ô
 	std::list<std::unique_ptr<Burst>> burst_;
