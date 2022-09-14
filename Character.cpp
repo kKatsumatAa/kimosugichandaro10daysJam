@@ -104,6 +104,8 @@ void Character::Draw()
 	DrawBox(pos.x - 78 * 1.5f, pos.y - 123,
 		pos.x - 78 * 1.5f + ((float)168 * 1.5f * ((float)HP / (float)hpMAX)), pos.y - 95,
 		0xff0000, true);
+	//hpの数字
+	DrawFormatString(pos.x , pos.y - 123, 0xcccccc, "%d",HP);
 
 	attackState->Draw(texhandle);
 	particle->Draw();
