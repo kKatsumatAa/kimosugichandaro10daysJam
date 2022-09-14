@@ -74,9 +74,10 @@ protected:
 	bool isIni = false;
 	int attackHandle[4];
 	bool isAttackTex = false;
+	bool isBoss;
 
 public:
-	virtual void Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240) = 0;
+	virtual void Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp = 5, int power = 1, int attackCool = 240,bool isBoss = false) = 0;
 	void Update();
 	void Draw();
 

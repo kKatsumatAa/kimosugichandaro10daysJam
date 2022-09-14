@@ -16,7 +16,7 @@ void Tutorial::Update(Mouse* mouse)
 void Tutorial::Draw(unsigned int* texhandle)
 {
 	state->Draw(texhandle);
-	DrawFormatString(0, 500, 0xffffff, "\nstate:%d", state2);
+	//DrawFormatString(0, 500, 0xffffff, "\nstate:%d", state2);
 
 	count += 0.1f;
 	//チュートリアル中
@@ -63,7 +63,7 @@ void BattleTutrial::Draw(unsigned int* texhandle)
 	else
 		DrawGraph(1550, 310, this->texhandle[3], true);
 
-	DrawFormatString(0, 500, 0xffffff, "tutorialNum:%d", num);
+	//DrawFormatString(0, 500, 0xffffff, "tutorialNum:%d", num);
 }
 
 //-----------------------------------------------------------------
@@ -115,7 +115,7 @@ void CardTutrial::Draw(unsigned int* texhandle)
 			DrawGraph(1550, 310, this->texhandle[5], true);
 	}
 
-	DrawFormatString(0, 500, 0xffffff, "tutorialNum:%d", num);
+	//DrawFormatString(0, 500, 0xffffff, "tutorialNum:%d", num);
 }
 
 
@@ -165,7 +165,7 @@ void WasteTutrial::Draw(unsigned int* texhandle)
 			DrawGraph(1550, 310, this->texhandle[5], true);
 	}
 
-	DrawFormatString(0, 500, 0xffffff, "tutorialNum:%d", num);
+	//DrawFormatString(0, 500, 0xffffff, "tutorialNum:%d", num);
 }
 
 
@@ -206,7 +206,7 @@ void BreakTutrial::Draw(unsigned int* texhandle)
 				DrawGraph(1550, 310, this->texhandle[4], true);
 		}
 
-		DrawFormatString(0, 500, 0xffffff, "tutorialNum:%d", num);
+		//DrawFormatString(0, 500, 0xffffff, "tutorialNum:%d", num);
 	}
 }
 

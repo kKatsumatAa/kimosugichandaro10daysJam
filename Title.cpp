@@ -81,7 +81,7 @@ void TitleScene::Draw()
 	else if (state == TITLESTATE::TUTORIAL)
 	{
 		DrawGraph(0, 0, background, true);
-		DrawFormatString(0, 0, 0xFFFFFF, "TITLE");
+		//DrawFormatString(0, 0, 0xFFFFFF, "TITLE");
 		charaM.Draw();
 		cardM.Draw(texhandle);
 

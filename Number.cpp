@@ -44,7 +44,7 @@ void Number::Draw()
 		DrawRotaGraph(pos_.x, pos_.y, 2.0, 0.0, texture_[num_ % 100 / 10], true);
 		DrawRotaGraph(pos_.x + 40, pos_.y, 2.0, 0.0, texture_[num_ % 10], true);
 	}
-	DrawFormatString(200, 0, GetColor(255, 255, 255), "num = %d", num_);
+	//DrawFormatString(200, 0, GetColor(255, 255, 255), "num = %d", num_);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 }

@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-void Enemy::Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp, int power, int attackCool)
+void Enemy::Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp, int power, int attackCool,bool isBoss)
 {
 	this->pos = pos;
 
@@ -21,4 +21,5 @@ void Enemy::Initialize(unsigned int* playertexture, unsigned int* textureHandle,
 	attackState->SetChara(this);
 
 	isSpecial = false;
+	this->isBoss = isBoss;
 }
