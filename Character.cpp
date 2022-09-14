@@ -58,7 +58,7 @@ void Character::Draw()
 		if (animeTimer >= 9) {
 			animeTimer = 0;
 		}
-		if (GetAttackGauge() > 0.7f) {
+		if (GetAttackGauge() >= 0.8f && isAttackTex == false) {
 			isAttackTex = true;
 			animeTimer = 0;
 		}
