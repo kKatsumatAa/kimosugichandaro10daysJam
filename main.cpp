@@ -19,7 +19,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	
-	
+	int soundHandle;
+	soundHandle = LoadSoundMem("resources/sound/sound_BGM.mp3");
+	PlaySoundMem(soundHandle, DX_PLAYTYPE_LOOP, true);
+	ChangeVolumeSoundMem(100, soundHandle);
 
 	// ゲームループ
 	while (true) {
@@ -29,6 +32,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
+
 		mouse.Update();
 		key.Update();
 

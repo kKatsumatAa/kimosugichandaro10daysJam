@@ -11,6 +11,8 @@ private:
 	Enemy* enemy = nullptr;
 	Particle* particle = nullptr;
 
+	int soundHandle;
+
 	bool isBattle = false;
 
 	int enemyNum = 0;

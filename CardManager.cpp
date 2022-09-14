@@ -12,6 +12,21 @@ void CardManager::Initialize()
 {
 	DeckSet();
 
+	soundHandle[0] = LoadSoundMem("resources/sound/slash_SFX.mp3");
+	soundHandle[1] = LoadSoundMem("resources/sound/card_play_SFX.wav");
+	soundHandle[2] = LoadSoundMem("resources/sound/sound_card_defense_SFX.mp3");
+	soundHandle[3] = LoadSoundMem("resources/sound/waste.mp3");
+	soundHandle[4] = LoadSoundMem("resources/sound/se_magic_curse01.mp3");
+	soundHandle[5] = LoadSoundMem("resources/sound/buff.mp3");
+	ChangeVolumeSoundMem(100, soundHandle[0]);
+	ChangeVolumeSoundMem(100, soundHandle[1]);
+	ChangeVolumeSoundMem(100, soundHandle[2]);
+	ChangeVolumeSoundMem(100, soundHandle[3]);
+	ChangeVolumeSoundMem(100, soundHandle[4]);
+	ChangeVolumeSoundMem(80, soundHandle[5]);
+
+	
+
 	//初期化
 	for (int i = 0; i < CARD_CONST; i++) {
 		card[i].pos_ = deckSpace;
@@ -421,6 +436,9 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		for (int i = 0; i < CARD_CONST; i++) {
 			if (card[i].isHit_ == true) {
 
+				//廃棄音
+				PlaySoundMem(soundHandle[3], DX_PLAYTYPE_BACK, true);
+
 				int count = 0;
 				//リストの方の廃棄処理
 				std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
@@ -513,6 +531,9 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 						//カードのコストと現在のコストを比較
 						if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
 						{
+							//プレイ音
+							PlaySoundMem(soundHandle[1], DX_PLAYTYPE_BACK, true);
+
 							//チュートリアル中で,かつカードのチュートリアルなら
 							if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::CARD && tutorial->GetStateNum() == 0)
 							{
@@ -535,14 +556,21 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 								particle->BurstGenerate(Vec2(1175, 390), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
 								particle->SlashGenerate(Vec2(1125, 340));
 								shakeTimer = 10;
+								//スラッシュ音
+								PlaySoundMem(soundHandle[0], DX_PLAYTYPE_BACK, true);
 							}
 							else if (card[i].type_ == 1) {
-
+								//防御音
+								PlaySoundMem(soundHandle[2], DX_PLAYTYPE_BACK, true);
 							}
 							else if (card[i].type_ == 2) {
+								//
+								PlaySoundMem(soundHandle[5], DX_PLAYTYPE_BACK, true);
 								buffTimer = 50;
 							}
 							else if (card[i].type_ == 3) {
+								//デバフ音
+								PlaySoundMem(soundHandle[4], DX_PLAYTYPE_BACK, true);
 								debuffTimer = 50;
 							}
 							card[i].space_ = CardSpace::Trash;

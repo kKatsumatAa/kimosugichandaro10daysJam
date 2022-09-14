@@ -56,6 +56,8 @@ private:
 	std::list<std::unique_ptr<Card>> deck;
 	std::list<std::unique_ptr<Card>> deck2;
 
+	int soundHandle[10];
+
 public:
 	void Initialize();
 	void Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost* cost, bool isBattle, Tutorial* tutorial = nullptr);

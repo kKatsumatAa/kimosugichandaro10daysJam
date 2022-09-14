@@ -4,7 +4,7 @@ class SetDef
 {
 private:
 	// ウィンドウのタイトルに表示する文字列
-	const char* TITLE = "キモスギチャン";
+	const char* TITLE = "2004_AutoKnight";
 
 	// ウィンドウ横幅
 	const int WIN_WIDTH = 1920;

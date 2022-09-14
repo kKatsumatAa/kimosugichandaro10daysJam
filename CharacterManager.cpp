@@ -13,6 +13,9 @@ void CharacterManager::Initialize(Player* player, Enemy* enemy, int enemyMax)
 	isBattle = false;
 	isEnd = false;
 	enemyNum = 0;
+
+	soundHandle = LoadSoundMem("resources/sound/slash_SFX.mp3");
+	ChangeVolumeSoundMem(100, soundHandle);
 }
 
 
@@ -28,6 +31,8 @@ void CharacterManager::Update(Tutorial* tutorial)
 		//敵の攻撃準備ができたら
 		if (enemy[enemyNum].GetIsAttack())
 		{
+			PlaySoundMem(soundHandle, DX_PLAYTYPE_BACK);
+
 			player->Damage(enemy[enemyNum].GetPower());
 			particle->NumberGecerate(Vec2(player->GetPos().x - 190, player->GetPos().y - 20), 1, enemy[enemyNum].GetPower() - player->GetGuardPower());
 			enemy[enemyNum].SetIsAttack(false);
@@ -39,6 +44,8 @@ void CharacterManager::Update(Tutorial* tutorial)
 		//playerの〃
 		if (player->GetIsAttack())
 		{
+			PlaySoundMem(soundHandle, DX_PLAYTYPE_BACK);
+
 			enemy[enemyNum].Damage(player->GetPower());
 			particle->NumberGecerate(Vec2(enemy[enemyNum].GetPos().x + 190,enemy[enemyNum].GetPos().y - 20), 1, player->GetPower() - enemy[enemyNum].GetGuardPower());
 			player->SetIsAttack(false);
