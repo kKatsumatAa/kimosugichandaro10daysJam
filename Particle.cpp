@@ -3,6 +3,8 @@
 #include <random>
 
 void Particle::Initialize() {
+	buffTexture = LoadGraph("resources/UI_effect_buff.png");
+	debuffTexture = LoadGraph("resources/UI_effect_debuff.png");
 }
 
 void Particle::BurstGenerate(Vec2 pos, int r, int num, int timer, float angle, float pow, unsigned int color)
@@ -64,7 +66,7 @@ void Particle::BuffGenerate(Vec2 pos, Vec2 random, int r)
 	//ƒ‰ƒ“ƒ_ƒ€
 	std::random_device seed_gen;
 	std::mt19937_64 engine(seed_gen());
-	std::uniform_real_distribution<float> rand(0.0f, 5.0f);
+	std::uniform_real_distribution<float> rand(0.0f, 7.0f);
 
 	if (static_cast<int>(rand(engine)) == 0) {
 		std::unique_ptr<Buff> newBuff = std::make_unique<Buff>();
@@ -75,6 +77,7 @@ void Particle::BuffGenerate(Vec2 pos, Vec2 random, int r)
 		newBuff->pos_.x = pos.x + x(engine);
 		newBuff->pos_.y = pos.y + random.y + y(engine);
 		newBuff->r_ = r;
+		newBuff->texture = buffTexture;
 		buff_.push_back(std::move(newBuff));
 	}
 }
@@ -95,6 +98,7 @@ void Particle::DebuffGenerate(Vec2 pos, Vec2 random, int r)
 		newDebuff->pos_.x = pos.x + x(engine);
 		newDebuff->pos_.y = pos.y - random.y + y(engine);
 		newDebuff->r_ = r;
+		newDebuff->texture = debuffTexture;
 		debuff_.push_back(std::move(newDebuff));
 	}
 }

@@ -16,6 +16,8 @@ void Debuff::Update()
 void Debuff::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha_);
-	DrawCircle(pos_.x, pos_.y, r_, GetColor(0, 125, 250), false, r_ / 2);
+	//DrawCircle(pos_.x, pos_.y, r_, GetColor(0, 125, 250), false, r_ / 2);
+	DrawGraph(pos_.x - 48, pos_.y - 48, texture, true);
+
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

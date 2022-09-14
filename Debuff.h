@@ -18,6 +18,7 @@ public:
 	//アルファ値
 	int alpha_ = 255;
 
+	int texture;
 	//存在するか
 	bool isDead_;
 };

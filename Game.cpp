@@ -11,7 +11,7 @@ GameScene::GameScene(KeyboardInput& key) :
 	LoadDivGraph("resources/player_idle-Animation-Sheet.png", 9, 9, 1, 160, 160, (int*)playerTexture, true);
 	LoadDivGraph("resources/enemy_slime.png", 6, 6, 1, 160, 160, (int*)enemy1Texture, true);
 	LoadDivGraph("resources/enemy_mashroom.png", 6, 6, 1, 160, 160, (int*)enemy2Texture, true);
-	LoadDivGraph("resources/enemy_mob-Sheet.png", 6, 6, 1, 128, 80, (int*)enemy3Texture, true);
+	LoadDivGraph("resources/enemy_mob-Sheet.png", 6, 6, 1, 160, 160, (int*)enemy3Texture, true);
 	LoadDivGraph("resources/enemy_monster.png", 6, 6, 1, 160, 160, (int*)enemy4Texture, true);
 	LoadDivGraph("resources/enemy_boss-Sheet.png", 6, 6, 1, 305, 188, (int*)enemy5Texture, true);
 	LoadDivGraph("resources/UI_number.png", 10, 10, 1, 32, 32, numText);
