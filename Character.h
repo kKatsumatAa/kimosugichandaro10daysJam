@@ -90,6 +90,9 @@ public:
 		if (powertmp[0] + power - deBuffPower <= 0) return 0;
 		                                            return powertmp[0] + power - deBuffPower;
 	}
+	int GetGuardPower() {
+		return guardPower;
+	}
 
 	void Damage(int power);
 
@@ -107,7 +110,7 @@ public:
 
 	int GetHP() { return HP; }
 
-	float GetAttackGauge() { return (float)attackTime / (float)(attackCool + (attackCool * (deBuffPower / 3.0f))); }
+	float GetAttackGauge() { return (float)attackTime / (float)(attackCool + (float)(attackCool * (deBuffPower / 3.0f))); }
 
 	unsigned int* GetTexHandle() { return texhandle; }
 
