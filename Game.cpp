@@ -21,11 +21,11 @@ GameScene::GameScene(KeyboardInput& key) :
 	particle_->Initialize();
 
 	player.Initialize(playerTexture, texhandle, { 780,1080 / 2 - 150 }, 50);
-	enemy[0].Initialize(enemy1Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 300);
-	enemy[1].Initialize(enemy2Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 7, 250);
-	enemy[2].Initialize(enemy3Texture, texhandle, { 2100,1080 / 2 - 150 }, 60, 15, 220);
-	enemy[3].Initialize(enemy4Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 8, 50);
-	enemy[4].Initialize(enemy5Texture, texhandle, { 2100,1080 / 2 - 150 }, 120, 20, 400);
+	enemy[0].Initialize(enemy1Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 300, false);
+	enemy[1].Initialize(enemy2Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 7, 250, false);
+	enemy[2].Initialize(enemy3Texture, texhandle, { 2100,1080 / 2 - 150 }, 60, 15, 220, false);
+	enemy[3].Initialize(enemy4Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 8, 50, false);
+	enemy[4].Initialize(enemy5Texture, texhandle, { 2100,1080 / 2 - 150 }, 120, 20, 400, true);
 
 	charaM.Initialize(&player, enemy);
 	cardM.Initialize();
