@@ -5,17 +5,20 @@
 ResultScene::ResultScene(KeyboardInput& key) :
 	key(key), isEnd(false)
 {
+	texhandle[0] = LoadGraph("resources/game_clear.png");
 }
 
 void ResultScene::Update()
 {
 	mouse.Update();
-	if (mouse.GetLeftClick()) isEnd = true;
+	timer++;
+
+	if (timer >= 180 || (timer > 1 && mouse.GetLeftClickTrriger())) isEnd = true;
 }
 
 void ResultScene::Draw()
 {
-	DrawFormatString(0, 0, 0xFFFFFF, "RESULT");
+	DrawGraph(0, 0, texhandle[0], true);
 }
 
 bool ResultScene::IsEnd()

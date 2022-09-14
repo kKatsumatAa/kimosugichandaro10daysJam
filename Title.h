@@ -41,6 +41,8 @@ private:
 	unsigned int playerTexture[9];
 	unsigned int background;
 
+	int endTimer = 0;
+
 public:
 	TitleScene(KeyboardInput& key);
 	void Update() override;

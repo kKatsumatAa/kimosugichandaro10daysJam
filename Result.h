@@ -9,6 +9,8 @@ private:
 	KeyboardInput& key;
 	bool isEnd;
 	Mouse mouse;
+	int texhandle[5];
+	int timer = 0;
 
 public:
 	ResultScene(KeyboardInput& key);

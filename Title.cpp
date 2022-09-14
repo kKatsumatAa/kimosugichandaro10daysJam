@@ -47,7 +47,9 @@ void TitleScene::Update()
 		//クリアしたらリザルト画面
 		if (charaM.GetIsEnd())
 		{
-			isEnd = true;
+			endTimer++;
+
+			if (endTimer >= 180) isEnd = true;
 		}
 
 		tutorial.Update(&mouse);

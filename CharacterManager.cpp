@@ -86,7 +86,7 @@ void CharacterManager::Update(Tutorial* tutorial)
 	}
 
 	//ブレークのチュートリアルになって、説明を読み進めたら、相手のhpを半分にしてブレーク発動
-	if (tutorial != nullptr && (tutorial->GetState() == TUTORIAL::WASTE || (tutorial->GetState() == TUTORIAL::BREAK))
+	if (tutorial != nullptr && (tutorial->GetState() != TUTORIAL::BATTLE || (tutorial->GetState() == TUTORIAL::BREAK))
 		&& tutorial->GetStateNum() < tutorial->GetStateNumMax())
 	{
 		if (enemy[enemyNum].GetHpMAX() > enemy[enemyNum].GetHP()) enemy[enemyNum].AddHP(1);

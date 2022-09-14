@@ -456,7 +456,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 
 
 				//チュートリアル中で,かつ廃棄のチュートリアルなら
-				if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::WASTE)
+				if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::WASTE && tutorial->GetStateNum() == 0)
 				{
 					tutorial->AddState();
 				}
@@ -514,7 +514,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 						if (cost->GetCost() >= itr->get()->GetCost() && isBattle)
 						{
 							//チュートリアル中で,かつカードのチュートリアルなら
-							if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::CARD)
+							if (tutorial != nullptr && tutorial->GetState() == TUTORIAL::CARD && tutorial->GetStateNum() == 0)
 							{
 								tutorial->AddState();
 							}
