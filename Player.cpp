@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp, int power, int attackCool)
+void Player::Initialize(unsigned int* playertexture, unsigned int* textureHandle, Vec2 pos, int hp, int power, int attackCool,bool isBoss)
 {
 	this->pos = pos;
 

@@ -11,7 +11,7 @@ GameScene::GameScene(KeyboardInput& key) :
 	LoadDivGraph("resources/player_idle-Animation-Sheet.png", 9, 9, 1, 160, 160, (int*)playerTexture, true);
 	LoadDivGraph("resources/enemy_slime.png", 6, 6, 1, 160, 160, (int*)enemy1Texture, true);
 	LoadDivGraph("resources/enemy_mashroom.png", 6, 6, 1, 160, 160, (int*)enemy2Texture, true);
-	LoadDivGraph("resources/enemy_mob-Sheet.png", 6, 6, 1, 128, 80, (int*)enemy3Texture, true);
+	LoadDivGraph("resources/enemy_mob-Sheet.png", 6, 6, 1, 160, 160, (int*)enemy3Texture, true);
 	LoadDivGraph("resources/enemy_monster.png", 6, 6, 1, 160, 160, (int*)enemy4Texture, true);
 	LoadDivGraph("resources/enemy_boss-Sheet.png", 6, 6, 1, 305, 188, (int*)enemy5Texture, true);
 	LoadDivGraph("resources/UI_number.png", 10, 10, 1, 32, 32, numText);
@@ -21,11 +21,11 @@ GameScene::GameScene(KeyboardInput& key) :
 	particle_->Initialize();
 
 	player.Initialize(playerTexture, texhandle, { 780,1080 / 2 - 150 }, 50);
-	enemy[0].Initialize(enemy1Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 300);
-	enemy[1].Initialize(enemy2Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 7, 250);
-	enemy[2].Initialize(enemy3Texture, texhandle, { 2100,1080 / 2 - 150 }, 60, 15, 220);
-	enemy[3].Initialize(enemy4Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 8, 50);
-	enemy[4].Initialize(enemy5Texture, texhandle, { 2100,1080 / 2 - 150 }, 120, 30, 500);
+	enemy[0].Initialize(enemy1Texture, texhandle, { 2100,1080 / 2 - 150 }, 20, 5, 300, false);
+	enemy[1].Initialize(enemy2Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 7, 250, false);
+	enemy[2].Initialize(enemy3Texture, texhandle, { 2100,1080 / 2 - 150 }, 60, 15, 220, false);
+	enemy[3].Initialize(enemy4Texture, texhandle, { 2100,1080 / 2 - 150 }, 40, 8, 50, false);
+	enemy[4].Initialize(enemy5Texture, texhandle, { 2100,1080 / 2 - 150 }, 120, 20, 400, true);
 
 	charaM.Initialize(&player, enemy);
 	cardM.Initialize();
@@ -127,7 +127,7 @@ void GameScene::Draw()
 
 	cost.Draw(texhandle);
 
-	DrawFormatString(0, 0, 0xFFFFFF, "GAME");
+	//DrawFormatString(0, 0, 0xFFFFFF, "GAME");
 	particle_->Draw();
 }
 

@@ -79,8 +79,13 @@ void Character::Draw()
 		if (animeTimer >= 6) {
 			animeTimer = 0;
 		}
+		if (isBoss == false) {
+			DrawRotaGraph2(pos.x - 80, pos.y, 32.0f, 32.0f, scale * 1.7f, angle, modelTexture[static_cast<int>(animeTimer)], true);
+		}
+		else {
+			DrawRotaGraph2(pos.x - 200, pos.y, 32.0f, 32.0f, scale * 1.7f, angle, modelTexture[static_cast<int>(animeTimer)], true);
 
-		DrawRotaGraph2(pos.x - 80, pos.y, 32.0f, 32.0f, scale * 1.7f, angle, modelTexture[static_cast<int>(animeTimer)], true);
+		}
 	}
 
 
@@ -191,7 +196,7 @@ void SpecialAttack::Update()
 {
 	specialGauge++;
 
-	DrawFormatString(0, 0, 0xffffff, "\n\n\n\n\n\ngauge%d", specialGauge);
+	//DrawFormatString(0, 0, 0xffffff, "\n\n\n\n\n\ngauge%d", specialGauge);
 
 	//ゲージいっぱいになったら通常の攻撃力の2倍の攻撃
 	if (specialGauge >= specialGaugeMAX)

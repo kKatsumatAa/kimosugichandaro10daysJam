@@ -43,6 +43,7 @@ void CardManager::Initialize()
 	LoadDivGraph("resources/card_debuff-Sheet.png", 2, 2, 1, 100, 140, cardGraph_[3]);
 	deckGraph_ = LoadGraph("resources/UI_deckPile.png");
 	trashGraph_ = LoadGraph("resources/UI_discardPile_icon.png");
+	guardText_ = LoadGraph("resources/UI_effect_defense.png");
 
 	particle = new Particle;
 	particle->Initialize();
@@ -375,7 +376,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		}
 	}
 
-	
+
 	bool count = 0;
 
 	for (int i = 0; i < CARD_CONST; i++) {
@@ -393,7 +394,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 			if (card[i].pos_.x - cardSize.x / 2 - card[i].chengeSize_.x < mouseX && card[i].pos_.x + cardSize.x / 2 + card[i].chengeSize_.x > mouseX) {
 				if (card[i].pos_.y - cardSize.y / 2 + card[i].move_.y - card[i].chengeSize_.y < mouseY && card[i].pos_.y + cardSize.y / 2 + card[i].chengeSize_.y > mouseY) {
 					card[i].isHit_ = true;
-					
+
 					//コスト表示用の処理------------------------------------
 					count = true;
 					std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
@@ -402,7 +403,7 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 					{
 						itr++;
 					}
-					
+
 					cost->SelectCost(itr->get()->GetCost());
 				}
 			}
@@ -423,10 +424,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		}
 	}
 	///カードの選択
-	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\nattacknum:%d", attackMaxBattle);
-	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\nguardnum:%d", guardMaxBattle);
-	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\nbuffnum:%d", buffMaxBattle);
-	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\n\ndenum:%d", deBuffMaxBattle);
+	//DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\nattacknum:%d", attackMaxBattle);
+	//DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\nguardnum:%d", guardMaxBattle);
+	//DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\nbuffnum:%d", buffMaxBattle);
+	//DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\n\ndenum:%d", deBuffMaxBattle);
 
 	//掴んでいない時右クリックで廃棄
 	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0 && isCatch == false && deck.size() > 0) {
@@ -553,8 +554,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 							}
 							if (card[i].type_ == 0) {
 								(Vec2(enemy->GetPos().x + 50, enemy->GetPos().y - 50), 1, 3);
-								particle->BurstGenerate(Vec2(1175, 390), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
-								particle->SlashGenerate(Vec2(1125, 340));
+								particle->BurstGenerate(Vec2(1190, 540), 5, 50, 60, -45, 15.0f, GetColor(200, 0, 0));
+								particle->SlashGenerate(Vec2(1140, 490));
 								shakeTimer = 10;
 								//スラッシュ音
 								PlaySoundMem(soundHandle[0], DX_PLAYTYPE_BACK, true);
@@ -562,6 +563,8 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 							else if (card[i].type_ == 1) {
 								//防御音
 								PlaySoundMem(soundHandle[2], DX_PLAYTYPE_BACK, true);
+								guardAlpha_ = 255;
+								guardSize_ = 3.0;
 							}
 							else if (card[i].type_ == 2) {
 								//
@@ -675,12 +678,21 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 	if (--debuffTimer >= 0) {
 		particle->DebuffGenerate(Vec2(1175, 390), Vec2(100, 50), 15);
 	}
+	if (guardAlpha_ > 0) {
+		guardAlpha_ -= 5;
+		guardSize_ -= 0.01;
+	}
 
 	particle->Update();
 }
 
 void CardManager::Draw(unsigned int* texhandle)
 {
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, guardAlpha_);
+	DrawRotaGraph(840, 450, guardSize_, 0, guardText_, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	particle->Draw();
+
 	std::list<std::unique_ptr<Card>>::iterator itr = deck.begin();
 
 	for (int i = 0; i < deck.size(); i++) {
@@ -740,7 +752,8 @@ void CardManager::Draw(unsigned int* texhandle)
 
 	DrawRotaGraph(deckSpace.x, deckSpace.y, 2, 0, deckGraph_, true);
 	DrawRotaGraph(handSpace6.x, handSpace6.y, 2, 0, trashGraph_, true);
-	particle->Draw();
+
+	
 }
 
 std::mt19937 create_rand_engine() {
@@ -825,7 +838,7 @@ void CardManager::DeckSet()
 		for (int i = 0; i < deBuffMaxBattle; i++)
 		{
 			std::unique_ptr<DeBuffCard> deBuffC = std::make_unique<DeBuffCard>();
-			deBuffC->Initialize(1,2);
+			deBuffC->Initialize(1, 2);
 			deBuffC->SetCardOrder(*ITR);
 			deck2.push_back(std::move(deBuffC));
 

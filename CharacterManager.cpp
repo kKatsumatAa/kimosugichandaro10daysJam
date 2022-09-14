@@ -128,9 +128,9 @@ void CharacterManager::Draw()
 	player->Draw();
 	particle->Draw();
 
-	DrawFormatString(5, 0, 0xffffff, "\nisBattle:%d", isBattle);
-	DrawFormatString(5, 0, 0xffffff, "\n\nisEnd:%d", isEnd);
-	DrawFormatString(5, 0, 0xffffff, "\n\n\nenemyNumber:%d", enemyNum);
+	//DrawFormatString(5, 0, 0xffffff, "\nisBattle:%d", isBattle);
+	//DrawFormatString(5, 0, 0xffffff, "\n\nisEnd:%d", isEnd);
+	//DrawFormatString(5, 0, 0xffffff, "\n\n\nenemyNumber:%d", enemyNum);
 
 	////hp
 	//DrawFormatString(player->GetPos().x -32, player->GetPos().y - 100, 0xffffff, "playerHP:%d", player->GetHP());

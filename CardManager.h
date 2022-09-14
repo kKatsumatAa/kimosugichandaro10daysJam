@@ -104,5 +104,8 @@ public:
 	int buffTimer = 0;
 	int debuffTimer = 0;
 	int shakeTimer = 0;
+	int guardAlpha_ = 0;
+	int guardText_ = 0;
+	double guardSize_ = 3.0;
 };
 
