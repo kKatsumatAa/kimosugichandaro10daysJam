@@ -409,10 +409,10 @@ void CardManager::Update(KeyboardInput* key, Player* player, Enemy* enemy, Cost*
 		}
 	}
 	///カードの選択
-	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\nattacknum:%d", attackMaxBattle);
-	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\nguardnum:%d", guardMaxBattle);
-	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\nbuffnum:%d", buffMaxBattle);
-	DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\n\ndenum:%d", deBuffMaxBattle);
+	//DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\nattacknum:%d", attackMaxBattle);
+	//DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\nguardnum:%d", guardMaxBattle);
+	//DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\nbuffnum:%d", buffMaxBattle);
+	//DrawFormatString(0, 10, 0xffffff, "\n\n\n\n\n\n\n\n\ndenum:%d", deBuffMaxBattle);
 
 	//掴んでいない時右クリックで廃棄
 	if ((GetMouseInput() & MOUSE_INPUT_RIGHT) != 0 && isCatch == false && deck.size() > 0) {

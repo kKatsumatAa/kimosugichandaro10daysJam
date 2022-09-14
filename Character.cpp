@@ -189,7 +189,7 @@ void SpecialAttack::Update()
 {
 	specialGauge++;
 
-	DrawFormatString(0, 0, 0xffffff, "\n\n\n\n\n\ngauge%d", specialGauge);
+	//DrawFormatString(0, 0, 0xffffff, "\n\n\n\n\n\ngauge%d", specialGauge);
 
 	//ゲージいっぱいになったら通常の攻撃力の2倍の攻撃
 	if (specialGauge >= specialGaugeMAX)
